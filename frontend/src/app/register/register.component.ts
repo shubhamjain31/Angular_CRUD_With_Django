@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonService } from '../services/common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,25 +14,33 @@ export class RegisterComponent implements OnInit {
   alert:boolean = false;
 
   createUser= new FormGroup({
-    name:     new FormControl(''),
-    password: new FormControl(''),
-    email:    new FormControl(''),
-    mobile:   new FormControl('')
+    name:     new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    email:    new FormControl('', Validators.required),
+    mobile:   new FormControl('', Validators.required)
   })
 
   constructor(private commonservice:CommonService) { }
 
   ngOnInit(): void {
+    password:''
   }
 
   register(){
+    this.alert = true;
+    console.log(this.alert)
+    if(this.createUser.invalid) {
+      return;
+    }
+
     console.log(this.createUser.value);
     this.commonservice.createUser(this.createUser.value).subscribe((data)=>{
-      console.log(data,"data created sucessfull")
       //  if (data["saved"]){
       //   this.route.navigate(['/select-service'])
       // }
     })
+    this.createUser.reset();
+    this.alert = false;
   }
 
 }

@@ -20,7 +20,7 @@ export class CommonService {
     };
    }
 
-  createUser(data: any){
-    return this.http.post(this.APIUrl, data, this.httpOptions);
+  public createUser(data: any){
+    return this.http.post(this.APIUrl + '/register/', data, this.httpOptions);
   }
 }

@@ -1,3 +1,7 @@
 from django.contrib import admin
+from django.apps import apps
+from django.contrib.auth.models import User
 
-# Register your models here.
+myapp = apps.get_app_config('App')
+for model in myapp.get_models():
+    admin.site.register(model)

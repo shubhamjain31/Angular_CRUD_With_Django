@@ -7,11 +7,13 @@ from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 
 class User(AbstractUser):
+    fullname                = models.CharField(max_length=20, blank=True, null=True)
     username                = models.CharField(max_length=20, blank=True, null=True)
     email                   = models.EmailField(unique=True)
     mobile                  = models.CharField(max_length=20)
     first_name              = models.CharField(max_length=30)
     last_name               = models.CharField(max_length=30)
+    password                = models.CharField(max_length=150)
     
      
     last_login              = models.DateTimeField(blank=True, null=True)

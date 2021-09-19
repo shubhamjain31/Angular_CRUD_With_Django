@@ -10,6 +10,17 @@
 
 <div class="container w-50 bg-light p-4">
 	<form [formGroup]="createUser" (ngSubmit)= "register()">
+
+		<div class="alert alert-warning alert-dismissible fade show" role="alert"
+		*ngIf="alert && createUser.invalid">
+			<span *ngIf="createUser.controls.name.errors?.required">Please Enter Name</span><br>
+			<span *ngIf="createUser.controls.password.errors?.required">Please Enter Password</span><br>
+			<span *ngIf="createUser.controls.email.errors?.required">Please Enter Email</span><br>
+			<span *ngIf="createUser.controls.mobile.errors?.required">Please Enter Mobile</span><br>
+			<span *ngIf="createUser.controls.password.errors?.minlength">Password Must Contain 8 Characters</span>
+
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
 	    
 	    <div class="form-group">
 	      <label for="name" class="form-label">Name</label>
@@ -18,7 +29,7 @@
 	    
 	    <div class="form-group mt-3">
 	        <label for="password" class="form-label">Password</label>
-	        <input type="password" class="form-control" id="password" placeholder="Enter Address" formControlName="password">
+	        <input type="password" class="form-control" id="password" placeholder="Enter Password" formControlName="password" name="password">
 	    </div>
 
 	     <div class="form-group mt-3">
