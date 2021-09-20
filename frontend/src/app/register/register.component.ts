@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   alert:boolean = false;
+  activeVerificationCodeSent:boolean = false;
 
   createUser= new FormGroup({
     name:     new FormControl('', Validators.required),
@@ -24,6 +25,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     password:''
+  }
+
+  onAlertClose(): void {
+   this.activeVerificationCodeSent = false;
   }
 
   register(){
@@ -40,7 +45,7 @@ export class RegisterComponent implements OnInit {
       // }
     })
     this.createUser.reset();
-    this.alert = false;
+    // this.alert = false;
   }
 
 }
