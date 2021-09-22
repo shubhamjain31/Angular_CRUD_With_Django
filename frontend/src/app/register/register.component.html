@@ -10,46 +10,35 @@
 
 <div class="container w-50 bg-light p-4">
 	<form [formGroup]="createUser" (ngSubmit)= "register()">
-
-		<div class="alert alert-warning alert-dismissible fade show" role="alert"
-		*ngIf="alert && createUser.invalid">
-			<div class="row">
-				<span *ngIf="createUser.controls.name.errors?.required && createUser.controls.name.touched">Please Enter Name</span>
-			</div>
-			<div class="row">
-				<span *ngIf="createUser.controls.password.errors?.required && createUser.controls.password.touched">Please Enter Password</span>
-			</div>
-			<div class="row">
-				<span *ngIf="createUser.controls.email.errors?.required && createUser.controls.email.touched">Please Enter Email</span>
-			</div>
-			<div class="row">
-				<span *ngIf="createUser.controls.mobile.errors?.required && createUser.controls.mobile.touched">Please Enter Mobile</span>
-			</div>
-			<div class="row">
-				<span *ngIf="createUser.controls.password.errors?.minlength && createUser.controls.password.touched">Password Must Contain 8 Characters</span>
-			</div>
-
-			<button type="button" class="btn-close" aria-label="Close"></button>
+		
+    <div *ngIf="error_msg" class="alert alert-warning alert-dismissible fade show" role="alert">
+		  {{error_msg}}
+		  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>
 	    
 	    <div class="form-group">
 	      <label for="name" class="form-label">Name</label>
-	      <input type="text" class="form-control" id="name" placeholder="Enter Name" formControlName="name">
+	      <input type="text" class="form-control" id="name" placeholder="Enter Name" formControlName="name" name="name" [(ngModel)]="user.name">
+	      <span class="text-danger" *ngIf="(submitted && createUser.controls.name.errors?.required) || (!createUser.controls.name.value && createUser.controls.name.touched)">Please Enter Name</span>
 	    </div>
 	    
 	    <div class="form-group mt-3">
 	        <label for="password" class="form-label">Password</label>
-	        <input type="password" class="form-control" id="password" placeholder="Enter Password" formControlName="password" name="password">
+	        <input type="password" class="form-control" id="password" placeholder="Enter Password" formControlName="password" name="password" [(ngModel)]="user.password" minlength="8">
+	        <span class="text-danger" *ngIf="(submitted && createUser.controls.password.errors?.required)|| (!createUser.controls.password.value && createUser.controls.password.touched)">Please Enter Password</span>
+	        <span class="text-danger" *ngIf="(submitted && createUser.controls.password.errors?.minlength)|| (createUser.controls.password.errors?.minlength)">Password Must Contain 8 Characters</span>
 	    </div>
 
 	     <div class="form-group mt-3">
 	        <label for="email" class="form-label">Email</label>
-	        <input type="text" class="form-control" id="email" placeholder="Enter Email" formControlName="email">
+	        <input type="text" class="form-control" id="email" placeholder="Enter Email" formControlName="email" name="email" [(ngModel)]="user.email">
+	        <span class="text-danger" *ngIf="(submitted && createUser.controls.email.errors?.required)|| (!createUser.controls.email.value && createUser.controls.email.touched)">Please Enter Email</span>
 	    </div>
 
 	    <div class="form-group mt-3">
 	        <label for="mobile" class="form-label">Mobile</label>
-	        <input type="text" class="form-control" placeholder="Enter Mobile" id="mobile" formControlName="mobile">
+	        <input type="text" class="form-control" placeholder="Enter Mobile" id="mobile" formControlName="mobile" name="mobile" [(ngModel)]="user.mobile">
+	        <span class="text-danger" *ngIf="(submitted && createUser.controls.mobile.errors?.required) || (!createUser.controls.mobile.value && createUser.controls.mobile.touched)">Please Enter Mobile</span>
 	    </div>
 
 	    <button type="submit" class="btn btn-primary mt-3">Register</button>

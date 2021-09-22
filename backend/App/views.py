@@ -33,7 +33,6 @@ def register_user(request):
     if request.method == "POST":
         data = urlencode(json.loads(request.body))
         user_data = QueryDict(data)
-        print(user_data)
 
         name       	= user_data.get('name')
         password    = user_data.get('password')
@@ -55,12 +54,15 @@ def register_user(request):
         if len(password) < 8:
             return JsonResponse({'error':True, 'msg':"Password must contain 8 characters"})
 
-        # user_obj =  User.objects.create(email=email,
-        # 								fullname=name,
-        # 								mobile=mobile,
-        # 								password=make_password(password),
-        #                             ip_address = get_ip(request))
+        if User.objects.filter(email=email).exists():
+            return JsonResponse({'exists':True})
+
+        user_obj =  User.objects.create(email=email,
+        								fullname=name,
+        								mobile=mobile,
+        								password=make_password(password),
+                                    ip_address = get_ip(request))
         
-        return JsonResponse({'success':True})
+        return JsonResponse({'saved':True})
     else:
         return JsonResponse({'fail':True}) 

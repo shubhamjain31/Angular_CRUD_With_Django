@@ -11,20 +11,27 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  alert:boolean = false;
+  public user: any;
+  submitted:boolean = false;
   activeVerificationCodeSent:boolean = false;
+  public error_msg: any;
 
   createUser= new FormGroup({
     name:     new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    email:    new FormControl('', Validators.required),
+    email:    new FormControl('', [Validators.required, Validators.email]),
     mobile:   new FormControl('', Validators.required)
   })
 
-  constructor(private commonservice:CommonService) { }
+  constructor(private commonservice:CommonService, private route: Router) { }
 
   ngOnInit(): void {
-    password:''
+      this.user = {
+      name: '',
+      password:'',
+      email: '',
+      mobile: ''
+    }
   }
 
   onAlertClose(): void {
@@ -32,20 +39,25 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    this.alert = true;
-    console.log(this.alert)
+    this.submitted = true;
+
     if(this.createUser.invalid) {
       return;
     }
 
-    console.log(this.createUser.value);
-    this.commonservice.createUser(this.createUser.value).subscribe((data)=>{
-      //  if (data["saved"]){
-      //   this.route.navigate(['/select-service'])
-      // }
+    this.commonservice.createUser(this.createUser.value).subscribe((data: any)=>{
+       if (data["saved"]){
+        this.route.navigate(['/select-service'])
+      }
+      else if (data["exists"]){
+        this.error_msg = "User with this email alraedy exists."
+      }
+      else if (data["fail"]){
+        this.error_msg = "Something Went Wrong!."
+      }
     })
     this.createUser.reset();
-    // this.alert = false;
+    this.submitted = false;
   }
 
 }
