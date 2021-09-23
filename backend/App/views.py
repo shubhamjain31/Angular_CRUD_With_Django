@@ -95,3 +95,7 @@ def login_user(request):
         return JsonResponse({'msg':msg, 'fail':True})
               
     return JsonResponse({})
+
+@csrf_exempt
+def login_check(request):
+    return JsonResponse({'is_logged_in':request.user.is_authenticated})

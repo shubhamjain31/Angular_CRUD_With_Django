@@ -6,7 +6,7 @@
 		  {{error_msg}}
 		  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>
-		
+
 		<div class="form-group">
 		  <label for="email">Email</label>
 		  <input type="email" class="form-control" id="email" formControlName="emailaddress" name="email"  placeholder="Enter Email">
@@ -18,6 +18,13 @@
 		  <span class="text-danger" *ngIf="(submitted && loginUser.controls.pass.errors?.required)|| (!loginUser.controls.pass.value && loginUser.controls.pass.touched)">Please Enter Password</span>
 	        <span class="text-danger" *ngIf="(submitted && loginUser.controls.pass.errors?.minlength)|| (loginUser.controls.pass.errors?.minlength)">Password Must Contain 8 Characters</span>
 		</div>
-		<button type="submit" class="btn btn-success">Login</button>
+		<div class="row">
+			<div class="col-8">
+				<button type="submit" class="btn btn-success">Login</button>
+			</div>
+			<div class="col-4">
+				<button type="button" class="btn btn-info text-white" [routerLink]="['/register']">Create</button>
+			</div>
+		</div>
 	</form>
 </div>

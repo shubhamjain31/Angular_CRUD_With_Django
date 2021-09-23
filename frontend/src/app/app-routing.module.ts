@@ -5,11 +5,13 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 
+import { LoginGuard, AuthGuard } from './login/login.guard';
+
 const routes: Routes = [
   { 
-    path: '',  
+    path: 'home',  
     component: HomeComponent,
-    // canActivate: []
+    canActivate: [AuthGuard]
   },
   // {
   //   component:AddRestaurantComponent , path:'add'
@@ -21,12 +23,14 @@ const routes: Routes = [
   //   component:ListRestaurantComponent, path:'list'},
   {
     component:LoginComponent, 
-    path:'login'
+    path:'login',
+    canActivate: [LoginGuard]
   },
   {
     component:RegisterComponent, 
-    path:'register'
-  }
+    path:'register',
+    // canActivate: [LoginGuard]
+  },
 ];
 
 @NgModule({

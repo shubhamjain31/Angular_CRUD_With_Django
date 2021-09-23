@@ -22,4 +22,9 @@ export class AuthenticationService {
   public loginUser(data: any){
     return this.http.post(this.APIUrl + '/login/', data, this.httpOptions);
   }
+
+  public is_logged_in() {
+    return this.http.get(this.APIUrl + '/login_check/', this.httpOptions);
+  }
+  
 }

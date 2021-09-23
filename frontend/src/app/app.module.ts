@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterModule } from '@angular/router';
 
 import {  ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,6 +27,8 @@ import { GlobalConstantsComponent } from './common/global-constants/global-const
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    NgbModule,
+    RouterModule,
     ReactiveFormsModule,
     FormsModule
   ],

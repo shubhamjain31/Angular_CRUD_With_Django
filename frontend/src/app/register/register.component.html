@@ -35,6 +35,14 @@
 	        <span class="text-danger" *ngIf="(submitted && createUser.controls.mobile.errors?.required) || (!createUser.controls.mobile.value && createUser.controls.mobile.touched)">Please Enter Mobile</span>
 	    </div>
 
-	    <button type="submit" class="btn btn-primary mt-3">Register</button>
+	    <div class="row mt-3">
+			<div class="col-10">
+				<button type="submit" class="btn btn-success">Register</button>
+			</div>
+			<div class="col-2">
+				<button type="button" class="btn btn-info text-white" [routerLink]="['/login']">Login</button>
+			</div>
+		</div>
+
 	</form>
 </div>

@@ -39,10 +39,8 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.user = {
-      email: '',
-      password:'',
-    }
+    this.authenticationService.is_logged_in();
+    
   }
 
   login(){
@@ -51,8 +49,6 @@ export class LoginComponent implements OnInit {
     if(this.loginUser.invalid) {
       return;
     }
-
-    console.log(this.loginUser.value)
     
     this.authenticationService.loginUser(this.loginUser.value).subscribe((data: any)=>{
        if (data["saved"]){
@@ -70,4 +66,7 @@ export class LoginComponent implements OnInit {
     this.submitted = false;
     }
 
+    check_login(){
+    this.authenticationService.is_logged_in()
+  }
 }

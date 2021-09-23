@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
         this.route.navigate(['/select-service'])
       }
       else if (data["exists"]){
-        this.error_msg = "User with this email already exists."
+        this.error_msg = "User with this email alraedy exists."
       }
       else if (data["fail"]){
         this.error_msg = "Something Went Wrong!"
