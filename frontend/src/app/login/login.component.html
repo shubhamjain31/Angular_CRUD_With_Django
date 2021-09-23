@@ -1,1 +1,23 @@
-<p>login works!</p>
+<div class="container w-25 bg-light p-4 mx-auto mt-5">
+	<h3 class="text-center mb-4"> LOGIN </h3>
+	<form [formGroup]="loginUser" (ngSubmit)= "login()">
+
+		<div *ngIf="error_msg" class="alert alert-warning alert-dismissible fade show" role="alert">
+		  {{error_msg}}
+		  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		
+		<div class="form-group">
+		  <label for="email">Email</label>
+		  <input type="email" class="form-control" id="email" formControlName="emailaddress" name="email"  placeholder="Enter Email">
+		 <span class="text-danger" *ngIf="(submitted && loginUser.controls.emailaddress.errors?.required)|| (!loginUser.controls.emailaddress.value && loginUser.controls.emailaddress.touched)">Please Enter Email</span>
+		</div>
+		<div class="form-group my-4">
+		  <label for="password">Password</label>
+		  <input type="password" class="form-control" id="password" formControlName="pass" name="password"  placeholder="Enter Password">
+		  <span class="text-danger" *ngIf="(submitted && loginUser.controls.pass.errors?.required)|| (!loginUser.controls.pass.value && loginUser.controls.pass.touched)">Please Enter Password</span>
+	        <span class="text-danger" *ngIf="(submitted && loginUser.controls.pass.errors?.minlength)|| (loginUser.controls.pass.errors?.minlength)">Password Must Contain 8 Characters</span>
+		</div>
+		<button type="submit" class="btn btn-success">Login</button>
+	</form>
+</div>

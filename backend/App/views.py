@@ -7,9 +7,9 @@ from urllib.parse import urlencode
 from django.http import QueryDict
 import json
 
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.forms.models import model_to_dict
-# from django.middleware import csrf
+from django.middleware import csrf
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
@@ -66,3 +66,32 @@ def register_user(request):
         return JsonResponse({'saved':True})
     else:
         return JsonResponse({'fail':True}) 
+
+@csrf_exempt
+def login_user(request):
+    if request.user.is_authenticated:
+        return JsonResponse({'is_logged_in':request.user.is_authenticated})
+
+    if request.method == "POST":
+        data = urlencode(json.loads(request.body))
+        user_data = QueryDict(data)
+
+        email       = user_data.get('emailaddress')
+        password    = user_data.get('pass')
+
+        user = authenticate(email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            token       = csrf.get_token(request)
+            sessionid   = request.session.session_key
+
+            return JsonResponse({'sessionid':sessionid, 'csrf':token, 'success':True})
+        else:    
+            msg = 'Invalid credentials'
+            return JsonResponse({'msg':msg, 'fail':True})   
+    else:
+        msg = 'Error validating the form'  
+        return JsonResponse({'msg':msg, 'fail':True})
+              
+    return JsonResponse({})

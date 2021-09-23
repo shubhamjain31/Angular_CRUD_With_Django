@@ -134,3 +134,9 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 # custom user model
 AUTH_USER_MODEL = 'App.User'
+
+# custom authentication
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'backends.EmailAuthBackend'
+]

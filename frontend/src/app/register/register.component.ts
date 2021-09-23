@@ -13,7 +13,6 @@ export class RegisterComponent implements OnInit {
 
   public user: any;
   submitted:boolean = false;
-  activeVerificationCodeSent:boolean = false;
   public error_msg: any;
 
   createUser= new FormGroup({
@@ -34,10 +33,6 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  onAlertClose(): void {
-   this.activeVerificationCodeSent = false;
-  }
-
   register(){
     this.submitted = true;
 
@@ -50,10 +45,10 @@ export class RegisterComponent implements OnInit {
         this.route.navigate(['/select-service'])
       }
       else if (data["exists"]){
-        this.error_msg = "User with this email alraedy exists."
+        this.error_msg = "User with this email already exists."
       }
       else if (data["fail"]){
-        this.error_msg = "Something Went Wrong!."
+        this.error_msg = "Something Went Wrong!"
       }
     })
     this.createUser.reset();
