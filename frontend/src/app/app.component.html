@@ -26,7 +26,8 @@
         </li>
       </ul>
       <form class="d-flex">
-        <button class="btn btn-outline-danger" routerLink="login" type="button">Logout</button>
+        <button class="btn btn-outline-danger" *ngIf="loggedin" routerLink="logout" type="button">Logout</button>
+        <button class="btn btn-outline-dark" *ngIf="!loggedin" routerLink="login" type="button">Login</button>
       </form>
     </div>
   </div>

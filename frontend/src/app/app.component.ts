@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+import { AuthenticationService } from './services/authentication.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +10,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
+
+  loggedin: any;
+
+  constructor(private authenticationService:AuthenticationService, private router: Router) { }
+
+
+  ngOnInit(): void {
+    this.authenticationService.is_logged_in().subscribe((data: any)=>{
+      this.loggedin =  data["is_logged_in"];
+      
+    });
+    
+  }
+
 }

@@ -19,11 +19,11 @@ export class LoginGuard implements CanActivate {
     return this.authenticationService.is_logged_in().pipe(map((res: any) => {
          if(res['is_logged_in']){
           console.log('fjdjd')
-            return false;
+            return true;
           }
           else{
             this.router.navigate(['home']);
-            return true;
+            return false;
           }
        
       }));

@@ -1,9 +1,8 @@
-<div class="jumbotron">
-    <h1 class="text-center text-secondary my-4">Register</h1>
-</div>
 
-<div class="container w-50 bg-light p-4">
+<div class="container w-50 bg-light p-4 mt-4">
 	<form [formGroup]="createUser" (ngSubmit)= "register()">
+
+		<h1 class="text-center mb-3">REGISTRATION</h1>
 		
     	<div *ngIf="error_msg" class="alert alert-warning alert-dismissible fade show" role="alert">
 		  {{error_msg}}

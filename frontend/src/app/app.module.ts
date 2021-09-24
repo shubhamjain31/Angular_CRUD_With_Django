@@ -13,6 +13,8 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { RegisterComponent } from './register/register.component';
 import { GlobalConstantsComponent } from './common/global-constants/global-constants.component';
+import { LoginGuard, AuthGuard } from './login/login.guard';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,7 @@ import { GlobalConstantsComponent } from './common/global-constants/global-const
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [LoginGuard, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
