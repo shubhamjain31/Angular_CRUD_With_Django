@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonService } from '../services/common.service';
 import { Router } from '@angular/router';
+import { ToasterService } from '../services/toaster.service';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,7 @@ export class RegisterComponent implements OnInit {
     mobile:   new FormControl('', Validators.required)
   })
 
-  constructor(private commonservice:CommonService, private route: Router) { }
+  constructor(private commonservice:CommonService, private route: Router, private toaster: ToasterService) { }
 
   ngOnInit(): void {
       this.user = {
@@ -42,7 +43,7 @@ export class RegisterComponent implements OnInit {
 
     this.commonservice.createUser(this.createUser.value).subscribe((data: any)=>{
        if (data["saved"]){
-        this.route.navigate(['/select-service'])
+        this.route.navigate(['/login'])
       }
       else if (data["exists"]){
         this.error_msg = "User with this email alraedy exists."
@@ -53,6 +54,11 @@ export class RegisterComponent implements OnInit {
     })
     this.createUser.reset();
     this.submitted = false;
+  }
+
+  showSuccessToaster() {
+    console.log('first')
+    this.toaster.show('success', 'Well done!', 'This is a success alert');
   }
 
 }

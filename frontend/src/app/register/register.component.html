@@ -1,6 +1,6 @@
 
 <div class="container w-50 bg-light p-4 mt-4">
-	<form [formGroup]="createUser" (ngSubmit)= "register()">
+	<form [formGroup]="createUser" (ngSubmit)= "register(); showSuccessToaster()">
 
 		<h1 class="text-center mb-3">REGISTRATION</h1>
 		

@@ -14,6 +14,8 @@ import { LogoutComponent } from './logout/logout.component';
 import { RegisterComponent } from './register/register.component';
 import { GlobalConstantsComponent } from './common/global-constants/global-constants.component';
 import { LoginGuard, AuthGuard } from './login/login.guard';
+import { ToasterComponent } from './messages/toaster/toaster.component';
+// import { ToasterContainerComponent } from './messages/toaster/toaster-container.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { LoginGuard, AuthGuard } from './login/login.guard';
     LoginComponent,
     LogoutComponent,
     RegisterComponent,
-    GlobalConstantsComponent
+    GlobalConstantsComponent,
+    ToasterComponent,
+    // ToasterContainerComponent
   ],
   imports: [
     BrowserModule,
