@@ -16,6 +16,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { RegisterComponent } from './register/register.component';
 import { GlobalConstantsComponent } from './common/global-constants/global-constants.component';
 import { LoginGuard, AuthGuard } from './login/login.guard';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { LoginGuard, AuthGuard } from './login/login.guard';
     LogoutComponent,
     RegisterComponent,
     GlobalConstantsComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
