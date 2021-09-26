@@ -57,11 +57,11 @@ def register_user(request):
         if User.objects.filter(email=email).exists():
             return JsonResponse({'exists':True})
 
-        user_obj =  User.objects.create(email=email,
-        								fullname=name,
-        								mobile=mobile,
-        								password=make_password(password),
-                                    ip_address = get_ip(request))
+        # user_obj =  User.objects.create(email=email,
+        # 								fullname=name,
+        # 								mobile=mobile,
+        # 								password=make_password(password),
+        #                             ip_address = get_ip(request))
         
         return JsonResponse({'saved':True})
     else:

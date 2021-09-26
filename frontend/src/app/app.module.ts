@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 
 import {  ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,9 +16,6 @@ import { LogoutComponent } from './logout/logout.component';
 import { RegisterComponent } from './register/register.component';
 import { GlobalConstantsComponent } from './common/global-constants/global-constants.component';
 import { LoginGuard, AuthGuard } from './login/login.guard';
-import { ToasterComponent } from './messages/toaster/toaster.component';
-// import { ToasterContainerComponent } from './messages/toaster/toaster-container.component';
-
 
 @NgModule({
   declarations: [
@@ -26,8 +25,6 @@ import { ToasterComponent } from './messages/toaster/toaster.component';
     LogoutComponent,
     RegisterComponent,
     GlobalConstantsComponent,
-    ToasterComponent,
-    // ToasterContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +33,9 @@ import { ToasterComponent } from './messages/toaster/toaster.component';
     NgbModule,
     RouterModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({preventDuplicates: true}),
   ],
   providers: [LoginGuard, AuthGuard],
   bootstrap: [AppComponent]

@@ -1,13 +1,16 @@
 
 <div class="container w-50 bg-light p-4 mt-4">
-	<form [formGroup]="createUser" (ngSubmit)= "register(); showSuccessToaster()">
+	<form [formGroup]="createUser" (ngSubmit)= "register()">
 
 		<h1 class="text-center mb-3">REGISTRATION</h1>
 		
-    	<div *ngIf="error_msg" class="alert alert-warning alert-dismissible fade show" role="alert">
-		  {{error_msg}}
-		  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-		</div>
+    	<ngb-alert [type]="'warning'" *ngIf="staticAlertClosed" [dismissible]="false">
+    		<span>
+    			{{error_msg}}
+    		</span>
+            <button type="button" aria-hidden="true" class="btn-close" data-dismiss="alert" aria-label="Close" (click)="staticAlertClosed = false">
+            </button>
+          </ngb-alert>
 	    
 	    <div class="form-group">
 	      <label for="name" class="form-label">Name</label>
