@@ -26,5 +26,9 @@ export class AuthenticationService {
   public is_logged_in() {
     return this.http.get(this.APIUrl + '/login_check/', this.httpOptions);
   }
+
+  public logout_user(){
+    return this.http.get(this.APIUrl + '/logout/', this.httpOptions);
+  }
   
 }

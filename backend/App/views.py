@@ -57,11 +57,11 @@ def register_user(request):
         if User.objects.filter(email=email).exists():
             return JsonResponse({'exists':True})
 
-        # user_obj =  User.objects.create(email=email,
-        # 								fullname=name,
-        # 								mobile=mobile,
-        # 								password=make_password(password),
-        #                             ip_address = get_ip(request))
+        user_obj =  User.objects.create(email=email,
+        								fullname=name,
+        								mobile=mobile,
+        								password=make_password(password),
+                                    ip_address = get_ip(request))
         
         return JsonResponse({'saved':True})
     else:
@@ -99,3 +99,8 @@ def login_user(request):
 @csrf_exempt
 def login_check(request):
     return JsonResponse({'is_logged_in':request.user.is_authenticated})
+
+@csrf_exempt
+def custom_logout(request):
+    logout(request)
+    return JsonResponse({'success':True})

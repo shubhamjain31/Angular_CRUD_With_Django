@@ -1,5 +1,10 @@
+<div class="container my-auto" *ngIf="loader">
+  <div class="d-flex justify-content-center">
+      <img src="assets/img/loader.gif">
+  </div>
+</div>
 
-<div class="container w-50 bg-light p-4 mt-4">
+<div class="container w-50 bg-light p-4 mt-4" *ngIf="template_form">
 	<form [formGroup]="createUser" (ngSubmit)= "register()">
 
 		<h1 class="text-center mb-3">REGISTRATION</h1>

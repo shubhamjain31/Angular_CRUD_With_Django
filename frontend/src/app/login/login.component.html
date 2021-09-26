@@ -1,4 +1,10 @@
-<div class="container w-25 bg-light p-4 mx-auto mt-5">
+<div class="container my-auto" *ngIf="loader">
+  <div class="d-flex justify-content-center">
+      <img src="assets/img/loader.gif">
+  </div>
+</div>
+
+<div class="container w-25 bg-light p-4 mx-auto mt-5" *ngIf="template_form">
 	<h3 class="text-center mb-4"> LOGIN </h3>
 	<form [formGroup]="loginUser" (ngSubmit)= "login()">
 

@@ -13,12 +13,14 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class LoginComponent implements OnInit {
 
-  public user: any;
-  submitted:boolean = false;
+  public user:      any;
   public error_msg: any;
-
-  public csrf: any;
+  public csrf:      any;
   public sessionid: any;
+
+  submitted:boolean          = false;
+  template_form: boolean     = true;
+  loader: boolean            = false;
 
   loginUser = new FormGroup({
     emailaddress:    new FormControl('', [Validators.required, Validators.email]),
@@ -40,6 +42,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.authenticationService.is_logged_in();
+    this.template_form = true;
     
   }
 
@@ -51,11 +54,18 @@ export class LoginComponent implements OnInit {
     }
     
     this.authenticationService.loginUser(this.loginUser.value).subscribe((data: any)=>{
-       if (data["saved"]){
-        this.csrf = data['csrf']
+       if (data["success"]){
+          this.template_form = false;
+          this.loader = true;
+
+          this.csrf = data['csrf']
           this.sessionid = data['sessionid']
           this.setCookie(this.csrf, this.sessionid)
-          this.router.navigate(['/'])
+
+          setTimeout(()=>{                       
+              this.router.navigateByUrl('/home');
+         }, 3000)
+          
       }
       else if (data["fail"]){
         this.error_msg = data["msg"]
@@ -67,6 +77,6 @@ export class LoginComponent implements OnInit {
     }
 
     check_login(){
-    this.authenticationService.is_logged_in()
-  }
+      this.authenticationService.is_logged_in()
+    }
 }

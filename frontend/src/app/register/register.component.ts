@@ -12,10 +12,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RegisterComponent implements OnInit {
 
-  public user: any;
-  submitted:boolean = false;
+  public user:      any;
   public error_msg: any;
+
+  submitted:boolean          = false;
   staticAlertClosed:boolean  = false;
+  template_form: boolean     = true;
+  loader: boolean            = false;
 
   createUser= new FormGroup({
     name:     new FormControl('', Validators.required),
@@ -27,6 +30,7 @@ export class RegisterComponent implements OnInit {
   constructor(private commonservice:CommonService, private route: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+     this.template_form = true
       this.user = {
       name: '',
       password:'',
@@ -37,7 +41,6 @@ export class RegisterComponent implements OnInit {
 
   register(){
     this.submitted = true;
-    this.staticAlertClosed = true;
 
     if(this.createUser.invalid) {
       return;
@@ -45,14 +48,23 @@ export class RegisterComponent implements OnInit {
 
     this.commonservice.createUser(this.createUser.value).subscribe((data: any)=>{
        if (data["saved"]){
-        this.route.navigate(['/login'])
-        this.showSuccessAlert();
+        this.template_form = false;
+        this.loader = true;
+
+        setTimeout(()=>{                       
+              this.route.navigate(['/login'])
+         }, 3000)
+
+        this.error_msg = "User Registered Successfully!"
+        this.showSuccessAlert(this.error_msg);
       }
       else if (data["exists"]){
+        this.staticAlertClosed = true;
         this.error_msg = "User with this email already exists."
         this.showErrorAlert(this.error_msg);
       }
       else if (data["fail"]){
+        this.staticAlertClosed = true;
         this.error_msg = "Something Went Wrong!"
         this.showErrorAlert(this.error_msg);
       }
@@ -61,8 +73,8 @@ export class RegisterComponent implements OnInit {
     this.submitted = false;
   }
 
-  showSuccessAlert() {
-    this.toastr.show('<span class="fa fa-check" [data-notify]="icon"></span> <span>&nbsp;&nbsp;User Registered Successfully!</span>', '', {
+  showSuccessAlert(msg:string) {
+    this.toastr.show('<span class="fa fa-check" [data-notify]="icon"></span> <span>&nbsp;&nbsp;'+msg+'</span>', '', {
       timeOut: 6000,
       enableHtml: true,
       toastClass: "alert alert-primary alert-with-icon",
@@ -78,4 +90,5 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  
 }
