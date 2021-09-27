@@ -24,4 +24,8 @@ export class CommonService {
     return this.http.post(this.APIUrl + '/register/', data, this.httpOptions);
   }
 
+  public addRestaurant(data: any){
+    return this.http.post(this.APIUrl + '/add/restaurant/', data, this.httpOptions);
+  }
+
 }

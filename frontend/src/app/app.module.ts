@@ -17,6 +17,11 @@ import { RegisterComponent } from './register/register.component';
 import { GlobalConstantsComponent } from './common/global-constants/global-constants.component';
 import { LoginGuard, AuthGuard } from './login/login.guard';
 import { AboutComponent } from './about/about.component';
+import { RestaurantComponent } from './restaurant/restaurant.component';
+import { AddRestaurantComponent } from './restaurant/add-restaurant/add-restaurant.component';
+import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-restaurant.component';
+import { DeleteRestaurantComponent } from './restaurant/delete-restaurant/delete-restaurant.component';
+import { ShowRestaurantComponent } from './restaurant/show-restaurant/show-restaurant.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,11 @@ import { AboutComponent } from './about/about.component';
     RegisterComponent,
     GlobalConstantsComponent,
     AboutComponent,
+    RestaurantComponent,
+    AddRestaurantComponent,
+    EditRestaurantComponent,
+    DeleteRestaurantComponent,
+    ShowRestaurantComponent,
   ],
   imports: [
     BrowserModule,
