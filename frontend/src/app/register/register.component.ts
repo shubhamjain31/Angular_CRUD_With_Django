@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   template_form: boolean     = true;
   loader: boolean            = false;
 
-  createUser= new FormGroup({
+  createUser = new FormGroup({
     name:     new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     email:    new FormControl('', [Validators.required, Validators.email]),

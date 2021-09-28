@@ -14,6 +14,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
 
+from .models import Restaurant
 from validators import is_invalid
 
 
@@ -103,4 +104,20 @@ def login_check(request):
 @csrf_exempt
 def custom_logout(request):
     logout(request)
+    return JsonResponse({'success':True})
+
+@csrf_exempt
+def add_restaurant(request):
+    data = urlencode(json.loads(request.body))
+    user_data = QueryDict(data)
+    print(user_data)
+
+    name        = user_data.get('name')
+    email       = user_data.get('email')
+    address     = user_data.get('address')
+
+    # Restaurant.objects.create(name          = name,
+    #                             email       = email,
+    #                             address     = address,
+    #                             ip_address  = get_ip(request))
     return JsonResponse({'success':True})

@@ -30,3 +30,13 @@ class User(AbstractUser):
         db_table = 'user'
         verbose_name = _('user')
         verbose_name_plural = _('users')
+
+class Restaurant(models.Model):
+    name                    = models.CharField(max_length=50, blank=True, null=True)
+    email                   = models.EmailField()
+    address                 = models.TextField()
+    date_created            = models.DateTimeField(auto_now_add=True, editable=False, blank=True)
+    ip_address              = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.name

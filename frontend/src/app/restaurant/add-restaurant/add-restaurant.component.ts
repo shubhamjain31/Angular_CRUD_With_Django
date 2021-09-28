@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonService } from '../../services/common.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -9,23 +10,46 @@ import { CommonService } from '../../services/common.service';
 })
 export class AddRestaurantComponent implements OnInit {
 
+  public error_msg: any;
+
+  submitted:boolean          = false;
+  staticAlertClosed:boolean  = false;
+
   addRestaurent = new FormGroup({
-    name:   new FormControl(''),
-    Adress: new FormControl(''),
-    email:  new FormControl('')
+    name:   new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+    email:  new FormControl('', [Validators.required, Validators.email])
   })
 
-  constructor(private commonservice:CommonService) { }
+  constructor(private commonservice:CommonService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
 
   create(){
-    console.log(this.addRestaurent.value);
-      this.commonservice.addRestaurant(this.addRestaurent.value).subscribe((result)=>{
-      console.log("Get Data From Service", result)
+    this.submitted = true;
+
+    if(this.addRestaurent.invalid) {
+      return;
+    }
+
+      this.commonservice.addRestaurant(this.addRestaurent.value).subscribe((data:any)=>{
+        if (data["success"]){
+          this.error_msg = "Restaurant Saved Successfully!"
+          this.showSuccessAlert(this.error_msg)
+        }
     })
       this.addRestaurent.reset()
+      this.submitted = false;
+  }
+
+  showSuccessAlert(msg:string) {
+    this.toastr.show('<span class="fa fa-check" [data-notify]="icon"></span> <span>&nbsp;&nbsp;'+msg+'</span>', '', {
+      timeOut: 6000,
+      enableHtml: true,
+      toastClass: "alert alert-success alert-with-icon",
+      // positionClass: 'toast-top-center'
+    });
   }
 
 }
