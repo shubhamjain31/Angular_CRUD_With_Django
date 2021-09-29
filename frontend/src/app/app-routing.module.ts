@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AboutComponent } from './about/about.component';
 import { AddRestaurantComponent } from './restaurant/add-restaurant/add-restaurant.component';
+import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-restaurant.component';
+import { ShowRestaurantComponent } from './restaurant/show-restaurant/show-restaurant.component';
 
 import { LoginGuard, AuthGuard } from './login/login.guard';
 
@@ -20,11 +22,14 @@ const routes: Routes = [
     component:AddRestaurantComponent,
     path:'add'
   },
-  // {
-  //   component:UpdateRestaurantComponent, path:'update/:id'
-  // },
-  // {
-  //   component:ListRestaurantComponent, path:'list'},
+  {
+    component:EditRestaurantComponent, 
+    path:'update/:id'
+  },
+  {
+    component:ShowRestaurantComponent, 
+    path:'show'
+  },
   {
     component:LoginComponent, 
     path:'login',

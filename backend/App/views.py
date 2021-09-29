@@ -13,6 +13,7 @@ from django.middleware import csrf
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
+from django.core.serializers import serialize
 
 from .models import Restaurant
 from validators import is_invalid
@@ -110,14 +111,30 @@ def custom_logout(request):
 def add_restaurant(request):
     data = urlencode(json.loads(request.body))
     user_data = QueryDict(data)
-    print(user_data)
 
     name        = user_data.get('name')
     email       = user_data.get('email')
     address     = user_data.get('address')
 
-    # Restaurant.objects.create(name          = name,
-    #                             email       = email,
-    #                             address     = address,
-    #                             ip_address  = get_ip(request))
+    Restaurant.objects.create(name          = name,
+                                email       = email,
+                                address     = address,
+                                ip_address  = get_ip(request))
     return JsonResponse({'success':True})
+
+@csrf_exempt
+def show_restaurant(request):
+    all_restaurant = Restaurant.objects.all()
+
+    return JsonResponse({'success':True, "all_restaurant":json.loads(serialize("json", all_restaurant))})
+
+@csrf_exempt
+def delete_restaurant(request):
+    data = urlencode(json.loads(request.body))
+    user_data = QueryDict(data)
+
+    _id        = user_data.get('id')
+    obj = Restaurant.objects.get(pk=_id)
+    obj.delete()
+    msg = "Restaurant deleted successfully"
+    return JsonResponse({'success':True, "msg":msg})
