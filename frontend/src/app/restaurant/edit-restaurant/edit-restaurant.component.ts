@@ -43,8 +43,12 @@ export class EditRestaurantComponent implements OnInit {
 
       this.commonservice.editRestaurant(this.router.snapshot.params.id, this.editRestaurent.value).subscribe((data:any)=>{
         if (data["success"]){
-          this.error_msg = "Restaurant Saved Successfully!"
+          this.error_msg = data['msg']
           this.showSuccessAlert(this.error_msg)
+        }
+        if (data["error"]){
+          this.error_msg = data['msg']
+          this.showErrorAlert(this.error_msg)
         }
     })
       // this.editRestaurent.reset()
@@ -56,6 +60,14 @@ export class EditRestaurantComponent implements OnInit {
       timeOut: 6000,
       enableHtml: true,
       toastClass: "alert alert-success alert-with-icon",
+    });
+  }
+
+  showErrorAlert(msg:string) {
+    this.toastr.show('<span class="fa fa-times" [data-notify]="icon"></span> <span>&nbsp;&nbsp;'+msg+'</span>', '', {
+      timeOut: 6000,
+      enableHtml: true,
+      toastClass: "alert alert-warning alert-with-icon",
     });
   }
 

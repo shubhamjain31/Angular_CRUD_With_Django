@@ -147,6 +147,10 @@ def get_restaurant(request, id):
 
 @csrf_exempt
 def edit_restaurant(request, id):
+    if not id:
+        msg = "Please Enter Valid Data"
+        return JsonResponse({'error':True, "msg":msg})
+
     data = urlencode(json.loads(request.body))
     user_data = QueryDict(data)
 
