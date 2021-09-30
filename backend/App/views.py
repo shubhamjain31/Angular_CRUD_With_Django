@@ -138,3 +138,26 @@ def delete_restaurant(request):
     obj.delete()
     msg = "Restaurant deleted successfully"
     return JsonResponse({'success':True, "msg":msg})
+
+@csrf_exempt
+def get_restaurant(request, id):
+    obj = Restaurant.objects.get(pk=id)
+    all_data = model_to_dict(obj)
+    return JsonResponse({"all_data":all_data})
+
+@csrf_exempt
+def edit_restaurant(request, id):
+    data = urlencode(json.loads(request.body))
+    user_data = QueryDict(data)
+
+    name        = user_data.get('name')
+    email       = user_data.get('email')
+    address     = user_data.get('address')
+
+    obj = Restaurant.objects.get(pk=id)
+    obj.name        = name
+    obj.email       = email
+    obj.address     = address
+    obj.save()
+    msg = "Restaurant Updated successfully"
+    return JsonResponse({'success':True, "msg":msg})

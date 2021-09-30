@@ -36,4 +36,12 @@ export class CommonService {
     return this.http.post(this.APIUrl + '/delete/restaurant/', data, this.httpOptions);
   }
 
+  public editRestaurant(id:any, data:any){
+    return this.http.post(this.APIUrl + '/edit/restaurant/'+id, data, this.httpOptions);
+  }
+
+  public getCurrentData(id:any){
+    return this.http.post(this.APIUrl + '/get/restaurant/'+id, this.httpOptions);
+  }
+
 }
