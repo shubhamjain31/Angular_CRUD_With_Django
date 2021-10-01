@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../../services/common.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-show-restaurant',
@@ -17,13 +18,24 @@ export class ShowRestaurantComponent implements OnInit {
   public name:        any;
   public id:          any;
 
-  constructor(private commonservice:CommonService, private modalService: NgbModal, private toastr: ToastrService) { }
+  constructor(private commonservice:CommonService, private modalService: NgbModal, private toastr: ToastrService,
+    private http: HttpClient) { }
 
   ngOnInit(): void {
     this.commonservice.showRestaurant().subscribe((data:any) => {
       if(data['success']){
         this.restaurant_list = data['all_restaurant']
       }
+
+      setTimeout(()=>{   
+        $('#restaurant_table').DataTable( {
+          pagingType: 'full_numbers',
+          pageLength: 5,
+          processing: true,
+          lengthMenu : [5, 10, 25]
+        });
+      }, 1);
+            
     });
   }
 

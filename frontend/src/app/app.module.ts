@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import {  ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DataTablesModule } from 'angular-datatables';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
@@ -47,6 +48,7 @@ import { ShowRestaurantComponent } from './restaurant/show-restaurant/show-resta
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
+    DataTablesModule,
     ToastrModule.forRoot({preventDuplicates: true}),
   ],
   providers: [LoginGuard, AuthGuard],
