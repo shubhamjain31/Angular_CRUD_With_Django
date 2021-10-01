@@ -12,10 +12,10 @@ export class ShowRestaurantComponent implements OnInit {
 
   public restaurant_list:any = [];
   staticAlertClosed:boolean  = false;
-  public error_msg: any;
-  public closeModal: any;
-  public name: any;
-  public id: any;
+  public error_msg:   any;
+  public closeModal:  any;
+  public name:        any;
+  public id:          any;
 
   constructor(private commonservice:CommonService, private modalService: NgbModal, private toastr: ToastrService) { }
 
@@ -54,6 +54,10 @@ export class ShowRestaurantComponent implements OnInit {
           this.error_msg = data['msg']
           this.showSuccessAlert(this.error_msg)
         }
+      if(data['error']){
+          this.error_msg = data['msg']
+          this.showErrorAlert(this.error_msg)
+        }
     })
 
   }
@@ -63,6 +67,14 @@ export class ShowRestaurantComponent implements OnInit {
       timeOut: 6000,
       enableHtml: true,
       toastClass: "alert alert-success alert-with-icon",
+    });
+  }
+
+  showErrorAlert(msg:string) {
+    this.toastr.show('<span class="fa fa-times" [data-notify]="icon"></span> <span>&nbsp;&nbsp;'+msg+'</span>', '', {
+      timeOut: 6000,
+      enableHtml: true,
+      toastClass: "alert alert-warning alert-with-icon",
     });
   }
 

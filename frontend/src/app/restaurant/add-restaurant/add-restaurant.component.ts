@@ -38,6 +38,10 @@ export class AddRestaurantComponent implements OnInit {
           this.error_msg = "Restaurant Saved Successfully!"
           this.showSuccessAlert(this.error_msg)
         }
+        if(data['error']){
+          this.error_msg = data['msg']
+          this.showErrorAlert(this.error_msg)
+        }
     })
       this.addRestaurent.reset()
       this.submitted = false;
@@ -49,6 +53,14 @@ export class AddRestaurantComponent implements OnInit {
       enableHtml: true,
       toastClass: "alert alert-success alert-with-icon",
       // positionClass: 'toast-top-center'
+    });
+  }
+
+  showErrorAlert(msg:string) {
+    this.toastr.show('<span class="fa fa-times" [data-notify]="icon"></span> <span>&nbsp;&nbsp;'+msg+'</span>', '', {
+      timeOut: 6000,
+      enableHtml: true,
+      toastClass: "alert alert-warning alert-with-icon",
     });
   }
 

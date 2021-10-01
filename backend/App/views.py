@@ -116,6 +116,15 @@ def add_restaurant(request):
     email       = user_data.get('email')
     address     = user_data.get('address')
 
+    if is_invalid(name):
+        return JsonResponse({"error":True, "msg":"Please Enter Name"})
+
+    if is_invalid(email):
+        return JsonResponse({"error":True, "msg":"Please Enter Email"})
+
+    if is_invalid(address):
+        return JsonResponse({"error":True, "msg":"Please Enter Address"})
+
     Restaurant.objects.create(name          = name,
                                 email       = email,
                                 address     = address,
@@ -134,6 +143,10 @@ def delete_restaurant(request):
     user_data = QueryDict(data)
 
     _id        = user_data.get('id')
+
+    if not _id:
+        return JsonResponse({"error":True, "msg":"Please Enter Valid Data"})
+
     obj = Restaurant.objects.get(pk=_id)
     obj.delete()
     msg = "Restaurant deleted successfully"
@@ -157,6 +170,15 @@ def edit_restaurant(request, id):
     name        = user_data.get('name')
     email       = user_data.get('email')
     address     = user_data.get('address')
+
+    if is_invalid(name):
+        return JsonResponse({"error":True, "msg":"Please Enter Name"})
+
+    if is_invalid(email):
+        return JsonResponse({"error":True, "msg":"Please Enter Email"})
+
+    if is_invalid(address):
+        return JsonResponse({"error":True, "msg":"Please Enter Address"})
 
     obj = Restaurant.objects.get(pk=id)
     obj.name        = name
