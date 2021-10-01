@@ -32,6 +32,11 @@ export class ShowRestaurantComponent implements OnInit {
           pagingType: 'full_numbers',
           pageLength: 5,
           processing: true,
+          searching: false,
+          columnDefs: [
+          { "orderable": false, "className": 'reorder', "targets": [0,4] },
+          { "targets": [], "orderable": false }
+          ],
           lengthMenu : [5, 10, 25]
         });
       }, 1);
