@@ -21,12 +21,6 @@ export class MenuRestaurantComponent implements OnInit {
   constructor(private commonservice:CommonService, private toastr: ToastrService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    // this.commonservice.showRestaurant().subscribe((data:any) => {
-    //   if(data['success']){
-    //     this.restaurant_list = data['all_restaurant']
-    //   }
-    //   });
-
     var that = this;
 
     this.dtOptions = {
@@ -44,8 +38,7 @@ export class MenuRestaurantComponent implements OnInit {
         ajax: (dataTablesParameters: any, callback) => {
             this.commonservice.allRestaurant( dataTablesParameters, {}).subscribe((resp:any) => {
                     this.restaurants = resp.data;
-                    console.log(this.restaurants,'dksdk')
-
+                    
                     callback({
                         recordsTotal: resp.recordsTotal,
                         recordsFiltered: resp.recordsFiltered,
