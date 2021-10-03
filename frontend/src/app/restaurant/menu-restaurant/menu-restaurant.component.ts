@@ -15,7 +15,8 @@ export class MenuRestaurantComponent implements OnInit {
   staticAlertClosed:boolean  = false;
   public error_msg:   any;
 
-  dtOptions:    DataTables.Settings = {};
+  // dtOptions:    DataTables.Settings = {};
+  dtOptions: any = {};
   restaurants:  Restaurant[] = [];
 
   constructor(private commonservice:CommonService, private toastr: ToastrService, private http: HttpClient) { }
@@ -24,7 +25,16 @@ export class MenuRestaurantComponent implements OnInit {
     var that = this;
 
     this.dtOptions = {
-        pagingType: 'full_numbers',
+        dom: 'Blfrtip',
+        // buttons: [
+        //   {
+        //     "text": 'Download',
+        //     "titleAttr": 'download',
+        //     "action":''
+        //   }
+        // ],
+        buttons:[],
+        // pagingType: 'full_numbers',
         serverSide: true,
         processing: true,
         searching: false,
@@ -35,7 +45,7 @@ export class MenuRestaurantComponent implements OnInit {
           { "targets": [], "orderable": false }
         ],
     
-        ajax: (dataTablesParameters: any, callback) => {
+        ajax: (dataTablesParameters: any, callback:any) => {
             this.commonservice.allRestaurant( dataTablesParameters, {}).subscribe((resp:any) => {
                     this.restaurants = resp.data;
                     

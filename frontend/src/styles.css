@@ -4,3 +4,20 @@
 .dataTables_empty {
     display: none;
 }
+
+.dt-buttons .dt-button{
+    background-color: DodgerBlue; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 12px 16px; /* Some padding */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  margin-right: 0;
+
+   margin-left:auto;
+   display:block;
+}
+
+.dt-buttons .dt-button:hover {
+  background-color: green;
+}
