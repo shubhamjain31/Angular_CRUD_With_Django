@@ -25,7 +25,7 @@ User = get_user_model()
 
 @csrf_exempt
 def home(request):
-	return JsonResponse({'saved':True})
+    return JsonResponse({'saved':True})
 
 @csrf_exempt
 def register_user(request):
@@ -36,7 +36,7 @@ def register_user(request):
         data = urlencode(json.loads(request.body))
         user_data = QueryDict(data)
 
-        name       	= user_data.get('name')
+        name        = user_data.get('name')
         password    = user_data.get('password')
         email       = user_data.get('email')
         mobile      = user_data.get('mobile')
@@ -60,9 +60,9 @@ def register_user(request):
             return JsonResponse({'exists':True})
 
         user_obj =  User.objects.create(email=email,
-        								fullname=name,
-        								mobile=mobile,
-        								password=make_password(password),
+                                        fullname=name,
+                                        mobile=mobile,
+                                        password=make_password(password),
                                     ip_address = get_ip(request))
         
         return JsonResponse({'saved':True})
@@ -130,10 +130,53 @@ def add_restaurant(request):
                                 address     = address,
                                 ip_address  = get_ip(request))
     return JsonResponse({'success':True})
-
+import ast
 @csrf_exempt
 def show_restaurant(request):
     all_restaurant = Restaurant.objects.all()
+
+    ORDER_COLUMN_CHOICES = {
+        '0': '',
+        '1': 'name',
+        '2':  '',
+        }
+
+    if request.method == 'POST':
+        data = urlencode(json.loads(request.body))
+        user_data = QueryDict(data)
+
+        start         = int(user_data.get('start'))
+        length        = int(user_data.get('length'))
+        draw          = int(user_data.get('draw'))
+        order_detail  = user_data.get('order')
+
+        order_column  = order_detail.split(',')[0][12:] or None
+        order         = order_detail.split(',')[-1][9:13] or None
+
+        # check if initial sorting has None value
+        if order_column is None:
+            order_column = ''
+        else:
+            order_column = ORDER_COLUMN_CHOICES[order_column]
+            # django orm '-' -> desc
+            if order == 'desc':
+                order_column = '-' + order_column
+
+        all_restaurant       = Restaurant.objects.all().order_by('-date_created').values('id','name')
+
+        if order_column == '-' or order_column == '':
+            all_restaurant       = all_restaurant
+        else:
+            all_restaurant       = all_restaurant.order_by(order_column)
+        lt = []
+        for item in all_restaurant[start:start+length]:
+            # item['add_menu']                      = '<a href="javascript:void(0);" class="btn btn-primary btn-sm user_status" id="user_status'+str(item["id"])+'" onclick="return user_status_update('+str(item["id"])+');">Active</a>'
+            lt.append(item)
+
+        return JsonResponse({"draw": draw,
+                "recordsTotal": all_restaurant.count(),
+                "recordsFiltered": all_restaurant.count(),
+                'data':lt})
 
     return JsonResponse({'success':True, "all_restaurant":json.loads(serialize("json", all_restaurant))})
 

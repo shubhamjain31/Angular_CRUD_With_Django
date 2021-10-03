@@ -9,6 +9,7 @@ import { AboutComponent } from './about/about.component';
 import { AddRestaurantComponent } from './restaurant/add-restaurant/add-restaurant.component';
 import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-restaurant.component';
 import { ShowRestaurantComponent } from './restaurant/show-restaurant/show-restaurant.component';
+import { MenuRestaurantComponent } from './restaurant/menu-restaurant/menu-restaurant.component';
 
 import { LoginGuard, AuthGuard } from './login/login.guard';
 
@@ -48,6 +49,10 @@ const routes: Routes = [
   {
     component:AboutComponent, 
     path:'about',
+  },
+  {
+    component:MenuRestaurantComponent, 
+    path:'menu',
   },
 ];
 

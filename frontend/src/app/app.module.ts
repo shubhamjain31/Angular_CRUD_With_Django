@@ -23,6 +23,7 @@ import { AddRestaurantComponent } from './restaurant/add-restaurant/add-restaura
 import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-restaurant.component';
 import { DeleteRestaurantComponent } from './restaurant/delete-restaurant/delete-restaurant.component';
 import { ShowRestaurantComponent } from './restaurant/show-restaurant/show-restaurant.component';
+import { MenuRestaurantComponent } from './restaurant/menu-restaurant/menu-restaurant.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ShowRestaurantComponent } from './restaurant/show-restaurant/show-resta
     EditRestaurantComponent,
     DeleteRestaurantComponent,
     ShowRestaurantComponent,
+    MenuRestaurantComponent,
   ],
   imports: [
     BrowserModule,

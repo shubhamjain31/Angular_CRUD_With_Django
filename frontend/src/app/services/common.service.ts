@@ -29,7 +29,11 @@ export class CommonService {
   }
 
   public showRestaurant(){
-    return this.http.post(this.APIUrl + '/show/restaurant/', this.httpOptions);
+    return this.http.get(this.APIUrl + '/show/restaurant/', this.httpOptions);
+  }
+
+  public allRestaurant(dataTablesParameters:any, {}){
+    return this.http.post(this.APIUrl + '/show/restaurant/', dataTablesParameters, this.httpOptions);
   }
 
   public deleteRestaurant(data:any){
