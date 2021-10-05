@@ -17,14 +17,11 @@ export class LoginGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean>|Promise<boolean>|boolean {
     
     return this.authenticationService.is_logged_in().pipe(map((res: any) => {
-         if(res['is_logged_in']){
-          console.log('fjdjd')
-            return true;
-          }
-          else{
-            this.router.navigate(['home']);
+         if(!res['is_logged_in']){
+            this.router.navigate(['login']);
             return false;
           }
+          return true;
        
       }));
   }
@@ -44,12 +41,10 @@ export class AuthGuard implements CanActivate {
 
       return this.authenticationService.is_logged_in().pipe(map((res: any) => {
          if(res['is_logged_in']){
-            return true;
+            this.router.navigate(['home']);
+            return false
           }
-          else{
-            this.router.navigate(['login']);
-            return false;
-          }
+         return true;
        
       }));
 

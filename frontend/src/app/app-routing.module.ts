@@ -17,34 +17,37 @@ const routes: Routes = [
   { 
     path: 'home',  
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [LoginGuard]
   },
   {
     component:AddRestaurantComponent,
-    path:'add'
+    path:'add',
+    canActivate: [LoginGuard]
   },
   {
     component:EditRestaurantComponent, 
-    path:'update/:id'
+    path:'update/:id',
+    canActivate: [LoginGuard]
   },
   {
     component:ShowRestaurantComponent, 
-    path:'show'
+    path:'show',
+    canActivate: [LoginGuard]
   },
   {
     component:LoginComponent, 
     path:'login',
-    canActivate: []
+    canActivate: [AuthGuard]
   },
   {
     component:RegisterComponent, 
     path:'register',
-    // canActivate: [LoginGuard]
+    canActivate: [AuthGuard]
   },
   {
     component:LogoutComponent, 
     path:'logout',
-    canActivate: [AuthGuard]
+    canActivate: [LoginGuard]
   },
   {
     component:AboutComponent, 
@@ -53,6 +56,7 @@ const routes: Routes = [
   {
     component:MenuRestaurantComponent, 
     path:'menu',
+    canActivate: [LoginGuard]
   },
 ];
 
