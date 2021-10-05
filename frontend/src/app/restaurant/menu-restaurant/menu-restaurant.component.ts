@@ -80,4 +80,8 @@ export class MenuRestaurantComponent implements OnInit {
     });
   }
 
+  add_menu(id:any){
+    console.log(id)
+  }
+
 }

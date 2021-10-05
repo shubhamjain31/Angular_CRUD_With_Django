@@ -10,6 +10,7 @@ import { AddRestaurantComponent } from './restaurant/add-restaurant/add-restaura
 import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-restaurant.component';
 import { ShowRestaurantComponent } from './restaurant/show-restaurant/show-restaurant.component';
 import { MenuRestaurantComponent } from './restaurant/menu-restaurant/menu-restaurant.component';
+import { MenuAddEditRestaurantComponent } from './restaurant/menu-restaurant/menu-add-edit-restaurant/menu-add-edit-restaurant.component';
 
 import { LoginGuard, AuthGuard } from './login/login.guard';
 
@@ -56,6 +57,11 @@ const routes: Routes = [
   {
     component:MenuRestaurantComponent, 
     path:'menu',
+    canActivate: [LoginGuard]
+  },
+  {
+    component:MenuAddEditRestaurantComponent, 
+    path:'add-menu',
     canActivate: [LoginGuard]
   },
 ];

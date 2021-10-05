@@ -2,14 +2,6 @@
 <div class="container w-75 bg-light p-5 mt-4">
 	<h1 class="text-center mb-4" id="kk">Restaurant Menu List</h1>
 
-	<!-- <ngb-alert [type]="'warning'" *ngIf="staticAlertClosed" [dismissible]="false">
-		<span>
-			{{error_msg}}
-		</span>
-      <button type="button" aria-hidden="true" class="btn-close" data-dismiss="alert" aria-label="Close" (click)="staticAlertClosed = false">
-      </button>
-  </ngb-alert> -->
-
 	<table class="table table-dark table-striped" datatable [dtOptions]="dtOptions">
 	    <thead class="text-center">
 	      <tr>
@@ -25,8 +17,8 @@
 	      	<tr *ngFor="let restaurant of restaurants; let i = index">
 	          <td>{{i+1}}</td>
 	          <td>{{restaurant.name}}</td>
-	          <td><a routerLink="">
-	            <i class="fa fa-bars text-info" style="font-size:20px; cursor: pointer;"></i></a>
+	          <td><button class="btn btn-primary" (click)="add_menu(restaurant.id)">
+	            <i class="fa fa-bars text-info" style="font-size:20px; cursor: pointer;"></i></button>
 	      	  </td>
 	      	</tr>
 	    </tbody>
