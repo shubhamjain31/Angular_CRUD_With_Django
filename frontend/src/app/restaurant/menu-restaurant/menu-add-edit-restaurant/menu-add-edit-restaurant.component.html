@@ -1,1 +1,35 @@
-<p>menu-add-edit-restaurant works!</p>
+<div class="container w-50 bg-light p-5 mt-4">
+    <h1 class="text-center mb-4">Add Menu</h1>
+	
+	<form [formGroup]="addMenuList" (ngSubmit)= "create()">
+
+		<<!-- ngb-alert [type]="'warning'" *ngIf="staticAlertClosed" [dismissible]="false">
+    		<span>
+    			{{error_msg}}
+    		</span>
+	        <button type="button" aria-hidden="true" class="btn-close" data-dismiss="alert" aria-label="Close" (click)="staticAlertClosed = false">
+	        </button>
+	    </ngb-alert> -->
+
+	   <table class="table table-bordered" formArrayName="addMenuList">
+	      <tr>
+	        <th colspan="2">Add Multiple Quantity:</th>
+	        <th width="150px"><button type="button" (click)="addvalue()" class="btn btn-primary">Add More</button></th>
+	      </tr>
+	      <tr *ngFor="let menu of menu_list; let i=index" [formGroupName]="i">
+	        <td>
+	            Name :
+	            <input type="text" formControlName="name" class="form-control">
+	        </td>
+	        <td>
+	            <button (click)="removevalue(i)" class="btn btn-danger">Remove</button>
+	        </td>
+	      </tr>
+	    </table>
+	  
+
+	    <div class="form-group mt-5 text-center">
+		    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+		</div>
+	</form>
+</div>

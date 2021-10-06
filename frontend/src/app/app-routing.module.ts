@@ -61,7 +61,7 @@ const routes: Routes = [
   },
   {
     component:MenuAddEditRestaurantComponent, 
-    path:'add-menu',
+    path:'add-menu/:id',
     canActivate: [LoginGuard]
   },
 ];

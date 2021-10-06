@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Restaurant } from './restaurant';
 import { DataTablesResponse } from 'src/app/datatables-response';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-restaurant',
@@ -19,7 +20,7 @@ export class MenuRestaurantComponent implements OnInit {
   dtOptions: any = {};
   restaurants:  Restaurant[] = [];
 
-  constructor(private commonservice:CommonService, private toastr: ToastrService, private http: HttpClient) { }
+  constructor(private commonservice:CommonService, private toastr: ToastrService, private http: HttpClient, private router:Router) { }
 
   ngOnInit(): void {
     var that = this;
@@ -82,6 +83,7 @@ export class MenuRestaurantComponent implements OnInit {
 
   add_menu(id:any){
     console.log(id)
+    this.router.navigate(["add-menu", id])
   }
 
 }
