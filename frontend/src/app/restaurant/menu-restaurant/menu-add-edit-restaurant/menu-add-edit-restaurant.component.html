@@ -1,9 +1,9 @@
 <div class="container w-50 bg-light p-5 mt-4">
     <h1 class="text-center mb-4">Add Menu</h1>
 	
-	<form [formGroup]="addMenuList" (ngSubmit)= "create()">
+	<form [formGroup]="addMenusForm" (ngSubmit)= "create()">
 
-		<<!-- ngb-alert [type]="'warning'" *ngIf="staticAlertClosed" [dismissible]="false">
+		<!-- ngb-alert [type]="'warning'" *ngIf="staticAlertClosed" [dismissible]="false">
     		<span>
     			{{error_msg}}
     		</span>
@@ -12,20 +12,23 @@
 	    </ngb-alert> -->
 
 	   <table class="table table-bordered" formArrayName="addMenuList">
+	   	<thead></thead>
+	   	<tbody>
 	      <tr>
-	        <th colspan="2">Add Multiple Quantity:</th>
-	        <th width="150px"><button type="button" (click)="addvalue()" class="btn btn-primary">Add More</button></th>
+	        <th colspan="2">Add Menus:</th>
+	        <th width="150px"><button type="button" (click)="addvalue()" class="btn btn-success">Add More</button></th>
 	      </tr>
-	      <tr *ngFor="let menu of menu_list; let i=index" [formGroupName]="i">
-	        <td>
+	      <tr *ngFor="let menu of menu_list().controls; let i=index" [formGroupName]="i">
+	        <td colspan="2">
 	            Name :
-	            <input type="text" formControlName="name" class="form-control">
+	            <input type="text" formControlName="name" class="form-control" name="name">
 	        </td>
 	        <td>
-	            <button (click)="removevalue(i)" class="btn btn-danger">Remove</button>
+	            <button (click)="removevalue(i)" class="btn btn-danger mt-3">Remove</button>
 	        </td>
 	      </tr>
-	    </table>
+	  	</tbody>
+	   </table>
 	  
 
 	    <div class="form-group mt-5 text-center">
