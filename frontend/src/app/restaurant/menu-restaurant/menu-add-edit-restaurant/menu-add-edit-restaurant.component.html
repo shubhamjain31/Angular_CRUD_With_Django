@@ -16,7 +16,16 @@
 	   	<tbody>
 	      <tr>
 	        <th colspan="2">Add Menus:</th>
-	        <th width="150px"><button type="button" (click)="addvalue()" class="btn btn-success">Add More</button></th>
+	        <th width="150px">
+	        	<div class="row">
+	        		<div class="col-6">
+			        	<button type="button" (click)="addvalue()" class="btn btn-success btn-sm">Add</button>
+	        		</div>
+	        		<div class="col-6">
+			        	<button type="button" (click)="clear()" class="btn btn-danger btn-sm">Reset</button>
+	        		</div>
+	        	</div>
+	        </th>
 	      </tr>
 	      <tr *ngFor="let menu of menu_list().controls; let i=index" [formGroupName]="i">
 	        <td colspan="2">
@@ -32,7 +41,7 @@
 	  
 
 	    <div class="form-group mt-5 text-center">
-		    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+		    <button type="submit" class="btn btn-primary btn-sm" [disabled]="!addMenusForm.valid">Save</button>
 		</div>
 	</form>
 </div>

@@ -40,3 +40,10 @@ class Restaurant(models.Model):
 
     def __str__(self):
         return self.name
+
+class Menu(models.Model):
+    menu_data               = models.JSONField(default={}, blank=True)
+    restaurant              = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.menu

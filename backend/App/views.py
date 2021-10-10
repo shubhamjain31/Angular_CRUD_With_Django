@@ -230,3 +230,13 @@ def edit_restaurant(request, id):
     obj.save()
     msg = "Restaurant Updated successfully"
     return JsonResponse({'success':True, "msg":msg})
+
+@csrf_exempt
+def add_menu(request):
+    data = urlencode(json.loads(request.body))
+    user_data = QueryDict(data)
+
+    _id        = user_data.get('id')
+    menus      = user_data.get('menus')
+    print(menus)
+    return JsonResponse({})

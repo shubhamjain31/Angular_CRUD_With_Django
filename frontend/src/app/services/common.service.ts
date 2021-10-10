@@ -48,4 +48,8 @@ export class CommonService {
     return this.http.post(this.APIUrl + '/get/restaurant/'+id, this.httpOptions);
   }
 
+  public addMenu(data:any){
+    return this.http.post(this.APIUrl + '/add/menu/', data, this.httpOptions);
+  }
+
 }
