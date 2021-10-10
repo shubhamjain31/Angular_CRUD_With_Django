@@ -15,7 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
 from django.core.serializers import serialize
 
-from .models import Restaurant
+from .models import Restaurant, Menu
 from validators import is_invalid
 
 
@@ -238,5 +238,8 @@ def add_menu(request):
 
     _id        = user_data.get('id')
     menus      = user_data.get('menus')
-    print(menus)
-    return JsonResponse({})
+    
+    Menu.objects.create(menu_data=menus,
+                        restaurant_id=_id)
+    msg = "Menu Added successfully"
+    return JsonResponse({'success':True, "msg":msg})

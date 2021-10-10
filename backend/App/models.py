@@ -46,4 +46,4 @@ class Menu(models.Model):
     restaurant              = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.menu
+        return str(self.restaurant)

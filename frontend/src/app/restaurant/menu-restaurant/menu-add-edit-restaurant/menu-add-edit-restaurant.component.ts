@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { CommonService } from '../../../services/common.service';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-menu-add-edit-restaurant',
@@ -13,7 +14,7 @@ export class MenuAddEditRestaurantComponent implements OnInit {
   
   addMenusForm: FormGroup;  
 
-  constructor(private fb:FormBuilder, private commonservice:CommonService, private route: ActivatedRoute) { 
+  constructor(private fb:FormBuilder, private commonservice:CommonService, private route: ActivatedRoute, private toastr: ToastrService) { 
     this.addMenusForm = this.fb.group({  
       addMenuList: this.fb.array([]) ,  
     });  
@@ -55,6 +56,7 @@ export class MenuAddEditRestaurantComponent implements OnInit {
 
       this.commonservice.addMenu(this.menu_data).subscribe((data:any)=>{
         if (data["success"]){
+          this.showSuccessAlert(data['msg'])
         }
     })
     }
@@ -68,4 +70,12 @@ export class MenuAddEditRestaurantComponent implements OnInit {
     }
   }
 
+  showSuccessAlert(msg:string) {
+    this.toastr.show('<span class="fa fa-check" [data-notify]="icon"></span> <span>&nbsp;&nbsp;'+msg+'</span>', '', {
+      timeOut: 6000,
+      enableHtml: true,
+      toastClass: "alert alert-success alert-with-icon",
+      // positionClass: 'toast-top-center'
+    });
+  }
 }
