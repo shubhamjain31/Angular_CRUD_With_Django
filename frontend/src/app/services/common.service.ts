@@ -52,4 +52,8 @@ export class CommonService {
     return this.http.post(this.APIUrl + '/add/menu/', data, this.httpOptions);
   }
 
+  public getMenu(id:any){
+    return this.http.get(this.APIUrl + '/get/menu/'+id, this.httpOptions);
+  }
+
 }

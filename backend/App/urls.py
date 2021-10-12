@@ -15,5 +15,6 @@ urlpatterns = [
     path("get/restaurant/<int:id>", get_restaurant, name="get_restaurant"),
 
     path("add/menu/", add_menu, name="add_menu"),
+    path("get/menu/<int:id>", get_menu, name="get_menu"),
 
 ]

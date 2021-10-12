@@ -238,8 +238,16 @@ def add_menu(request):
 
     _id        = user_data.get('id')
     menus      = user_data.get('menus')
+
+    menu_dict = {"menus":menus} 
     
-    Menu.objects.create(menu_data=menus,
+    Menu.objects.create(menu_data=menu_dict,
                         restaurant_id=_id)
     msg = "Menu Added successfully"
     return JsonResponse({'success':True, "msg":msg})
+
+@csrf_exempt
+def get_menu(request, id):
+    menus = Menu.objects.get(restaurant_id=id)
+    all_data = model_to_dict(menus)
+    return JsonResponse({'success':True, "menus":all_data})

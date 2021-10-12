@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MenuAddEditRestaurantComponent implements OnInit {
   menu_data: any;
+  all_menu: any = [];
   
   addMenusForm: FormGroup;  
 
@@ -21,6 +22,13 @@ export class MenuAddEditRestaurantComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.commonservice.getMenu(id).subscribe((data:any)=>{
+      if (data["success"]){
+        this.all_menu = data['menus'];
+        console.log(this.all_menu)
+      }
+    })
   }
 
 
