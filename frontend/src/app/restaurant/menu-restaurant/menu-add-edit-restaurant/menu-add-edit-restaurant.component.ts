@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class MenuAddEditRestaurantComponent implements OnInit {
   menu_data: any;
   all_menu: any = [];
+  menu_id: number = 0;
   
   addMenusForm: FormGroup;  
 
@@ -25,8 +26,15 @@ export class MenuAddEditRestaurantComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.commonservice.getMenu(id).subscribe((data:any)=>{
       if (data["success"]){
-        this.all_menu = data['menus'];
-        console.log(this.all_menu)
+        this.all_menu = data['menus'].menu_data.menus;
+        this.menu_id  = data['menus'].id;
+
+        if(this.all_menu.length > 0){
+          for(let i=0; i<this.all_menu.length; i++){
+            this.menu_list().push(this.dataMenu(this.all_menu[i]['name']));  
+          }
+        }
+
       }
     })
   }
@@ -40,6 +48,12 @@ export class MenuAddEditRestaurantComponent implements OnInit {
     return this.fb.group({  
       name: ['', [Validators.required]]  
     })  
+  } 
+
+  dataMenu(value:any): FormGroup {  
+    return this.fb.group({  
+      name: [value, [Validators.required]]  
+    })  
   }  
 
 
@@ -49,11 +63,25 @@ export class MenuAddEditRestaurantComponent implements OnInit {
 
   removevalue(i:number){
     this.menu_list().removeAt(i);  
+
+    this.delete();
   }
 
   create(){
     if(this.addMenusForm.invalid){
       return;
+    }
+    else if(this.menu_id){
+      this.menu_data = {
+        "id": this.menu_id,
+        "menus": this.addMenusForm.value['addMenuList']
+      }
+
+      this.commonservice.updateMenu(this.menu_data).subscribe((data:any)=>{
+        if (data["success"]){
+          this.showSuccessAlert(data['msg'])
+        }
+    })
     }
     else{
       const id = this.route.snapshot.paramMap.get('id');
@@ -72,7 +100,6 @@ export class MenuAddEditRestaurantComponent implements OnInit {
 
   clear() {
     let menu_length = this.addMenusForm.value['addMenuList'];
-    console.log(menu_length.length)
     for(let i=menu_length.length-1; i>=0; i--){
       this.menu_list().removeAt(i);  
     }
@@ -85,5 +112,9 @@ export class MenuAddEditRestaurantComponent implements OnInit {
       toastClass: "alert alert-success alert-with-icon",
       // positionClass: 'toast-top-center'
     });
+  }
+
+  delete(){
+    console.log(this.addMenusForm.value['addMenuList'])
   }
 }

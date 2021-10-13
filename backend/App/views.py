@@ -6,6 +6,7 @@ from backend.decorators import *
 from urllib.parse import urlencode
 from django.http import QueryDict
 import json
+import ast
 
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.forms.models import model_to_dict
@@ -239,6 +240,8 @@ def add_menu(request):
     _id        = user_data.get('id')
     menus      = user_data.get('menus')
 
+    menus      = ast.literal_eval(menus)
+
     menu_dict = {"menus":menus} 
     
     Menu.objects.create(menu_data=menu_dict,
@@ -248,6 +251,28 @@ def add_menu(request):
 
 @csrf_exempt
 def get_menu(request, id):
-    menus = Menu.objects.get(restaurant_id=id)
+    try:
+        menus = Menu.objects.get(restaurant_id=id)
+    except:
+        return JsonResponse({})
     all_data = model_to_dict(menus)
     return JsonResponse({'success':True, "menus":all_data})
+
+@csrf_exempt
+def update_menu(request):
+    data = urlencode(json.loads(request.body))
+    user_data = QueryDict(data)
+
+    _id        = user_data.get('id')
+    menus      = user_data.get('menus')
+
+    menus      = ast.literal_eval(menus)
+
+    menu_dict = {"menus":menus} 
+
+    menu_obj = Menu.objects.get(pk=_id)
+    menu_obj.menu_data = menu_dict
+    menu_obj.save()
+    
+    msg = "Menu Updated successfully"
+    return JsonResponse({'success':True, "msg":msg})
