@@ -56,6 +56,10 @@ export class CommonService {
     return this.http.post(this.APIUrl + '/update/menu/', data, this.httpOptions);
   }
 
+  public deleteMenu(data:any){
+    return this.http.post(this.APIUrl + '/delete/menu/', data, this.httpOptions);
+  }
+
   public getMenu(id:any){
     return this.http.get(this.APIUrl + '/get/menu/'+id, this.httpOptions);
   }

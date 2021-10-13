@@ -115,6 +115,14 @@ export class MenuAddEditRestaurantComponent implements OnInit {
   }
 
   delete(){
-    console.log(this.addMenusForm.value['addMenuList'])
+    this.menu_data = {
+        "id": this.menu_id,
+        "menus": this.addMenusForm.value['addMenuList']
+      }
+    this.commonservice.deleteMenu(this.menu_data).subscribe((data:any)=>{
+        if (data["success"]){
+          this.showSuccessAlert(data['msg'])
+        }
+    })
   }
 }
