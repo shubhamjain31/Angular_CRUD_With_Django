@@ -24,4 +24,8 @@ export class AppComponent {
     
   }
 
+   user_logout() {
+    this.loggedin = false;
+  }
+
 }
