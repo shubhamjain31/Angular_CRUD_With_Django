@@ -15,6 +15,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
 from django.core.serializers import serialize
+from django.contrib.admin.models import LogEntry
 
 from .models import Restaurant, Menu
 from validators import is_invalid
@@ -295,3 +296,8 @@ def delete_menu(request):
     
     msg = "Menu Deleted successfully"
     return JsonResponse({'success':True, "msg":msg})
+
+@csrf_exempt
+def history(request):
+    all_entries = LogEntry.objects.all()
+    return JsonResponse({"success":True, "all_entries":json.loads(serialize("json", all_entries))})

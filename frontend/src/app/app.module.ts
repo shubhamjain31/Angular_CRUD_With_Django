@@ -25,6 +25,7 @@ import { DeleteRestaurantComponent } from './restaurant/delete-restaurant/delete
 import { ShowRestaurantComponent } from './restaurant/show-restaurant/show-restaurant.component';
 import { MenuRestaurantComponent } from './restaurant/menu-restaurant/menu-restaurant.component';
 import { MenuAddEditRestaurantComponent } from './restaurant/menu-restaurant/menu-add-edit-restaurant/menu-add-edit-restaurant.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MenuAddEditRestaurantComponent } from './restaurant/menu-restaurant/men
     ShowRestaurantComponent,
     MenuRestaurantComponent,
     MenuAddEditRestaurantComponent,
+    HistoryComponent,
   ],
   imports: [
     BrowserModule,

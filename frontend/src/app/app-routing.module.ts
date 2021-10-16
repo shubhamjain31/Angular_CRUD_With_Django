@@ -11,6 +11,7 @@ import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-resta
 import { ShowRestaurantComponent } from './restaurant/show-restaurant/show-restaurant.component';
 import { MenuRestaurantComponent } from './restaurant/menu-restaurant/menu-restaurant.component';
 import { MenuAddEditRestaurantComponent } from './restaurant/menu-restaurant/menu-add-edit-restaurant/menu-add-edit-restaurant.component';
+import { HistoryComponent } from './history/history.component';
 
 import { LoginGuard, AuthGuard } from './login/login.guard';
 
@@ -49,6 +50,10 @@ const routes: Routes = [
     component:LogoutComponent, 
     path:'logout',
     canActivate: [LoginGuard]
+  },
+  {
+    component:HistoryComponent, 
+    path:'history',
   },
   {
     component:AboutComponent, 
