@@ -28,7 +28,9 @@
 	          <td>{{restaurant.fields.email}}</td>
 	          <td><a routerLink="/update/{{restaurant.pk}}">
 	            <i class="fa fa-edit text-info" style="font-size:20px; cursor: pointer;"></i></a>&nbsp; &nbsp; 
-	            <i (click)="openModal(modalData, restaurant.fields.name, restaurant.pk)" class="fa fa-trash-o" style="font-size:20px;color:red; cursor: pointer;"></i>
+	            <i (click)="openModal(modalData, restaurant.fields.name, restaurant.pk)" class="fa fa-trash-o" style="font-size:20px;color:red; cursor: pointer;"></i>&nbsp; &nbsp;
+	            <i class="fa fa-download" style="font-size:20px; cursor: pointer;" (click)="download_menus(restaurant.pk, MessageDialog)"></i> 
+
 	      </td>
 	        </tr>
 	    </tbody>
@@ -50,4 +52,14 @@
     <button type="button" class="btn btn-secondary btn-sm" (click)="modal.close('Save click')">Cancel</button>
     <button type="button" class="btn btn-primary btn-sm" (click)="modal.close('Save click'); delete();">Delete</button>
   </div>
+</ng-template>
+
+<ng-template #MessageDialog>
+  <h2 matDialogTitle>Detail!</h2>
+  <mat-dialog-content>
+    <p>No Menu</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button matDialogClose color="primary">Dismiss</button>
+  </mat-dialog-actions>
 </ng-template>

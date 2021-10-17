@@ -68,4 +68,8 @@ export class CommonService {
     return this.http.post(this.APIUrl + '/history/', this.httpOptions);
   }
 
+  public download_all_menus(id:any){
+    return this.http.get(this.APIUrl + '/download/menu/'+id, this.httpOptions);
+  }
+
 }

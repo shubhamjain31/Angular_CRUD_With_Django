@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CommonService } from '../../services/common.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { FileSaverService } from 'ngx-filesaver';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-show-restaurant',
@@ -12,14 +14,22 @@ import { HttpClient } from '@angular/common/http';
 export class ShowRestaurantComponent implements OnInit {
 
   public restaurant_list:any = [];
+  public all_menus: any = [];
   staticAlertClosed:boolean  = false;
   public error_msg:   any;
   public closeModal:  any;
   public name:        any;
   public id:          any;
+  // private dialog: any = MatDialog;
+
+  displayedColumns: string[] = ['Menu'];
+  dataSource = this.all_menus;
+  public fileName: string = '';
+
+  @ViewChild('secondDialog', { static: true }) secondDialog: TemplateRef<any>;
 
   constructor(private commonservice:CommonService, private modalService: NgbModal, private toastr: ToastrService,
-    private http: HttpClient) { }
+    private http: HttpClient, private _FileSaverService: FileSaverService,  private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.commonservice.showRestaurant().subscribe((data:any) => {
@@ -95,4 +105,57 @@ export class ShowRestaurantComponent implements OnInit {
     });
   }
 
+  download_menus(id:number, MessageDialog:any){
+    this.commonservice.download_all_menus(id).subscribe((data:any)=>{
+      if(data['success']){
+        this.all_menus = data['all_menus'];
+
+        this.downloadPDF('csv', MessageDialog);
+      }
+     })
+  }
+
+  downloadPDF(type: string, MessageDialog:any) {
+    if(this.all_menus.length === 0){
+      this.openDialogWithTemplateRef(MessageDialog);
+      return;
+    }
+
+    const fileName = `save.${type}`;
+    var csvData = this.ConvertToCSV(this.all_menus);
+      
+      const fileType = this._FileSaverService.genType(fileName);
+      const txtBlob = new Blob([csvData], { type: fileType });
+      this._FileSaverService.save(txtBlob, fileName);
+
+  }
+
+  ConvertToCSV(objArray: any): string {
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var str = '';
+    var row = "";
+
+    for (var index in objArray[0]) {
+        //Now convert each value to string and comma-separated
+        row += index + ',';
+    }
+    row = row.slice(0, -1);
+    //append Label row with line break
+    str += row + '\r\n';
+
+    for (var i = 0; i < array.length; i++) {
+        var line = '';
+        for (var index in array[i]) {
+            if (line != '') line += ','
+
+            line += array[i][index];
+        }
+        str += line + '\r\n';
+    }
+    return str;
+  }
+
+   openDialogWithTemplateRef(templateRef: TemplateRef<any>) {
+    this.dialog.open(templateRef);
+  }
 }

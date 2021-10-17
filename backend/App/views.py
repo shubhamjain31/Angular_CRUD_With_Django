@@ -306,3 +306,11 @@ def history(request):
         entry['pk'] = str(encryption_key(entry['pk']).decode())
     
     return JsonResponse({"success":True, "all_entries":list(all_entries)})
+
+@csrf_exempt
+def download_menus(request, id):
+    try:
+        all_menus = Menu.objects.get(restaurant_id=id).menu_data
+    except:
+        all_menus = {'menus': []}
+    return JsonResponse({"success":True, "all_menus":all_menus['menus']})

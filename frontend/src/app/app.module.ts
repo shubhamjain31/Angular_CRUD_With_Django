@@ -26,6 +26,8 @@ import { ShowRestaurantComponent } from './restaurant/show-restaurant/show-resta
 import { MenuRestaurantComponent } from './restaurant/menu-restaurant/menu-restaurant.component';
 import { MenuAddEditRestaurantComponent } from './restaurant/menu-restaurant/menu-add-edit-restaurant/menu-add-edit-restaurant.component';
 import { HistoryComponent } from './history/history.component';
+import { FileSaverModule } from 'ngx-filesaver';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -55,8 +57,11 @@ import { HistoryComponent } from './history/history.component';
     FormsModule,
     BrowserAnimationsModule,
     DataTablesModule,
+    FileSaverModule,
+    MatDialogModule,
     ToastrModule.forRoot({preventDuplicates: true}),
   ],
+  exports: [],
   providers: [LoginGuard, AuthGuard],
   bootstrap: [AppComponent]
 })

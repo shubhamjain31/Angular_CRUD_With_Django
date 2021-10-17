@@ -18,6 +18,7 @@ urlpatterns = [
     path("get/menu/<int:id>", get_menu, name="get_menu"),
     path("update/menu/", update_menu, name="update_menu"),
     path("delete/menu/", delete_menu, name="delete_menu"),
+    path("download/menu/<int:id>", download_menus, name="download_menus"),
 
     path("history/", history, name="history"),
 ]
