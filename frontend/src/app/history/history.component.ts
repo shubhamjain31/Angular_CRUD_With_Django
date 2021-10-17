@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '../services/common.service';
 
 @Component({
   selector: 'app-history',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./history.component.css']
 })
 export class HistoryComponent implements OnInit {
+  all_entries: any = [];
 
-  constructor() { }
+  constructor(private commonservice:CommonService) { }
 
   ngOnInit(): void {
+    this.commonservice.allHistory().subscribe((data:any) => {
+      if(data['success']){
+        this.all_entries = data['all_entries'];
+      }
+    });
   }
 
 }

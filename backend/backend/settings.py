@@ -140,3 +140,5 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'backends.EmailAuthBackend'
 ]
+
+CRYPTOGRAPHY_KEY = 'BwE8XD1UgL5SvbrnDB1Fc_s8zQnPhEzVnvqWliIMfcc='

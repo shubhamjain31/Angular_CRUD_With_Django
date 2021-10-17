@@ -299,5 +299,10 @@ def delete_menu(request):
 
 @csrf_exempt
 def history(request):
-    all_entries = LogEntry.objects.all()
-    return JsonResponse({"success":True, "all_entries":json.loads(serialize("json", all_entries))})
+    all_entries = LogEntry.objects.values('pk', 'user__fullname', 'user__email', 'user_id', 'action_time', 'content_type', 
+        'content_type__model', 'object_id', 'object_repr', 'action_flag', 'change_message')
+    
+    for entry in all_entries:
+        entry['pk'] = str(encryption_key(entry['pk']).decode())
+    
+    return JsonResponse({"success":True, "all_entries":list(all_entries)})
