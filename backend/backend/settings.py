@@ -141,4 +141,4 @@ AUTHENTICATION_BACKENDS = [
     'backends.EmailAuthBackend'
 ]
 
-CRYPTOGRAPHY_KEY = 'BwE8XD1UgL5SvbrnDB1Fc_s8zQnPhEzVnvqWliIMfcc='
+CRYPTOGRAPHY_KEY = config('CRYPTOGRAPHY_KEY')
