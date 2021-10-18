@@ -12,6 +12,7 @@ import { ShowRestaurantComponent } from './restaurant/show-restaurant/show-resta
 import { MenuRestaurantComponent } from './restaurant/menu-restaurant/menu-restaurant.component';
 import { MenuAddEditRestaurantComponent } from './restaurant/menu-restaurant/menu-add-edit-restaurant/menu-add-edit-restaurant.component';
 import { HistoryComponent } from './history/history.component';
+import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gallery-restaurant.component';
 
 import { LoginGuard, AuthGuard } from './login/login.guard';
 
@@ -58,6 +59,11 @@ const routes: Routes = [
   {
     component:AboutComponent, 
     path:'about',
+    canActivate: [LoginGuard]
+  },
+  {
+    component:GalleryRestaurantComponent, 
+    path:'gallery/:id',
   },
   {
     component:MenuRestaurantComponent, 

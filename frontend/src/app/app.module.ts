@@ -28,6 +28,7 @@ import { MenuAddEditRestaurantComponent } from './restaurant/menu-restaurant/men
 import { HistoryComponent } from './history/history.component';
 import { FileSaverModule } from 'ngx-filesaver';
 import { MatDialogModule } from '@angular/material/dialog';
+import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gallery-restaurant.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MenuRestaurantComponent,
     MenuAddEditRestaurantComponent,
     HistoryComponent,
+    GalleryRestaurantComponent,
   ],
   imports: [
     BrowserModule,

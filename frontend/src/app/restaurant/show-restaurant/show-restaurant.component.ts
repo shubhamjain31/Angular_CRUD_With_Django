@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { FileSaverService } from 'ngx-filesaver';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show-restaurant',
@@ -20,16 +21,14 @@ export class ShowRestaurantComponent implements OnInit {
   public closeModal:  any;
   public name:        any;
   public id:          any;
-  // private dialog: any = MatDialog;
 
   displayedColumns: string[] = ['Menu'];
   dataSource = this.all_menus;
   public fileName: string = '';
 
-  @ViewChild('secondDialog', { static: true }) secondDialog: TemplateRef<any>;
-
   constructor(private commonservice:CommonService, private modalService: NgbModal, private toastr: ToastrService,
-    private http: HttpClient, private _FileSaverService: FileSaverService,  private dialog: MatDialog) { }
+    private http: HttpClient, private _FileSaverService: FileSaverService,  private dialog: MatDialog,
+    private router:Router) { }
 
   ngOnInit(): void {
     this.commonservice.showRestaurant().subscribe((data:any) => {
@@ -157,5 +156,9 @@ export class ShowRestaurantComponent implements OnInit {
 
    openDialogWithTemplateRef(templateRef: TemplateRef<any>) {
     this.dialog.open(templateRef);
+  }
+
+  gallery(id:number){
+    this.router.navigate(["gallery", id])
   }
 }
