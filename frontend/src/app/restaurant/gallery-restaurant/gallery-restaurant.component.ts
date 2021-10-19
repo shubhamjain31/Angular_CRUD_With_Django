@@ -12,4 +12,10 @@ export class GalleryRestaurantComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  uploadImage(){
+    let image = (<HTMLInputElement>document.getElementById('formFile'));
+    const file: File = (image.files as FileList)[0];
+    console.log(file.name)
+  }
+
 }

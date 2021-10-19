@@ -37,6 +37,7 @@ class Restaurant(models.Model):
     address                 = models.TextField()
     date_created            = models.DateTimeField(auto_now_add=True, editable=False, blank=True)
     ip_address              = models.CharField(max_length=100, null=True, blank=True)
+    gallery                 = models.JSONField(default={}, blank=True)
 
     def __str__(self):
         return self.name
