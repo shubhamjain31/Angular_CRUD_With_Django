@@ -13,7 +13,7 @@
 	<table class="table table-dark table-striped" id="restaurant_table">
 	    <thead class="text-center">
 	      <tr>
-	        <th scope="col">Id</th>
+	        <th scope="col">Sr No.</th>
 	        <th scope="col">Name</th>
 	        <th scope="col">Restaurant Address</th>
 	        <th scope="col">Email</th>
@@ -21,8 +21,8 @@
 	      </tr>
 	    </thead>
 	    <tbody class="text-center text-white">
-	      <tr *ngFor="let restaurant of restaurant_list">
-	          <td>{{restaurant.pk}}</td>
+	      <tr *ngFor="let restaurant of restaurant_list; let i=index">
+	          <td>{{i+1}}</td>
 	          <td>{{restaurant.fields.name}}</td>
 	          <td>{{restaurant.fields.address}}</td>
 	          <td>{{restaurant.fields.email}}</td>

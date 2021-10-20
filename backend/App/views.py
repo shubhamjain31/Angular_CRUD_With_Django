@@ -180,14 +180,20 @@ def show_restaurant(request):
                 "recordsFiltered": all_restaurant.count(),
                 'data':lt})
 
-    return JsonResponse({'success':True, "all_restaurant":json.loads(serialize("json", all_restaurant))})
+    all_restaurant = json.loads(serialize("json", all_restaurant))
+
+    for restaurant in all_restaurant:
+        restaurant['pk'] = str(encryption_key(restaurant['pk']).decode())
+
+    return JsonResponse({'success':True, "all_restaurant":all_restaurant})
 
 @csrf_exempt
 def delete_restaurant(request):
     data = urlencode(json.loads(request.body))
     user_data = QueryDict(data)
 
-    _id        = user_data.get('id')
+    val        = user_data.get('id')
+    _id        = decryption_key(val)
 
     if not _id:
         return JsonResponse({"error":True, "msg":"Please Enter Valid Data"})
@@ -198,14 +204,16 @@ def delete_restaurant(request):
     return JsonResponse({'success':True, "msg":msg})
 
 @csrf_exempt
-def get_restaurant(request, id):
-    obj = Restaurant.objects.get(pk=id)
+def get_restaurant(request, val):
+    _id = decryption_key(val)
+    obj = Restaurant.objects.get(pk=_id)
     all_data = model_to_dict(obj)
     return JsonResponse({"all_data":all_data})
 
 @csrf_exempt
-def edit_restaurant(request, id):
-    if not id:
+def edit_restaurant(request, val):
+    _id = decryption_key(val)
+    if not _id:
         msg = "Please Enter Valid Data"
         return JsonResponse({'error':True, "msg":msg})
 
@@ -225,7 +233,7 @@ def edit_restaurant(request, id):
     if is_invalid(address):
         return JsonResponse({"error":True, "msg":"Please Enter Address"})
 
-    obj = Restaurant.objects.get(pk=id)
+    obj = Restaurant.objects.get(pk=_id)
     obj.name        = name
     obj.email       = email
     obj.address     = address
@@ -308,21 +316,23 @@ def history(request):
     return JsonResponse({"success":True, "all_entries":list(all_entries)})
 
 @csrf_exempt
-def download_menus(request, id):
+def download_menus(request, val):
+    _id     = decryption_key(val)
     try:
-        all_menus = Menu.objects.get(restaurant_id=id).menu_data
+        all_menus = Menu.objects.get(restaurant_id=_id).menu_data
     except:
         all_menus = {'menus': []}
     return JsonResponse({"success":True, "all_menus":all_menus['menus']})
 
 @csrf_exempt
-def add_image_in_gallery(request, id):
+def add_image_in_gallery(request, val):
+    _id     = decryption_key(val)
     data = urlencode(json.loads(request.body))
     user_data = QueryDict(data)
 
     image        = user_data.get('image')
 
-    obj = Restaurant.objects.get(pk=id)
+    obj = Restaurant.objects.get(pk=_id)
     if not bool(obj.gallery):
         images = []
         images.append(image)
@@ -335,8 +345,12 @@ def add_image_in_gallery(request, id):
     return JsonResponse({"success":True, "msg":msg, "all_images":obj.gallery['images']})
 
 @csrf_exempt
-def get_image_in_gallery(request, id):
-    obj = Restaurant.objects.get(pk=id)
-    all_images = obj.gallery['images']
+def get_image_in_gallery(request, val):
+    _id     = decryption_key(val)
+    obj = Restaurant.objects.get(pk=_id)
+    try:
+        all_images = obj.gallery['images']
+    except:
+        all_images = []
 
     return JsonResponse({"success":True, "all_images":all_images})

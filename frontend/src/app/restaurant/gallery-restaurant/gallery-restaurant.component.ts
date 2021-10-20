@@ -20,7 +20,6 @@ export class GalleryRestaurantComponent implements OnInit {
     this.commonservice.get_images(id).subscribe((data:any) => {
       if(data['success']){
         this.all_images = data['all_images'];
-        console.log(this.all_images)
       }
     });
   }

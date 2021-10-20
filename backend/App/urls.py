@@ -11,16 +11,16 @@ urlpatterns = [
     path("add/restaurant/", add_restaurant, name="add_restaurant"),
     path("show/restaurant/", show_restaurant, name="show_restaurant"),
     path("delete/restaurant/", delete_restaurant, name="delete_restaurant"),
-    path("edit/restaurant/<int:id>", edit_restaurant, name="edit_restaurant"),
-    path("get/restaurant/<int:id>", get_restaurant, name="get_restaurant"),
+    path("edit/restaurant/<str:val>", edit_restaurant, name="edit_restaurant"),
+    path("get/restaurant/<str:val>", get_restaurant, name="get_restaurant"),
 
     path("add/menu/", add_menu, name="add_menu"),
     path("get/menu/<int:id>", get_menu, name="get_menu"),
     path("update/menu/", update_menu, name="update_menu"),
     path("delete/menu/", delete_menu, name="delete_menu"),
-    path("download/menu/<int:id>", download_menus, name="download_menus"),
-    path("add/image/<int:id>", add_image_in_gallery, name="add_image_in_gallery"),
-    path("get/images/<int:id>", get_image_in_gallery, name="get_image_in_gallery"),
+    path("download/menu/<str:val>", download_menus, name="download_menus"),
+    path("add/image/<str:val>", add_image_in_gallery, name="add_image_in_gallery"),
+    path("get/images/<str:val>", get_image_in_gallery, name="get_image_in_gallery"),
 
     path("history/", history, name="history"),
 ]
