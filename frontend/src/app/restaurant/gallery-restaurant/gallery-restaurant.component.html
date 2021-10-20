@@ -10,6 +10,14 @@
 <div class="container w-75 bg-light p-5 mt-4">
 	<h1 class="text-center mb-4">Gallery</h1>
 
+  <ngb-alert [type]="'warning'" *ngIf="staticAlertClosed" [dismissible]="false">
+    <span>
+      {{error_msg}}
+    </span>
+      <button type="button" aria-hidden="true" class="btn-close" data-dismiss="alert" aria-label="Close" (click)="staticAlertClosed = false">
+      </button>
+  </ngb-alert>
+
 	<div class="row">
       <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
         <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light">
