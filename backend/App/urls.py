@@ -19,7 +19,8 @@ urlpatterns = [
     path("update/menu/", update_menu, name="update_menu"),
     path("delete/menu/", delete_menu, name="delete_menu"),
     path("download/menu/<int:id>", download_menus, name="download_menus"),
-    path("gallery/<int:id>", gallery, name="gallery"),
+    path("add/image/<int:id>", add_image_in_gallery, name="add_image_in_gallery"),
+    path("get/images/<int:id>", get_image_in_gallery, name="get_image_in_gallery"),
 
     path("history/", history, name="history"),
 ]

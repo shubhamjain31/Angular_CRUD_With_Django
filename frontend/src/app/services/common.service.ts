@@ -73,7 +73,11 @@ export class CommonService {
   }
 
   public upload_image(id:any, data:any){
-    return this.http.post(this.APIUrl + '/gallery/'+id, data, this.httpOptions);
+    return this.http.post(this.APIUrl + '/add/image/'+id, data, this.httpOptions);
+  }
+
+  public get_images(id:any){
+    return this.http.get(this.APIUrl + '/get/images/'+id, this.httpOptions);
   }
 
 }

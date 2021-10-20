@@ -11,10 +11,18 @@ import { CommonService } from '../../services/common.service';
 export class GalleryRestaurantComponent implements OnInit {
   staticAlertClosed:boolean  = false;
   public error_msg:   any;
+  all_images: any = [];
 
   constructor(private commonservice:CommonService, private route: ActivatedRoute, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.commonservice.get_images(id).subscribe((data:any) => {
+      if(data['success']){
+        this.all_images = data['all_images'];
+        console.log(this.all_images)
+      }
+    });
   }
 
   uploadImage(){
@@ -30,6 +38,8 @@ export class GalleryRestaurantComponent implements OnInit {
     this.commonservice.upload_image(id, gallery).subscribe((data:any)=>{
       if (data["success"]){
         image.value = '';
+
+        this.all_images = data['all_images'];
         this.showSuccessAlert(data['msg'])
       }
       });

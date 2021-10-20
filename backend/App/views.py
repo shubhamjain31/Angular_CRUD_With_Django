@@ -316,7 +316,7 @@ def download_menus(request, id):
     return JsonResponse({"success":True, "all_menus":all_menus['menus']})
 
 @csrf_exempt
-def gallery(request, id):
+def add_image_in_gallery(request, id):
     data = urlencode(json.loads(request.body))
     user_data = QueryDict(data)
 
@@ -332,4 +332,11 @@ def gallery(request, id):
 
     obj.save()
     msg = "Image Uploaded Succesfully !"
-    return JsonResponse({"success":True, "msg":msg})
+    return JsonResponse({"success":True, "msg":msg, "all_images":obj.gallery['images']})
+
+@csrf_exempt
+def get_image_in_gallery(request, id):
+    obj = Restaurant.objects.get(pk=id)
+    all_images = obj.gallery['images']
+
+    return JsonResponse({"success":True, "all_images":all_images})
