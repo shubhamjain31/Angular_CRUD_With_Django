@@ -37,14 +37,23 @@ class Restaurant(models.Model):
     address                 = models.TextField()
     date_created            = models.DateTimeField(auto_now_add=True, editable=False, blank=True)
     ip_address              = models.CharField(max_length=100, null=True, blank=True)
-    gallery                 = models.JSONField(default={}, blank=True)
-
     def __str__(self):
         return self.name
 
 class Menu(models.Model):
     menu_data               = models.JSONField(default={}, blank=True)
     restaurant              = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.restaurant)
+
+def upload_path(filename):
+    return '/'.join(['images', filename])
+
+class Gallery(models.Model):
+    image                   = models.ImageField(upload_to='media/images/', blank=True, null=True)
+    restaurant              = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    upload_to               = models.DateTimeField(auto_now_add=True, editable=False, blank=True)
 
     def __str__(self):
         return str(self.restaurant)

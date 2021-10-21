@@ -17,7 +17,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.serializers import serialize
 from django.contrib.admin.models import LogEntry
 
-from .models import Restaurant, Menu
+from .models import Restaurant, Menu, Gallery
 from validators import is_invalid
 
 
@@ -327,22 +327,24 @@ def download_menus(request, val):
 @csrf_exempt
 def add_image_in_gallery(request, val):
     _id     = decryption_key(val)
+
     data = urlencode(json.loads(request.body))
     user_data = QueryDict(data)
+    print(user_data)
+    return JsonResponse({})
 
     image        = user_data.get('image')
 
-    obj = Restaurant.objects.get(pk=_id)
-    if not bool(obj.gallery):
-        images = []
-        images.append(image)
-        obj.gallery['images'] = images
-    else:
-        obj.gallery['images'].append(image)
+    if not image:
+        return JsonResponse({'error':True})
 
-    obj.save()
+    obj = Restaurant.objects.get(pk=_id)
+    
+    Gallery.objects.create(image       = image,
+                           restaurant  = obj
+                          )
     msg = "Image Uploaded Succesfully !"
-    return JsonResponse({"success":True, "msg":msg, "all_images":obj.gallery['images']})
+    return JsonResponse({"success":True, "msg":msg})
 
 @csrf_exempt
 def get_image_in_gallery(request, val):
