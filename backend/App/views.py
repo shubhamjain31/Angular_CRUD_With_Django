@@ -330,7 +330,8 @@ def add_image_in_gallery(request, val):
 
     data = urlencode(json.loads(request.body))
     user_data = QueryDict(data)
-    print(user_data)
+    print(data)
+    print(request.FILES)
     return JsonResponse({})
 
     image        = user_data.get('image')

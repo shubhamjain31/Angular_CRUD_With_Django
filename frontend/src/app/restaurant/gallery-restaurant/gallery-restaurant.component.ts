@@ -35,9 +35,9 @@ export class GalleryRestaurantComponent implements OnInit {
     gallery.append('image', file.name)
 
 
-    console.log(gallery)
+    console.log(gallery.get('image'),'sdhhss')
     let gall = {
-      'image' :     gallery
+      'image' :     file
     }
     
     this.commonservice.upload_image(id, gall).subscribe((data:any)=>{
