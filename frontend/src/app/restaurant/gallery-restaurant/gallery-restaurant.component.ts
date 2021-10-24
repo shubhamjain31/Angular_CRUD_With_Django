@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from '../../services/common.service';
+import{ GlobalConstantsComponent } from 'src/app/common/global-constants/global-constants.component';
 
 @Component({
   selector: 'app-gallery-restaurant',
@@ -13,6 +14,8 @@ export class GalleryRestaurantComponent implements OnInit {
   public error_msg:   any;
   all_images: any = [];
 
+  APIUrl = GlobalConstantsComponent.APIUrl + '/media/';
+
   constructor(private commonservice:CommonService, private route: ActivatedRoute, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -20,7 +23,6 @@ export class GalleryRestaurantComponent implements OnInit {
     this.commonservice.get_images(id).subscribe((data:any) => {
       if(data['success']){
         this.all_images = data['all_images'];
-        console.log(this.all_images)
       }
     });
   }

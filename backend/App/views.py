@@ -349,10 +349,11 @@ class add_image_in_gallery(APIView):
 @csrf_exempt
 def get_image_in_gallery(request, val):
     _id     = decryption_key(val)
-    obj = Restaurant.objects.get(pk=_id)
+    
+    obj = Gallery.objects.filter(restaurant_id=_id)
     try:
-        all_images = obj.gallery['images']
+        all_images = obj.values_list('image', flat=True)
     except:
         all_images = []
 
-    return JsonResponse({"success":True, "all_images":all_images})
+    return JsonResponse({"success":True, "all_images":list(all_images)})

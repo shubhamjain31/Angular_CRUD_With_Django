@@ -3,6 +3,7 @@ import{ GlobalConstantsComponent } from 'src/app/common/global-constants/global-
 
 import {HttpClient, HttpHeaders } from '@angular/common/http';
 import { ReturnStatement } from '@angular/compiler';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,14 @@ export class CommonService {
   private httpOptions: any;
   private httpOptionsForRestFramework: any;
 
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient, private cookieService:CookieService) {
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       withCredentials: true
     };
 
     this.httpOptionsForRestFramework = {
-      headers: new HttpHeaders({}),
+      headers: new HttpHeaders({ 'x-csrftoken' : this.cookieService.get('csrftoken')}),
       withCredentials: true
     };
    }

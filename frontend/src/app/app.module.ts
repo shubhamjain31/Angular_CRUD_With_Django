@@ -4,7 +4,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 
 import {  ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -53,6 +53,7 @@ import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gall
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    HttpClientXsrfModule,
     NgbModule,
     RouterModule,
     ReactiveFormsModule,

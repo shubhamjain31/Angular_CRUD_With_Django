@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
           this.loader = true;
 
           this.csrf = data['csrf']
+          console.log(this.csrf)
           this.sessionid = data['sessionid']
           this.setCookie(this.csrf, this.sessionid)
 
