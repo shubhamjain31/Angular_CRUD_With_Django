@@ -64,6 +64,7 @@ const routes: Routes = [
   {
     component:GalleryRestaurantComponent, 
     path:'gallery/:id',
+    canActivate: [LoginGuard]
   },
   {
     component:MenuRestaurantComponent, 

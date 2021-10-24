@@ -17,30 +17,26 @@ export class GalleryRestaurantComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    // this.commonservice.get_images(id).subscribe((data:any) => {
-    //   if(data['success']){
-    //     this.all_images = data['all_images'];
-    //   }
-    // });
+    this.commonservice.get_images(id).subscribe((data:any) => {
+      if(data['success']){
+        this.all_images = data['all_images'];
+        console.log(this.all_images)
+      }
+    });
   }
 
   uploadImage(){
-    const id = this.route.snapshot.paramMap.get('id');
+    const id:any = this.route.snapshot.paramMap.get('id');
 
     let image = (<HTMLInputElement>document.getElementById('formFile'));
     const file: File = (image.files as FileList)[0];
 
     const gallery = new FormData();
 
-    gallery.append('image', file.name)
-
-
-    console.log(gallery.get('image'),'sdhhss')
-    let gall = {
-      'image' :     file
-    }
+    gallery.append('id', id)
+    gallery.append('image', file, file.name)
     
-    this.commonservice.upload_image(id, gall).subscribe((data:any)=>{
+    this.commonservice.upload_image(gallery).subscribe((data:any)=>{
       if (data["success"]){
         image.value = '';
 

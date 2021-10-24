@@ -22,7 +22,7 @@ urlpatterns = [
     path("update/menu/", update_menu, name="update_menu"),
     path("delete/menu/", delete_menu, name="delete_menu"),
     path("download/menu/<str:val>", download_menus, name="download_menus"),
-    path("add/image/<str:val>", add_image_in_gallery, name="add_image_in_gallery"),
+    path("add/image/", add_image_in_gallery.as_view(), name="add_image_in_gallery"),
     path("get/images/<str:val>", get_image_in_gallery, name="get_image_in_gallery"),
 
     path("history/", history, name="history"),

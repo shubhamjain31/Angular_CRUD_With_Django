@@ -12,10 +12,16 @@ export class CommonService {
   APIUrl = GlobalConstantsComponent.APIUrl;
 
   private httpOptions: any;
+  private httpOptionsForRestFramework: any;
 
   constructor(private http:HttpClient) {
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      withCredentials: true
+    };
+
+    this.httpOptionsForRestFramework = {
+      headers: new HttpHeaders({}),
       withCredentials: true
     };
    }
@@ -72,8 +78,8 @@ export class CommonService {
     return this.http.get(this.APIUrl + '/download/menu/'+id, this.httpOptions);
   }
 
-  public upload_image(id:any, data:any){
-    return this.http.post(this.APIUrl + '/add/image/'+id, data, this.httpOptions);
+  public upload_image(data:any){
+    return this.http.post(this.APIUrl + '/add/image/', data, this.httpOptionsForRestFramework);
   }
 
   public get_images(id:any){

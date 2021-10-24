@@ -20,6 +20,8 @@ from django.contrib.admin.models import LogEntry
 from .models import Restaurant, Menu, Gallery
 from validators import is_invalid
 
+from rest_framework.views import APIView
+
 
 User = get_user_model()
 
@@ -324,28 +326,25 @@ def download_menus(request, val):
         all_menus = {'menus': []}
     return JsonResponse({"success":True, "all_menus":all_menus['menus']})
 
-@csrf_exempt
-def add_image_in_gallery(request, val):
-    _id     = decryption_key(val)
 
-    data = urlencode(json.loads(request.body))
-    user_data = QueryDict(data)
-    print(data)
-    print(request.FILES)
-    return JsonResponse({})
 
-    image        = user_data.get('image')
+class add_image_in_gallery(APIView):
 
-    if not image:
-        return JsonResponse({'error':True})
+    def post(self, request, *args, **kwargs):
+        val         = request.data['id']
+        image       = request.data['image']
 
-    obj = Restaurant.objects.get(pk=_id)
-    
-    Gallery.objects.create(image       = image,
-                           restaurant  = obj
-                          )
-    msg = "Image Uploaded Succesfully !"
-    return JsonResponse({"success":True, "msg":msg})
+        _id         = decryption_key(val)
+
+        if not image:
+            return JsonResponse({'error':True})
+
+        obj = Restaurant.objects.get(pk=_id)
+
+        Gallery.objects.create(image        = image,
+                               restaurant   = obj)
+        msg = "Image Uploaded Succesfully !"
+        return JsonResponse({"success":True, "msg":msg})
 
 @csrf_exempt
 def get_image_in_gallery(request, val):

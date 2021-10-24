@@ -52,7 +52,7 @@ def upload_path(filename):
 
 class Gallery(models.Model):
     image                   = models.ImageField(upload_to='media/images/', blank=True, null=True)
-    restaurant              = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    restaurant              = models.ForeignKey(Restaurant, on_delete=models.CASCADE, blank=True, null=True)
     upload_to               = models.DateTimeField(auto_now_add=True, editable=False, blank=True)
 
     def __str__(self):
