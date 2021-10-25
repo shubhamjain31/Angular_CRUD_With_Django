@@ -29,6 +29,7 @@ import { HistoryComponent } from './history/history.component';
 import { FileSaverModule } from 'ngx-filesaver';
 import { MatDialogModule } from '@angular/material/dialog';
 import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gallery-restaurant.component';
+import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gall
     MenuAddEditRestaurantComponent,
     HistoryComponent,
     GalleryRestaurantComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

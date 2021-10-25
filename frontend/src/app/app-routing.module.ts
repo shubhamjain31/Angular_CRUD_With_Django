@@ -13,6 +13,7 @@ import { MenuRestaurantComponent } from './restaurant/menu-restaurant/menu-resta
 import { MenuAddEditRestaurantComponent } from './restaurant/menu-restaurant/menu-add-edit-restaurant/menu-add-edit-restaurant.component';
 import { HistoryComponent } from './history/history.component';
 import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gallery-restaurant.component';
+import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-found.component';
 
 import { LoginGuard, AuthGuard } from './login/login.guard';
 
@@ -75,6 +76,10 @@ const routes: Routes = [
     component:MenuAddEditRestaurantComponent, 
     path:'add-menu/:id',
     canActivate: [LoginGuard]
+  },
+  { 
+    path: '**', 
+    component: PageNotFoundComponent,
   },
 ];
 
