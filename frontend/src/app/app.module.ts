@@ -28,6 +28,8 @@ import { MenuAddEditRestaurantComponent } from './restaurant/menu-restaurant/men
 import { HistoryComponent } from './history/history.component';
 import { FileSaverModule } from 'ngx-filesaver';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatCardModule } from '@angular/material/card';
 import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gallery-restaurant.component';
 import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-found.component';
 
@@ -64,6 +66,8 @@ import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-fou
     DataTablesModule,
     FileSaverModule,
     MatDialogModule,
+    MatBottomSheetModule,
+    MatCardModule,
     ToastrModule.forRoot({preventDuplicates: true}),
   ],
   exports: [],

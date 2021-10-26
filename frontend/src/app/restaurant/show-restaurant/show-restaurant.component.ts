@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { FileSaverService } from 'ngx-filesaver';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-show-restaurant',
@@ -28,7 +29,7 @@ export class ShowRestaurantComponent implements OnInit {
 
   constructor(private commonservice:CommonService, private modalService: NgbModal, private toastr: ToastrService,
     private http: HttpClient, private _FileSaverService: FileSaverService,  private dialog: MatDialog,
-    private router:Router) { }
+    private router:Router, private _bottomSheet: MatBottomSheet) { }
 
   ngOnInit(): void {
     this.commonservice.showRestaurant().subscribe((data:any) => {
@@ -160,5 +161,24 @@ export class ShowRestaurantComponent implements OnInit {
 
   gallery(id:number){
     this.router.navigate(["gallery", id])
+  }
+
+  openBottomSheet(): void {
+    this._bottomSheet.open(ReviewBottomSheet);
+  }
+
+}
+
+
+@Component({
+  selector: 'review-bottom-sheet',
+  templateUrl: 'review-bottom-sheet.html',
+})
+export class ReviewBottomSheet {
+  constructor(private _bottomSheetRef: MatBottomSheetRef<ReviewBottomSheet>) {}
+
+  openLink(event: MouseEvent): void {
+    this._bottomSheetRef.dismiss();
+    event.preventDefault();
   }
 }

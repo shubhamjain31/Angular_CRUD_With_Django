@@ -27,11 +27,11 @@
 	          <td>{{restaurant.fields.address}}</td>
 	          <td>{{restaurant.fields.email}}</td>
 	          <td><a routerLink="/update/{{restaurant.pk}}">
-	            <i class="fa fa-edit text-info" style="font-size:20px; cursor: pointer;"></i></a>&nbsp; &nbsp; 
-	            <i (click)="openModal(modalData, restaurant.fields.name, restaurant.pk)" class="fa fa-trash-o" style="font-size:20px;color:red; cursor: pointer;"></i>&nbsp; &nbsp;
-	            <i class="fa fa-download" style="font-size:20px; cursor: pointer;" (click)="download_menus(restaurant.pk, MessageDialog)"></i>&nbsp; &nbsp;
-	            <i class="fa fa-picture-o text-warning" style="font-size:20px; cursor: pointer;" (click)="gallery(restaurant.pk)"></i> 
-
+	            <i class="fa fa-edit text-info" style="font-size:20px; cursor: pointer;" title="Edit Restaurant"></i></a>&nbsp; &nbsp; 
+	            <i (click)="openModal(modalData, restaurant.fields.name, restaurant.pk)" class="fa fa-trash-o" style="font-size:20px;color:red; cursor: pointer;" title="Delete Restaurant"></i>&nbsp; &nbsp;
+	            <i class="fa fa-download" style="font-size:20px; cursor: pointer;" (click)="download_menus(restaurant.pk, MessageDialog)" title="Download CSV"></i>&nbsp; &nbsp;
+	            <i class="fa fa-picture-o text-warning" style="font-size:20px; cursor: pointer;" (click)="gallery(restaurant.pk)"title="Gallery"></i>&nbsp; &nbsp;
+	            <i class="fa fa-star text-success" style="font-size:20px; cursor: pointer;" (click)="openBottomSheet()" title="Review"></i> 
 	      </td>
 	        </tr>
 	    </tbody>
@@ -63,4 +63,9 @@
   <mat-dialog-actions align="end">
     <button mat-button matDialogClose color="primary">Dismiss</button>
   </mat-dialog-actions>
+</ng-template>
+
+<ng-template #ReviewDialog>
+  <h2 matDialogTitle>Detail!</h2>
+  <mat-card>Simple card</mat-card>
 </ng-template>
