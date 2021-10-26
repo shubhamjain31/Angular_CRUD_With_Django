@@ -2,8 +2,8 @@
 	<div class="row">
     <form>
   		<div class="d-flex justify-content-center">
-  			<input class="form-control me-2 w-50" type="file" id="formFile">
-  			<button class="btn btn-outline-success" type="button" (click)="uploadImage()">Upload</button>
+  			<input class="form-control me-2 w-50" #fileInput type="file" id="formFile" (change)="image_file(fileInput.files)">
+  			<button class="btn btn-outline-success" type="button" (click)="uploadImage()" [disabled]="is_image">Upload</button>
   		</div>
     </form>
 	</div>

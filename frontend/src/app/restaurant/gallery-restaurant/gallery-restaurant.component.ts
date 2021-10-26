@@ -11,6 +11,7 @@ import{ GlobalConstantsComponent } from 'src/app/common/global-constants/global-
 })
 export class GalleryRestaurantComponent implements OnInit {
   staticAlertClosed:boolean  = false;
+  is_image:boolean           = true;
   public error_msg:   any;
   all_images: any = [];
 
@@ -41,6 +42,7 @@ export class GalleryRestaurantComponent implements OnInit {
     this.commonservice.upload_image(gallery).subscribe((data:any)=>{
       if (data["success"]){
         image.value = '';
+        this.is_image = true;
 
         this.all_images = data['all_images'];
         this.showSuccessAlert(data['msg'])
@@ -54,6 +56,15 @@ export class GalleryRestaurantComponent implements OnInit {
       enableHtml: true,
       toastClass: "alert alert-success alert-with-icon"
     });
+  }
+
+  image_file(files: FileList | null){
+    if((files as FileList).length>0) {
+      this.is_image = false;
+    }
+    else{
+      this.is_image = true;
+    }
   }
 
 }
