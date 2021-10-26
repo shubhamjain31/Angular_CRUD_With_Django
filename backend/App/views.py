@@ -341,8 +341,8 @@ class add_image_in_gallery(APIView):
 
         obj = Restaurant.objects.get(pk=_id)
 
-        # Gallery.objects.create(image        = image,
-        #                        restaurant   = obj)
+        Gallery.objects.create(image        = image,
+                               restaurant   = obj)
         msg = "Image Uploaded Succesfully !"
         return JsonResponse({"success":True, "msg":msg})
 
