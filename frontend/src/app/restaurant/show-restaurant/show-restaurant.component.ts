@@ -6,7 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { FileSaverService } from 'ngx-filesaver';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+
 
 @Component({
   selector: 'app-show-restaurant',
@@ -22,6 +23,8 @@ export class ShowRestaurantComponent implements OnInit {
   public closeModal:  any;
   public name:        any;
   public id:          any;
+  is_rating: boolean = false;
+  rating_number: any;
 
   displayedColumns: string[] = ['Menu'];
   dataSource = this.all_menus;
@@ -51,6 +54,14 @@ export class ShowRestaurantComponent implements OnInit {
         });
       }, 1);
             
+    });
+  }
+
+  update_restaurant_list(){
+    this.commonservice.showRestaurant().subscribe((data:any) => {
+      if(data['success']){
+        this.restaurant_list = data['all_restaurant']
+      }
     });
   }
 
@@ -163,22 +174,34 @@ export class ShowRestaurantComponent implements OnInit {
     this.router.navigate(["gallery", id])
   }
 
-  openBottomSheet(): void {
-    this._bottomSheet.open(ReviewBottomSheet);
+  openBottomSheet(content:any, pk: string): void {
+    this.rating_number = this.filter_data(this.restaurant_list, pk).review
+    this.id = pk;
+    this._bottomSheet.open(content);
   }
 
-}
+  rating(event: any, num: number){
+    let data = {
+      rate: num,
+    }
 
+    this.commonservice.rating_restaurant(this.id, data).subscribe((data:any)=>{
+      if(data["success"]){
+        this.error_msg = data['msg']
+        this.showSuccessAlert(this.error_msg)
 
-@Component({
-  selector: 'review-bottom-sheet',
-  templateUrl: 'review-bottom-sheet.html',
-})
-export class ReviewBottomSheet {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<ReviewBottomSheet>) {}
-
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
+        this._bottomSheet.dismiss();
+        this.update_restaurant_list();
+      }
+    });
   }
+
+  filter_data(all_data: any, single_data: string){
+    for(let i=0; i<all_data.length; i++){
+      if(all_data[i]['pk'] === single_data){
+        return all_data[i]['fields'];
+      }
+    }
+  }
+
 }

@@ -16,6 +16,7 @@ urlpatterns = [
     path("delete/restaurant/", delete_restaurant, name="delete_restaurant"),
     path("edit/restaurant/<str:val>", edit_restaurant, name="edit_restaurant"),
     path("get/restaurant/<str:val>", get_restaurant, name="get_restaurant"),
+    path("rating/<str:val>", rating, name="rating"),
 
     path("add/menu/", add_menu, name="add_menu"),
     path("get/menu/<int:id>", get_menu, name="get_menu"),

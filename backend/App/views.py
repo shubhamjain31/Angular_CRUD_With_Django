@@ -357,3 +357,19 @@ def get_image_in_gallery(request, val):
         all_images = []
 
     return JsonResponse({"success":True, "all_images":list(all_images)})
+
+@csrf_exempt
+def rating(request, val):
+    data = urlencode(json.loads(request.body))
+    user_data = QueryDict(data)
+
+    rate        = user_data.get('rate')
+
+    _id         = decryption_key(val)
+
+    obj = Restaurant.objects.get(pk=_id)
+    obj.review = int(rate)
+    obj.save()
+
+    msg = "Rating Updated Succesfully !"
+    return JsonResponse({"success":True, "msg":msg})

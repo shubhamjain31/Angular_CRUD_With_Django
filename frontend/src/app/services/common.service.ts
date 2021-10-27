@@ -87,4 +87,8 @@ export class CommonService {
     return this.http.get(this.APIUrl + '/get/images/'+id, this.httpOptions);
   }
 
+  public rating_restaurant(id: string, data:any){
+    return this.http.post(this.APIUrl + '/rating/'+ id, data, this.httpOptionsForRestFramework);
+  }
+
 }
