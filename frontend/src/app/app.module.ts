@@ -30,8 +30,11 @@ import { FileSaverModule } from 'ngx-filesaver';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gallery-restaurant.component';
 import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-found.component';
+import { RatingComponent } from './rating/rating.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,7 @@ import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-fou
     HistoryComponent,
     GalleryRestaurantComponent,
     PageNotFoundComponent,
+    RatingComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +72,8 @@ import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-fou
     MatDialogModule,
     MatBottomSheetModule,
     MatCardModule,
+    MatTableModule,
+    MatPaginatorModule,
     ToastrModule.forRoot({preventDuplicates: true}),
   ],
   exports: [],

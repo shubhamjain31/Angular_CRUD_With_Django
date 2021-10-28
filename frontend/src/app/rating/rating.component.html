@@ -1,0 +1,52 @@
+
+<div class="container w-75 bg-light p-5 mt-4">
+	<h1 class="text-center mb-4">Ratings</h1>
+
+	<!-- <ngb-alert [type]="'warning'" *ngIf="staticAlertClosed" [dismissible]="false">
+		<span>
+			{{error_msg}}
+		</span>
+      <button type="button" aria-hidden="true" class="btn-close" data-dismiss="alert" aria-label="Close" (click)="staticAlertClosed = false">
+      </button>
+  </ngb-alert> -->
+
+
+    <div class="mat-elevation-z8 text-center">
+	  <table mat-table [dataSource]="dataSource">
+
+	    <!-- Position Column -->
+	    <ng-container matColumnDef="position">
+	      <th mat-header-cell *matHeaderCellDef> No. </th>
+	      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+	    </ng-container>
+
+	    <!-- Name Column -->
+	    <ng-container matColumnDef="name">
+	      <th mat-header-cell *matHeaderCellDef> Name </th>
+	      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+	    </ng-container>
+
+	    <!-- Weight Column -->
+	    <ng-container matColumnDef="weight">
+	      <th mat-header-cell *matHeaderCellDef> Weight </th>
+	      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+	    </ng-container>
+
+	    <!-- Symbol Column -->
+	    <ng-container matColumnDef="symbol">
+	      <th mat-header-cell *matHeaderCellDef> Symbol </th>
+	      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+	    </ng-container>
+
+	    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+	    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+	  </table>
+
+	  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+	                 showFirstLastButtons 
+	                 aria-label="Select page of periodic elements">
+	  </mat-paginator>
+	</div>
+
+
+</div>

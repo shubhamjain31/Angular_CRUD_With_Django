@@ -14,6 +14,8 @@ import { MenuAddEditRestaurantComponent } from './restaurant/menu-restaurant/men
 import { HistoryComponent } from './history/history.component';
 import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gallery-restaurant.component';
 import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-found.component';
+import { RatingComponent } from './rating/rating.component';
+
 
 import { LoginGuard, AuthGuard } from './login/login.guard';
 
@@ -56,6 +58,11 @@ const routes: Routes = [
   {
     component:HistoryComponent, 
     path:'history',
+  },
+  {
+    component:RatingComponent, 
+    path:'rating',
+    canActivate: [LoginGuard]
   },
   {
     component:AboutComponent, 
