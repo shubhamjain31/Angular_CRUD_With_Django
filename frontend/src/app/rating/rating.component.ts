@@ -7,7 +7,7 @@ export interface PeriodicElement {
   remove_col(fields: any): any;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = this.remove_col();
+const ELEMENT_DATA: PeriodicElement[] = [];
 
 @Component({
   selector: 'app-rating',
@@ -23,13 +23,14 @@ export class RatingComponent implements OnInit {
     this.commonservice.showRestaurant().subscribe((data:any) => {
       if(data['success']){
         this.restaurant_list = data['all_restaurant'];
-        console.log(this.remove_col())
+        this.remove_col();
+        this.rating_to_review();
       }
     });
   }
 
-  displayedColumns: any[] = ['fields', 'fields', 'fields'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: any[] = ['position', 'name', 'rating', 'review'];
+  dataSource = new MatTableDataSource<PeriodicElement>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -37,13 +38,40 @@ export class RatingComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  remove_col(): any{
+  remove_col(){
     var restaurant_array = JSON.parse(JSON.stringify(this.restaurant_list));
     for(let i in restaurant_array) {
        delete restaurant_array[i].model;
        delete restaurant_array[i].pk;
     }
     return restaurant_array;
+  }
+
+  rating_to_review(){
+    let restaurant_arr = this.remove_col();
+    
+    for(let i=0; i<restaurant_arr.length; i++){
+      if(restaurant_arr[i].fields.review === 1){
+        restaurant_arr[i]['review'] = "Poor"
+      }
+      else if(restaurant_arr[i].fields.review === 2){
+        restaurant_arr[i]['review'] = "Below Average"
+      }
+      else if(restaurant_arr[i].fields.review === 3){
+        restaurant_arr[i]['review'] = "Average"
+      }
+      else if(restaurant_arr[i].fields.review === 4){
+        restaurant_arr[i]['review'] = "Above Average"
+      }
+      else if(restaurant_arr[i].fields.review === 5){
+        restaurant_arr[i]['review'] = "Excellent"
+      }
+      else{
+        restaurant_arr[i]['review'] = "--"
+      }
+    }
+
+    this.dataSource.data = restaurant_arr;
   }
 
 }
