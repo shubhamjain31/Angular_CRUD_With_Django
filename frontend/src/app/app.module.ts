@@ -32,6 +32,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
 import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gallery-restaurant.component';
 import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-found.component';
 import { RatingComponent } from './rating/rating.component';
@@ -74,6 +75,7 @@ import { RatingComponent } from './rating/rating.component';
     MatCardModule,
     MatTableModule,
     MatPaginatorModule,
+    MatButtonModule,
     ToastrModule.forRoot({preventDuplicates: true}),
   ],
   exports: [],

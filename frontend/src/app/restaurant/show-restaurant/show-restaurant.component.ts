@@ -204,4 +204,16 @@ export class ShowRestaurantComponent implements OnInit {
     }
   }
 
+  sheetRef: any;
+  openAddressDetail(content:any, pk: string): void {
+    this.id = pk;
+    this.sheetRef = this._bottomSheet.open(content, {
+       panelClass: 'custom_css_for_address_details'
+    });
+  }
+
+  closeAddressDetailsSheet(){
+    this.sheetRef.dismiss();
+  }
+
 }

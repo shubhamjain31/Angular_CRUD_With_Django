@@ -23,3 +23,10 @@
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.custom_css_for_address_details {
+    padding: 0px !important;
+    min-width: 100vw !important;
+    min-height: 100vw !important;
+}
