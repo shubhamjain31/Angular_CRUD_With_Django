@@ -7,7 +7,7 @@ import { FileSaverService } from 'ngx-filesaver';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-show-restaurant',
@@ -24,11 +24,43 @@ export class ShowRestaurantComponent implements OnInit {
   public name:        any;
   public id:          any;
   is_rating: boolean = false;
+  submitted: boolean = false;
   rating_number: any;
 
   displayedColumns: string[] = ['Menu'];
   dataSource = this.all_menus;
   public fileName: string = '';
+
+  states: any = [
+    {'name': 'Andhra Pradesh'},
+    {'name': 'Arunachal Pradesh'},
+    {'name': 'Assam'},
+    {'name': 'Bihar'},
+    {'name': 'Chhattisgarh'},
+    {'name': 'Goa'},
+    {'name': 'Gujarat'},
+    {'name': 'Haryana'},
+    {'name': 'Himachal Pradesh'},
+    {'name': 'Jharkhand'},
+    {'name': 'Karnataka'},
+    {'name': 'Kerala'},
+    {'name': 'Madhya Pradesh'},
+    {'name': 'Maharashtra'},
+    {'name': 'Manipur'},
+    {'name': 'Meghalaya'},
+    {'name': 'Mizoram'},
+    {'name': 'Nagaland'},
+    {'name': 'Odisha'},
+    {'name': 'Punjab'},
+    {'name': 'Rajasthan'},
+    {'name': 'Sikkim'},
+    {'name': 'Tamil Nadu'},
+    {'name': 'Telangana'},
+    {'name': 'Tripura'},
+    {'name': 'Uttar Pradesh'},
+    {'name': 'Uttarakhand'},
+    {'name': 'West Bengal'}
+  ]
 
   constructor(private commonservice:CommonService, private modalService: NgbModal, private toastr: ToastrService,
     private http: HttpClient, private _FileSaverService: FileSaverService,  private dialog: MatDialog,
@@ -214,6 +246,25 @@ export class ShowRestaurantComponent implements OnInit {
 
   closeAddressDetailsSheet(){
     this.sheetRef.dismiss();
+  }
+
+  addressDetail = new FormGroup({
+    address:            new FormControl('', Validators.required),
+    address_optional:   new FormControl(''),
+    city:               new FormControl('', Validators.required),
+    state:              new FormControl('', Validators.required),
+    country:            new FormControl('India', Validators.required),
+    zip:                new FormControl('', Validators.required)
+  })
+
+  details(){
+
+    if(this.addressDetail.invalid) {
+      let msg = 'Invalid Form'
+      this.showErrorAlert(msg);
+      return;
+    }
+
   }
 
 }
