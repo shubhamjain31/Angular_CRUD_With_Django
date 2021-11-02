@@ -55,6 +55,7 @@ class Address_Details(models.Model):
     city                    = models.CharField(max_length=50, blank=True, null=True)
     state                   = models.CharField(max_length=50, blank=True, null=True)
     country                 = models.CharField(max_length=20, blank=True, null=True) 
+    pincode                 = models.CharField(max_length=20, blank=True, null=True) 
     restaurant              = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -17,7 +17,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.serializers import serialize
 from django.contrib.admin.models import LogEntry
 
-from .models import Restaurant, Menu, Gallery
+from .models import Restaurant, Menu, Gallery, Address_Details
 from validators import is_invalid
 
 from rest_framework.views import APIView
@@ -372,4 +372,50 @@ def rating(request, val):
     obj.save()
 
     msg = "Rating Updated Succesfully !"
+    return JsonResponse({"success":True, "msg":msg})
+
+@csrf_exempt
+def address_details(request, val):
+    data = urlencode(json.loads(request.body))
+    user_data = QueryDict(data)
+
+    _id         = decryption_key(val)
+
+    address                 = user_data.get('address')
+    address_optional        = user_data.get('address_optional')
+    city                    = user_data.get('city')
+    state                   = user_data.get('state')
+    country                 = user_data.get('country')
+    pincode                 = user_data.get('pincode')
+
+    if not _id:
+        msg = "Please Enter Valid Data"
+        return JsonResponse({'error':True, "msg":msg})
+
+    if is_invalid(address):
+        return JsonResponse({"error":True, "msg":"Please Enter Address"})
+
+    if is_invalid(city):
+        return JsonResponse({"error":True, "msg":"Please Enter City"})
+
+    if is_invalid(state):
+        return JsonResponse({"error":True, "msg":"Please Enter State"})
+
+    if is_invalid(country):
+        return JsonResponse({"error":True, "msg":"Please Enter Country"})
+
+    if is_invalid(pincode):
+        return JsonResponse({"error":True, "msg":"Please Enter Pincode"})
+
+    obj = Restaurant.objects.get(pk=_id)
+
+    Address_Details.objects.create(address          = address,
+                                    address_optional = address_optional,
+                                    city            = city,
+                                    state           = state,
+                                    country         = country,
+                                    pincode         = pincode,
+                                    restaurant      = obj)
+
+    msg = "Address Details Added Successfully"
     return JsonResponse({"success":True, "msg":msg})
