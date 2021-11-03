@@ -407,17 +407,29 @@ def address_details(request, val):
     if is_invalid(pincode):
         return JsonResponse({"error":True, "msg":"Please Enter Pincode"})
 
-    obj = Restaurant.objects.get(pk=_id)
+    restaurant_obj  = Restaurant.objects.get(pk=_id)
+    address_obj     = Address_Details.objects.filter(restaurant=restaurant_obj)
 
-    Address_Details.objects.create(address          = address,
+    if address_obj.exists():
+        address_obj     = address_obj.update(
+                                        address          = address,
+                                        address_optional = address_optional,
+                                        city             = city,
+                                        state            = state,
+                                        country          = country,
+                                        pincode          = pincode)
+
+        msg = "Address Details Updated Successfully"
+    else:
+        Address_Details.objects.create(
+                                    address          = address,
                                     address_optional = address_optional,
-                                    city            = city,
-                                    state           = state,
-                                    country         = country,
-                                    pincode         = pincode,
-                                    restaurant      = obj)
-
-    msg = "Address Details Added Successfully"
+                                    city             = city,
+                                    state            = state,
+                                    country          = country,
+                                    pincode          = pincode,
+                                    restaurant       = restaurant_obj)
+        msg = "Address Details Added Successfully"
     return JsonResponse({"success":True, "msg":msg})
 
 @csrf_exempt

@@ -245,10 +245,10 @@ export class ShowRestaurantComponent implements OnInit {
 
         this.addressDetail = new FormGroup({
         address:            new FormControl(data['all_data']['address']),
-        address_optional:   new FormControl(data['all_data']['address_optional']),
+        address_optional:   new FormControl(data['all_data']['address_optional'] || ''),
         city:               new FormControl(data['all_data']['city']),
         state:              new FormControl(data['all_data']['state']),
-        country:            new FormControl(data['all_data']['country']),
+        country:            new FormControl(data['all_data']['state'] || "India"),
         pincode:            new FormControl(data['all_data']['pincode'])
       })
       }
