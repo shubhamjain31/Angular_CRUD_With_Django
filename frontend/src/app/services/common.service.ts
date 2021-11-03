@@ -91,4 +91,12 @@ export class CommonService {
     return this.http.post(this.APIUrl + '/rating/'+ id, data, this.httpOptionsForRestFramework);
   }
 
+  public addressDetailForRestaurant(id: string, data:any){
+    return this.http.post(this.APIUrl + '/address/details/'+ id, data, this.httpOptionsForRestFramework);
+  }
+
+  public getAddressDetail(id:string){
+    return this.http.get(this.APIUrl + '/get/address/details/'+id, this.httpOptions);
+  }
+
 }

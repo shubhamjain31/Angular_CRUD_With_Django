@@ -237,14 +237,36 @@ export class ShowRestaurantComponent implements OnInit {
   }
 
   sheetRef: any;
-  openAddressDetail(content:any, pk: string): void {
+  openAddressDetail(content:any, pk: string, name: string): void {
     this.id = pk;
+
+    this.commonservice.getAddressDetail(this.id).subscribe((data:any) => {
+      if(data['success']){
+
+        this.addressDetail = new FormGroup({
+        address:            new FormControl(data['all_data']['address']),
+        address_optional:   new FormControl(data['all_data']['address_optional']),
+        city:               new FormControl(data['all_data']['city']),
+        state:              new FormControl(data['all_data']['state']),
+        country:            new FormControl(data['all_data']['country']),
+        pincode:            new FormControl(data['all_data']['pincode'])
+      })
+      }
+
+      if (data["error"]){
+          this.error_msg = data['msg']
+          this.showErrorAlert(this.error_msg)
+        }
+    });
+
+    this.router.navigate(['/show'], { fragment: name.replace(/ /g,"+") })   // here whitespace will replaced by plus
     this.sheetRef = this._bottomSheet.open(content, {
        panelClass: 'custom_css_for_address_details'
     });
   }
 
   closeAddressDetailsSheet(){
+    this.router.navigate(['/show']);
     this.sheetRef.dismiss();
   }
 
@@ -254,16 +276,30 @@ export class ShowRestaurantComponent implements OnInit {
     city:               new FormControl('', Validators.required),
     state:              new FormControl('', Validators.required),
     country:            new FormControl('India', Validators.required),
-    zip:                new FormControl('', Validators.required)
+    pincode:            new FormControl('', Validators.required)
   })
 
   details(){
+    this.submitted = true;
 
     if(this.addressDetail.invalid) {
       let msg = 'Invalid Form'
       this.showErrorAlert(msg);
       return;
     }
+
+    this.commonservice.addressDetailForRestaurant(this.id, this.addressDetail.value).subscribe((data:any)=>{
+        if (data["success"]){
+          this.error_msg = data['msg']
+          this.showSuccessAlert(this.error_msg)
+        }
+        if (data["error"]){
+          this.error_msg = data['msg']
+          this.showErrorAlert(this.error_msg)
+        }
+    })
+    this.submitted = false;
+    this.sheetRef.dismiss();
 
   }
 

@@ -419,3 +419,19 @@ def address_details(request, val):
 
     msg = "Address Details Added Successfully"
     return JsonResponse({"success":True, "msg":msg})
+
+@csrf_exempt
+def get_address_details(request, val):
+    _id         = decryption_key(val)
+
+    if not _id:
+        msg = "Please Enter Valid Data"
+        return JsonResponse({'error':True, "msg":msg})
+
+    try:
+        obj = Address_Details.objects.get(restaurant_id = _id)
+        all_data = model_to_dict(obj)
+    except:
+        all_data = []
+
+    return JsonResponse({"success":True, 'all_data':all_data})
