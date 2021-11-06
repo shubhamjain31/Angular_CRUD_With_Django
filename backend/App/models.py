@@ -34,7 +34,7 @@ class User(AbstractUser):
 class Restaurant(models.Model):
     name                    = models.CharField(max_length=50, blank=True, null=True)
     email                   = models.EmailField()
-    address                 = models.TextField()
+    mobile                  = models.CharField(max_length=15, blank=True, null=True)
     review                  = models.IntegerField(blank=True, null=True)
     rating                  = models.IntegerField(blank=True, null=True)
     date_created            = models.DateTimeField(auto_now_add=True, editable=False, blank=True)

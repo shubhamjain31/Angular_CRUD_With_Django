@@ -118,7 +118,7 @@ def add_restaurant(request):
 
     name        = user_data.get('name')
     email       = user_data.get('email')
-    address     = user_data.get('address')
+    mobile      = user_data.get('mobile')
 
     if is_invalid(name):
         return JsonResponse({"error":True, "msg":"Please Enter Name"})
@@ -126,12 +126,12 @@ def add_restaurant(request):
     if is_invalid(email):
         return JsonResponse({"error":True, "msg":"Please Enter Email"})
 
-    if is_invalid(address):
-        return JsonResponse({"error":True, "msg":"Please Enter Address"})
+    if is_invalid(mobile):
+        return JsonResponse({"error":True, "msg":"Please Enter Mobile"})
 
     Restaurant.objects.create(name          = name,
                                 email       = email,
-                                address     = address,
+                                mobile      = mobile,
                                 ip_address  = get_ip(request))
     return JsonResponse({'success':True})
 import ast
@@ -166,7 +166,7 @@ def show_restaurant(request):
             if order == 'desc':
                 order_column = '-' + order_column
 
-        all_restaurant       = Restaurant.objects.all().order_by('-date_created').values('id','name')
+        all_restaurant       = Restaurant.objects.all().order_by('-date_created').values('id','name', 'address_details__address')
 
         if order_column == '-' or order_column == '':
             all_restaurant       = all_restaurant
@@ -182,7 +182,8 @@ def show_restaurant(request):
                 "recordsFiltered": all_restaurant.count(),
                 'data':lt})
 
-    all_restaurant = json.loads(serialize("json", all_restaurant))
+    all_restaurant = list(all_restaurant.values('pk', 'name', 'email', 'mobile', 'review', 'rating', 'date_created', 'address_details__address'))
+    # all_restaurant = json.loads(serialize("json", all_restaurant, fields = ('name', 'email', 'mobile', 'review', 'rating', 'date_created')))
 
     for restaurant in all_restaurant:
         restaurant['pk'] = str(encryption_key(restaurant['pk']).decode())
@@ -224,7 +225,7 @@ def edit_restaurant(request, val):
 
     name        = user_data.get('name')
     email       = user_data.get('email')
-    address     = user_data.get('address')
+    mobile      = user_data.get('mobile')
 
     if is_invalid(name):
         return JsonResponse({"error":True, "msg":"Please Enter Name"})
@@ -232,13 +233,13 @@ def edit_restaurant(request, val):
     if is_invalid(email):
         return JsonResponse({"error":True, "msg":"Please Enter Email"})
 
-    if is_invalid(address):
-        return JsonResponse({"error":True, "msg":"Please Enter Address"})
+    if is_invalid(mobile):
+        return JsonResponse({"error":True, "msg":"Please Enter Mobile"})
 
     obj = Restaurant.objects.get(pk=_id)
     obj.name        = name
     obj.email       = email
-    obj.address     = address
+    obj.mobile      = mobile
     obj.save()
     msg = "Restaurant Updated successfully"
     return JsonResponse({'success':True, "msg":msg})
