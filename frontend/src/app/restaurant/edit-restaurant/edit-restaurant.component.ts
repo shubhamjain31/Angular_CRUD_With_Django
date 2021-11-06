@@ -18,7 +18,7 @@ export class EditRestaurantComponent implements OnInit {
 
   editRestaurent = new FormGroup({
     name:   new FormControl('', Validators.required),
-    address: new FormControl('', Validators.required),
+    mobile: new FormControl('', Validators.required),
     email:  new FormControl('', [Validators.required, Validators.email])
   })
 
@@ -28,7 +28,7 @@ export class EditRestaurantComponent implements OnInit {
     this.commonservice.getCurrentData(this.router.snapshot.params.id).subscribe((data:any)=>{
       this.editRestaurent = new FormGroup({
         name:     new FormControl(data['all_data']['name']),
-        address:  new FormControl(data['all_data']['address']),
+        mobile:   new FormControl(data['all_data']['mobile']),
         email:    new FormControl(data['all_data']['email'])
       })
     })

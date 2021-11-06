@@ -79,7 +79,7 @@ export class ShowRestaurantComponent implements OnInit {
           processing: true,
           searching: false,
           columnDefs: [
-          { "orderable": false, "className": 'reorder', "targets": [0,4] },
+          { "orderable": false, "className": 'reorder', "targets": [0,5] },
           { "targets": [], "orderable": false }
           ],
           lengthMenu : [5, 10, 25]
@@ -231,7 +231,7 @@ export class ShowRestaurantComponent implements OnInit {
   filter_data(all_data: any, single_data: string){
     for(let i=0; i<all_data.length; i++){
       if(all_data[i]['pk'] === single_data){
-        return all_data[i]['fields'];
+        return all_data[i];
       }
     }
   }

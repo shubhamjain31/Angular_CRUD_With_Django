@@ -1,5 +1,5 @@
 
-<div class="container w-75 bg-light p-5 mt-4">
+<div class="container bg-light p-5 mt-4">
 	<h1 class="text-center mb-4">Show Restaurant</h1>
 
 	<ngb-alert [type]="'warning'" *ngIf="staticAlertClosed" [dismissible]="false">
@@ -15,24 +15,26 @@
 	      <tr>
 	        <th scope="col">Sr No.</th>
 	        <th scope="col">Name</th>
-	        <th scope="col">Restaurant Address</th>
-	        <th scope="col">Email</th>
+	        <th scope="col">Mobile</th>
+          <th scope="col">Email</th>
+	        <th scope="col">Address</th>
 	        <th scope="col">Action{{rating_number}}</th>
 	      </tr>
 	    </thead>
 	    <tbody class="text-center text-white">
 	      <tr *ngFor="let restaurant of restaurant_list; let i=index">
 	          <td>{{i+1}}</td>
-	          <td>{{restaurant.fields.name}}</td>
-	          <td>{{restaurant.fields.address}}</td>
-	          <td>{{restaurant.fields.email}}</td>
+	          <td>{{restaurant.name}}</td>
+	          <td>{{restaurant.mobile || "---"}}</td>
+            <td>{{restaurant.email}}</td>
+	          <td>{{restaurant.address_details__address || "---"}}</td>
 	          <td><a routerLink="/update/{{restaurant.pk}}">
 	            <i class="fa fa-edit text-info" style="font-size:20px; cursor: pointer;" title="Edit Restaurant"></i></a>&nbsp; &nbsp; 
-	            <i (click)="openModal(modalData, restaurant.fields.name, restaurant.pk)" class="fa fa-trash-o" style="font-size:20px;color:red; cursor: pointer;" title="Delete Restaurant"></i>&nbsp; &nbsp;
+	            <i (click)="openModal(modalData, restaurant.name, restaurant.pk)" class="fa fa-trash-o" style="font-size:20px;color:red; cursor: pointer;" title="Delete Restaurant"></i>&nbsp; &nbsp;
 	            <i class="fa fa-download" style="font-size:20px; cursor: pointer;" (click)="download_menus(restaurant.pk, MessageDialog)" title="Download CSV"></i>&nbsp; &nbsp;
 	            <i class="fa fa-picture-o text-warning" style="font-size:20px; cursor: pointer;" (click)="gallery(restaurant.pk)"title="Gallery"></i>&nbsp; &nbsp;
 	            <i class="fa fa-star text-success" style="font-size:20px; cursor: pointer;" (click)="openBottomSheet(ReviewDialog, restaurant.pk)" title="Review"></i>&nbsp; &nbsp;
-              <i class="fa fa-address-book-o text-secondary" style="font-size:20px; cursor: pointer;" (click)="openAddressDetail(AddressDetailBottomSheet, restaurant.pk, restaurant.fields.name)" title="Address Detail"></i> 
+              <i class="fa fa-address-book-o text-secondary" style="font-size:20px; cursor: pointer;" (click)="openAddressDetail(AddressDetailBottomSheet, restaurant.pk, restaurant.name)" title="Address Detail"></i> 
 	      </td>
 	        </tr>
 	    </tbody>
