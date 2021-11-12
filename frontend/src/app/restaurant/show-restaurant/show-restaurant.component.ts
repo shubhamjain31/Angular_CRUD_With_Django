@@ -69,7 +69,7 @@ export class ShowRestaurantComponent implements OnInit {
   ngOnInit(): void {
     this.commonservice.showRestaurant().subscribe((data:any) => {
       if(data['success']){
-        this.restaurant_list = data['all_restaurant']
+        this.restaurant_list = data['all_restaurant'];
       }
 
       setTimeout(()=>{   
@@ -254,8 +254,8 @@ export class ShowRestaurantComponent implements OnInit {
       }
 
       if (data["error"]){
-          this.error_msg = data['msg']
-          this.showErrorAlert(this.error_msg)
+          this.error_msg = data['msg'];
+          this.showErrorAlert(this.error_msg);
         }
     });
 
@@ -290,12 +290,13 @@ export class ShowRestaurantComponent implements OnInit {
 
     this.commonservice.addressDetailForRestaurant(this.id, this.addressDetail.value).subscribe((data:any)=>{
         if (data["success"]){
-          this.error_msg = data['msg']
-          this.showSuccessAlert(this.error_msg)
+          this.error_msg = data['msg'];
+          this.showSuccessAlert(this.error_msg);
+          this.update_restaurant_list();
         }
         if (data["error"]){
-          this.error_msg = data['msg']
-          this.showErrorAlert(this.error_msg)
+          this.error_msg = data['msg'];
+          this.showErrorAlert(this.error_msg);
         }
     })
     this.submitted = false;
