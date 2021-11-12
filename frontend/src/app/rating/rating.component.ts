@@ -48,22 +48,28 @@ export class RatingComponent implements OnInit {
   }
 
   rating_to_review(){
+
     let restaurant_arr = this.remove_col();
     
     for(let i=0; i<restaurant_arr.length; i++){
-      if(restaurant_arr[i].fields.review === 1){
+      if(restaurant_arr[i].review === 1){
+        restaurant_arr[i].rating= restaurant_arr[i].review;
         restaurant_arr[i]['review'] = "Poor"
       }
-      else if(restaurant_arr[i].fields.review === 2){
+      else if(restaurant_arr[i].review === 2){
+        restaurant_arr[i].rating= restaurant_arr[i].review;
         restaurant_arr[i]['review'] = "Below Average"
       }
-      else if(restaurant_arr[i].fields.review === 3){
+      else if(restaurant_arr[i].review === 3){
+        restaurant_arr[i].rating= restaurant_arr[i].review;
         restaurant_arr[i]['review'] = "Average"
       }
-      else if(restaurant_arr[i].fields.review === 4){
+      else if(restaurant_arr[i].review === 4){
+        restaurant_arr[i].rating= restaurant_arr[i].review;
         restaurant_arr[i]['review'] = "Above Average"
       }
-      else if(restaurant_arr[i].fields.review === 5){
+      else if(restaurant_arr[i].review === 5){
+        restaurant_arr[i].rating= restaurant_arr[i].review;
         restaurant_arr[i]['review'] = "Excellent"
       }
       else{
