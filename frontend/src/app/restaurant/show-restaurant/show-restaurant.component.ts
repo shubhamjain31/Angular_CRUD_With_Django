@@ -19,6 +19,8 @@ export class ShowRestaurantComponent implements OnInit {
   public restaurant_list:any = [];
   public all_menus: any = [];
   staticAlertClosed:boolean  = false;
+  template_form: boolean     = true;
+  loader: boolean            = false;
   public error_msg:   any;
   public closeModal:  any;
   public name:        any;
@@ -67,9 +69,14 @@ export class ShowRestaurantComponent implements OnInit {
     private router:Router, private _bottomSheet: MatBottomSheet) { }
 
   ngOnInit(): void {
+    this.template_form = false;
+    this.loader = true;
+
     this.commonservice.showRestaurant().subscribe((data:any) => {
       if(data['success']){
         this.restaurant_list = data['all_restaurant'];
+        this.template_form = true;
+        this.loader = false;
       }
 
       setTimeout(()=>{   

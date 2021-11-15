@@ -1,5 +1,10 @@
+<div class="container bg-light p-5 mt-4 my-auto" *ngIf="loader">
+  <div class="d-flex justify-content-center">
+      <img src="assets/img/loader.gif">
+  </div>
+</div>
 
-<div class="container bg-light p-5 mt-4">
+<div class="container bg-light p-5 mt-4" *ngIf="template_form">
 	<h1 class="text-center mb-4">Show Restaurant</h1>
 
 	<ngb-alert [type]="'warning'" *ngIf="staticAlertClosed" [dismissible]="false">
