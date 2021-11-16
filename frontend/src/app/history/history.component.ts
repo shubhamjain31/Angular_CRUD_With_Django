@@ -9,11 +9,13 @@ import { CommonService } from '../services/common.service';
 export class HistoryComponent implements OnInit {
   all_entries: any = [];
 
-  displayedColumns = ['position', 'name', 'email', 'operation', 'table', ''];
+  displayedColumns = ['position', 'name', 'email', 'table', 'operation', 'datetime', 'change_message'];
   dataSource : any ;
-  start: number = 0;
-  limit: number = 15;
-  end: number = this.limit + this.start;
+  
+  start: number   = 0;
+  limit: number   = 15;
+  end: number     = this.limit + this.start;
+  
   selectedRowIndex: number = 0;
 
   constructor(private commonservice:CommonService) { }
@@ -22,7 +24,6 @@ export class HistoryComponent implements OnInit {
     this.commonservice.allHistory().subscribe((data:any) => {
       if(data['success']){
         this.all_entries = data['all_entries'];
-        console.log(this.all_entries)
       }
 
     this.dataSource = this.getTableData(this.start, this.end);

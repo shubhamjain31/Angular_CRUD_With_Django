@@ -1,51 +1,7 @@
-<!-- 
-<div class="container w-75 bg-light p-5 mt-4">
+<div class="container bg-light p-5 mt-4">
 	<h1 class="text-center text-success mb-4">History</h1>
 
-	<div class="card text-white bg-dark mb-3" style="max-width: 78rem;" *ngFor="let entry of all_entries">
-	  <div class="card-header">
-	  	Name:<span class="mycolor"> &nbsp;&nbsp;{{entry.user__fullname}}</span><br>
-	  	Email:<span class="mycolor"> &nbsp;&nbsp;{{entry.user__email}}</span>
-	  </div>
-	  <div class="card-body">
-	    <h5 class="card-title">{{entry.object_repr}}</h5>
-	    
-	    <p class="card-text">
-	    	<ng-container *ngIf="entry.action_flag === 1; else operation">
-	    		Table: <small class="text-danger"> &nbsp;&nbsp;{{entry.content_type__model | titlecase}}</small><br>
-	    		Operation: <small class="text-warning"> &nbsp;&nbsp;ADDITION</small><br>
-		    	Date: <small class="text-info"> &nbsp;&nbsp;{{entry.action_time| date :'shortDate'}}</small><br>
-	    		Time: <small class="text-info"> &nbsp;&nbsp;{{entry.action_time| date :'shortTime'}}</small><br>
-	    		Change Message: <small class="text-secondary"> &nbsp;&nbsp;{{entry.change_message|| '----'}}</small>
-	    	</ng-container>
-
-	    	<ng-template #operation>
-			    <ng-container *ngIf="entry.action_flag === 2; else new_operation">
-		    		Table: <small class="text-danger"> &nbsp;&nbsp;{{entry.content_type__model | titlecase}}</small><br>
-			    	Operation: <small class="text-warning"> &nbsp;&nbsp;CHANGE</small><br>
-			    	Date: <small class="text-info"> &nbsp;&nbsp;{{entry.action_time| date :'shortDate'}}</small><br>
-			    	Time: <small class="text-info"> &nbsp;&nbsp;{{entry.action_time| date :'shortTime'}}</small><br>
-		    		Change Message: <small class="text-secondary"> &nbsp;&nbsp;{{entry.change_message|| '----'}}</small>
-			    </ng-container>
-			</ng-template>
-
-			<ng-template #new_operation>
-	    		Table: <small class="text-danger"> &nbsp;&nbsp;{{entry.content_type__model | titlecase}}</small><br>
-				Operation: <small class="text-warning"> &nbsp;&nbsp;DELETION</small><br>
-		    	Date: <small class="text-info"> &nbsp;&nbsp;{{entry.action_time| date :'shortDate'}}</small><br>
-		    	Time: <small class="text-info"> &nbsp;&nbsp;{{entry.action_time| date :'shortTime'}}</small><br>
-	    		Change Message: <small class="text-secondary"> &nbsp;&nbsp;{{entry.change_message|| '----'}}</small>
-			</ng-template>
-	    </p>
-
-	  </div>
-	</div>
-</div> -->
-
-<div class="container w-75 bg-light p-5 mt-4">
-	<h1 class="text-center text-success mb-4">History</h1>
-
-<div class="example-container mat-elevation-z8">
+<div class="example-container mat-elevation-z8 demo-table">
   <mat-table #table [dataSource]="dataSource" (scroll)="onTableScroll($event)">
 
     <ng-container matColumnDef="position">
@@ -65,7 +21,7 @@
 
     <ng-container matColumnDef="table">
       <mat-header-cell *matHeaderCellDef> Table </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.content_type__model}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.content_type__model | titlecase}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="operation">
@@ -75,12 +31,12 @@
 
     <ng-container matColumnDef="datetime">
       <mat-header-cell *matHeaderCellDef> Date/Time </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.action_time}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.action_time | date :'shortDate'}}<br> {{element.action_time | date :'shortTime'}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="change_message">
       <mat-header-cell *matHeaderCellDef> Change Message </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.change_message}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.change_message || '--'}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

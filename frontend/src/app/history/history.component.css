@@ -1,7 +1,3 @@
-.mycolor{
-	color: #66CDAA;
-}
-
 .example-container {
   display: flex;
   flex-direction: column;
@@ -12,4 +8,24 @@
 .mat-table {
   overflow: auto;
   max-height: 500px;
+}
+
+.demo-table {
+  width: 100%;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+  color: white;
+  background-color: gray;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
 }
