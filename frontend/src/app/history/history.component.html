@@ -1,4 +1,4 @@
-
+<!-- 
 <div class="container w-75 bg-light p-5 mt-4">
 	<h1 class="text-center text-success mb-4">History</h1>
 
@@ -40,4 +40,52 @@
 
 	  </div>
 	</div>
+</div> -->
+
+<div class="container w-75 bg-light p-5 mt-4">
+	<h1 class="text-center text-success mb-4">History</h1>
+
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" (scroll)="onTableScroll($event)">
+
+    <ng-container matColumnDef="position">
+      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+      <mat-cell *matCellDef="let element=index"> {{element+1}} </mat-cell>
+    </ng-container>
+
+   <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.user__fullname}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.user__email}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="table">
+      <mat-header-cell *matHeaderCellDef> Table </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.content_type__model}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="operation">
+      <mat-header-cell *matHeaderCellDef> Operation </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.operation}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="datetime">
+      <mat-header-cell *matHeaderCellDef> Date/Time </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.action_time}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="change_message">
+      <mat-header-cell *matHeaderCellDef> Change Message </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.change_message}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns; let i= index" (click)="selectedRow(row)"
+    [ngClass]="{'highlightTableColor': selectedRowIndex == i}"></mat-row>
+  </mat-table>
+</div>
 </div>

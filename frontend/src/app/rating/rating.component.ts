@@ -7,8 +7,6 @@ export interface PeriodicElement {
   remove_col(fields: any): any;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [];
-
 @Component({
   selector: 'app-rating',
   templateUrl: './rating.component.html',
