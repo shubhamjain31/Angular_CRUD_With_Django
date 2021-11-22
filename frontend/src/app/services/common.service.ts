@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import{ GlobalConstantsComponent } from 'src/app/common/global-constants/global-constants.component';
 
-import {HttpClient, HttpHeaders } from '@angular/common/http';
-import { ReturnStatement } from '@angular/compiler';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
