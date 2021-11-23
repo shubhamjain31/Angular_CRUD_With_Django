@@ -36,6 +36,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gallery-restaurant.component';
 import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-found.component';
 import { RatingComponent } from './rating/rating.component';
+import { UpgradeComponent } from './upgrade/upgrade.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { RatingComponent } from './rating/rating.component';
     GalleryRestaurantComponent,
     PageNotFoundComponent,
     RatingComponent,
+    UpgradeComponent,
   ],
   imports: [
     BrowserModule,

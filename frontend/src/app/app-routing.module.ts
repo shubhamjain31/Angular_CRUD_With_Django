@@ -15,6 +15,7 @@ import { HistoryComponent } from './history/history.component';
 import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gallery-restaurant.component';
 import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-found.component';
 import { RatingComponent } from './rating/rating.component';
+import { UpgradeComponent } from './upgrade/upgrade.component';
 
 
 import { LoginGuard, AuthGuard } from './login/login.guard';
@@ -82,6 +83,11 @@ const routes: Routes = [
   {
     component:MenuAddEditRestaurantComponent, 
     path:'add-menu/:id',
+    canActivate: [LoginGuard]
+  },
+   { 
+    path: 'upgrade',  
+    component: UpgradeComponent,
     canActivate: [LoginGuard]
   },
   { 

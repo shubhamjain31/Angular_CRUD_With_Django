@@ -31,6 +31,7 @@
         </li>
       </ul>
       <form class="d-flex">
+        <button class="btn btn-success me-3" routerLink="upgrade">Upgrade</button>
         <button class="btn btn-outline-danger" *ngIf="loggedin" (click)="user_logout()" routerLink="logout" type="button">Logout</button>
         <button class="btn btn-outline-dark" *ngIf="!loggedin" routerLink="login" type="button">Login</button>
       </form>
