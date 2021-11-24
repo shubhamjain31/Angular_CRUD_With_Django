@@ -29,6 +29,7 @@ urlpatterns = [
     path("get/images/<str:val>", get_image_in_gallery, name="get_image_in_gallery"),
 
     path("history/", history, name="history"),
+    path("upgrade/", upgrade, name="upgrade"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

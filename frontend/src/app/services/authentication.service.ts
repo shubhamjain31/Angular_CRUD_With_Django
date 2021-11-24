@@ -30,5 +30,9 @@ export class AuthenticationService {
   public logout_user(){
     return this.http.get(this.APIUrl + '/logout/', this.httpOptions);
   }
+
+  public upgrade(data: any){
+    return this.http.post(this.APIUrl + '/upgrade/', data, this.httpOptions);
+  }
   
 }

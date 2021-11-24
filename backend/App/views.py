@@ -32,6 +32,14 @@ def home(request):
     return JsonResponse({'saved':True})
 
 @csrf_exempt
+def upgrade(request):
+    if request.method == "POST":
+        data = urlencode(json.loads(request.body))
+        user_data = QueryDict(data)
+        print(user_data)
+    return JsonResponse({})
+
+@csrf_exempt
 def register_user(request):
     if request.user.is_authenticated:
         return JsonResponse({'is_logged_in':request.user.is_authenticated})

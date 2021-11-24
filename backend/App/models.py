@@ -71,3 +71,21 @@ class Gallery(models.Model):
 
     def __str__(self):
         return str(self.restaurant)
+
+class Transactions(models.Model):
+    class Meta:
+        verbose_name_plural = 'Transactions'
+
+    payment_id              = models.CharField(max_length=100)
+    order_id                = models.CharField(max_length=100)
+    amount                  = models.CharField(max_length=100)
+    status                  = models.CharField(max_length=100)
+    email                   = models.CharField(max_length=100)
+    payment_response        = models.JSONField(default={}, blank=True)
+    payment_information     = models.TextField()
+    date_created            = models.DateTimeField(auto_now_add=True)
+    ip_address              = models.CharField(max_length=100)
+    user                    = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.user)

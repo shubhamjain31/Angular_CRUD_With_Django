@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import{ GlobalConstantsComponent } from 'src/app/common/global-constants/global-constants.component';
+import { AuthenticationService } from '../services/authentication.service';
+import { Charge} from './transaction';
 
 @Component({
   selector: 'app-upgrade',
@@ -8,34 +10,42 @@ import{ GlobalConstantsComponent } from 'src/app/common/global-constants/global-
 })
 export class UpgradeComponent implements OnInit {
   handler:any = null;
+  token_data: any;
 
   API_KEY = GlobalConstantsComponent.STRIPE_PUBLISHABLE_KEY;
 
-  constructor() { }
+  constructor(private authenticationService:AuthenticationService) { }
 
   ngOnInit(): void {
     this.loadStripe();
   }
 
-   pay(amount: any) {    
+   pay(amount: any) {
+   let total = (amount * 100); 
  
     var handler = (<any>window).StripeCheckout.configure({
       key: this.API_KEY,
       locale: 'auto',
       token: function (token: any) {
-        console.log(token)
-        alert('Token Created!!');
+         const transaction = new Charge(total, token.id, token);
+        console.log('From navbar nonObject ' + token.id + ' ' + total);
+        // var charge (transaction: any): any => {}
       }
     });
  
     handler.open({
       name:         'FoodMania',
       description: 'Delicious Food',
-      amount:       amount * 100
+      amount:       total
     });
  
   }
  
+   charge(transaction: any){
+      console.log(transaction)
+
+   }
+
   loadStripe() {
      
     if(!window.document.getElementById('stripe-script')) {
@@ -50,7 +60,6 @@ export class UpgradeComponent implements OnInit {
           locale: 'auto',
           token: function (token: any) {
             console.log(token)
-            alert('Payment Success!!');
           }
         });
       }
