@@ -81,7 +81,7 @@ class Transactions(models.Model):
     amount                  = models.CharField(max_length=100)
     status                  = models.CharField(max_length=100)
     email                   = models.CharField(max_length=100)
-    payment_response        = models.JSONField(default={}, blank=True)
+    payment_response        = models.JSONField(dict, blank=True)
     payment_information     = models.TextField()
     date_created            = models.DateTimeField(auto_now_add=True)
     ip_address              = models.CharField(max_length=100)

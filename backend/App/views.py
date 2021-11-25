@@ -7,6 +7,8 @@ from urllib.parse import urlencode
 from django.http import QueryDict
 import json
 import ast
+import stripe
+from datetime import datetime, timedelta
 
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.forms.models import model_to_dict
@@ -17,7 +19,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.serializers import serialize
 from django.contrib.admin.models import LogEntry
 
-from .models import Restaurant, Menu, Gallery, Address_Details
+from .models import Restaurant, Menu, Gallery, Address_Details, Transactions
 from validators import is_invalid
 
 from rest_framework.views import APIView
@@ -35,8 +37,39 @@ def home(request):
 def upgrade(request):
     if request.method == "POST":
         data = urlencode(json.loads(request.body))
-        user_data = QueryDict(data)
-        print(user_data)
+        payment_info = QueryDict(data)
+
+        amount        = int(payment_info.get('amount'))
+        token         = payment_info.get('token_id')
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        customer = stripe.Customer.create(
+            email       = request.user.email,
+            name        = request.user.username,
+            source      = token
+            )
+            
+        charge = stripe.Charge.create(
+            customer        = customer,
+            amount          = amount,
+            currency        = 'inr',
+            description     ="Delicious Food",   
+        )
+        print(json.dumps(charge))
+
+        Transactions.objects.create(
+            payment_id          = charge['id'],
+            order_id            = charge['balance_transaction'],
+            amount              = charge['amount'],
+            status              = charge['status'],
+            email               = charge['billing_details']['name'],
+            payment_response    = json.dumps(charge),
+            payment_information = payment_info,
+            ip_address          = get_ip(request),
+            user                = request.user,
+        )
+
     return JsonResponse({})
 
 @csrf_exempt

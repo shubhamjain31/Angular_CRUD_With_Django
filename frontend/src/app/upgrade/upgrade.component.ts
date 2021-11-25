@@ -26,10 +26,9 @@ export class UpgradeComponent implements OnInit {
     var handler = (<any>window).StripeCheckout.configure({
       key: this.API_KEY,
       locale: 'auto',
-      token: function (token: any) {
+      token: (token: any) => {
          const transaction = new Charge(total, token.id, token);
-        console.log('From navbar nonObject ' + token.id + ' ' + total);
-        // var charge (transaction: any): any => {}
+        this.authenticationService.upgrade(transaction).subscribe((data: any)=>{})
       }
     });
  
@@ -41,10 +40,6 @@ export class UpgradeComponent implements OnInit {
  
   }
  
-   charge(transaction: any){
-      console.log(transaction)
-
-   }
 
   loadStripe() {
      
