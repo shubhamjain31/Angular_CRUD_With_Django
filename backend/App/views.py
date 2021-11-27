@@ -147,18 +147,19 @@ def login_user(request):
 
 @csrf_exempt
 def login_check(request):
-    transaction             = Transactions.objects.filter(user = request.user)
+    if request.user.is_authenticated:
+        transaction             = Transactions.objects.filter(user = request.user)
 
-    if transaction.count() > 0:
-        last_transaction        = transaction.last()
-        date_of_transaction     = last_transaction.date_created
-        current_date            = datetime.now()
+        if transaction.count() > 0:
+            last_transaction        = transaction.last()
+            date_of_transaction     = last_transaction.date_created
+            current_date            = datetime.now()
 
-        transaction_valid_until = date_of_transaction + timedelta(days=30)
-        if transaction_valid_until.replace(tzinfo=None) > current_date:
-            return JsonResponse({'is_upgrade':True, 'is_logged_in':request.user.is_authenticated})
+            transaction_valid_until = date_of_transaction + timedelta(days=30)
+            if transaction_valid_until.replace(tzinfo=None) > current_date:
+                return JsonResponse({'is_upgrade':True, 'is_logged_in':request.user.is_authenticated})
 
-    return JsonResponse({'is_logged_in':request.user.is_authenticated})
+    return JsonResponse({'is_upgrade':True, 'is_logged_in':request.user.is_authenticated})
 
 @csrf_exempt
 def custom_logout(request):

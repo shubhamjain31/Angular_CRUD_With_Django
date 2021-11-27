@@ -16,6 +16,7 @@ import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gall
 import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-found.component';
 import { RatingComponent } from './rating/rating.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
+import { LoginResolver } from './resolvers/login.resolver';
 
 
 import { LoginGuard, AuthGuard } from './login/login.guard';
@@ -24,7 +25,10 @@ const routes: Routes = [
   { 
     path: 'home',  
     component: HomeComponent,
-    canActivate: [LoginGuard]
+    canActivate: [LoginGuard],
+    resolve: {
+      is_logged_in: LoginResolver
+    }
   },
   {
     component:AddRestaurantComponent,
