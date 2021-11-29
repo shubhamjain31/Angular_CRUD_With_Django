@@ -17,7 +17,7 @@ export class GalleryRestaurantComponent implements OnInit {
 
   APIUrl = GlobalConstantsComponent.APIUrl + '/media/';
 
-  constructor(private commonservice:CommonService, private route: ActivatedRoute, private toastr: ToastrService) { }
+  constructor(private commonservice:CommonService, private route: ActivatedRoute, private toastr: ToastrService) { console.log('gallery modeule loaded')}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

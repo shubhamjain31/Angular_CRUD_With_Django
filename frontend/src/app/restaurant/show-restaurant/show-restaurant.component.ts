@@ -66,7 +66,7 @@ export class ShowRestaurantComponent implements OnInit {
 
   constructor(private commonservice:CommonService, private modalService: NgbModal, private toastr: ToastrService,
     private http: HttpClient, private _FileSaverService: FileSaverService,  private dialog: MatDialog,
-    private router:Router, private _bottomSheet: MatBottomSheet) { }
+    private router:Router, private _bottomSheet: MatBottomSheet) {console.log('show restaurant modeule loaded') }
 
   ngOnInit(): void {
     this.template_form = false;

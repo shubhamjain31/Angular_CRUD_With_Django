@@ -18,7 +18,7 @@ export class HistoryComponent implements OnInit {
   
   selectedRowIndex: number = 0;
 
-  constructor(private commonservice:CommonService) { }
+  constructor(private commonservice:CommonService) {console.log('history modeule loaded') }
 
   ngOnInit(): void {
     this.commonservice.allHistory().subscribe((data:any) => {

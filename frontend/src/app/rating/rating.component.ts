@@ -15,7 +15,7 @@ export interface PeriodicElement {
 export class RatingComponent implements OnInit {
   public restaurant_list:any = [];
 
-  constructor(private commonservice:CommonService) { }
+  constructor(private commonservice:CommonService) {console.log('rating modeule loaded') }
 
   ngOnInit(): void {
     this.commonservice.showRestaurant().subscribe((data:any) => {

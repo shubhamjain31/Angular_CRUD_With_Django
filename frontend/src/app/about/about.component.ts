@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  constructor() { console.log('about modeule loaded')}
 
   ngOnInit(): void {
   }
