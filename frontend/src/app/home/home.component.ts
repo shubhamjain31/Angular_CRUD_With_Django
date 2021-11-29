@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 export class HomeComponent implements OnInit {
   is_logged_in: boolean;
 
-  constructor(private route:ActivatedRoute) { console.log('home modeule loaded')}
+  constructor(private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.is_logged_in = this.route.snapshot.data['is_logged_in'];

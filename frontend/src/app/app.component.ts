@@ -14,7 +14,7 @@ export class AppComponent {
   loggedin: any;
   is_upgrade: boolean = false;
 
-  constructor(private authenticationService:AuthenticationService, private router: Router) { console.log('app loaded') }
+  constructor(private authenticationService:AuthenticationService, private router: Router) { }
 
 
   ngOnInit(): void {

@@ -10,18 +10,11 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { RegisterComponent } from './register/register.component';
 import { GlobalConstantsComponent } from './common/global-constants/global-constants.component';
-import { GalleryRestaurantComponent } from './restaurant/gallery-restaurant/gallery-restaurant.component';
-import { PageNotFoundComponent } from './error-pages/page-not-found/page-not-found.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
 
 import { LoginGuard, AuthGuard } from './login/login.guard';
 import { LoginResolver } from './resolvers/login.resolver';
 
-import { AboutModule } from './modules/about.module';
-import { HomeModule } from './modules/home.module';
-import { HistoryModule } from './modules/history.module';
-import { RatingModule } from './modules/rating.module';
-import { RestaurantModule } from './modules/restaurant.module';
 import { SharedModule } from './modules/shared.module';
 
 @NgModule({
@@ -32,8 +25,6 @@ import { SharedModule } from './modules/shared.module';
     LogoutComponent,
     RegisterComponent,
     GlobalConstantsComponent,
-    GalleryRestaurantComponent,
-    PageNotFoundComponent,
     UpgradeComponent,
   ],
   imports: [
@@ -42,11 +33,6 @@ import { SharedModule } from './modules/shared.module';
     NgbModule,
     BrowserAnimationsModule,
     
-    AboutModule,
-    HomeModule,
-    HistoryModule,
-    RatingModule,
-    RestaurantModule,
     SharedModule,
   ],
   exports: [],

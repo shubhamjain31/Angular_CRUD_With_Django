@@ -1,8 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
 
 import { RatingComponent } from '../rating/rating.component';
 import { SharedModule } from './shared.module';
+import { LoginGuard } from '../login/login.guard';
+
+const routes: Routes = [
+   {
+    component:RatingComponent, 
+    path:'',
+    canActivate: [LoginGuard]
+  },
+];
+
 
 
 @NgModule({
@@ -11,7 +22,13 @@ import { SharedModule } from './shared.module';
   ],
   imports: [
     CommonModule,
-    SharedModule
-  ]
+    SharedModule,
+    RouterModule.forChild(routes)
+  ],
+  exports: [RouterModule]
 })
-export class RatingModule { }
+export class RatingModule { 
+  constructor(){
+    console.log('rate modeule loaded')
+  }
+}
