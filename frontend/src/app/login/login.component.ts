@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -77,6 +77,6 @@ export class LoginComponent implements OnInit {
     }
 
     check_login(){
-      this.authenticationService.is_logged_in()
+      this.authenticationService.is_logged_in();
     }
 }
