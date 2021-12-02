@@ -82,6 +82,8 @@ def register_user(request):
     if request.method == "POST":
         data = urlencode(json.loads(request.body))
         user_data = QueryDict(data)
+        print(user_data)
+        return JsonResponse({})
 
         name        = user_data.get('name')
         password    = user_data.get('password')

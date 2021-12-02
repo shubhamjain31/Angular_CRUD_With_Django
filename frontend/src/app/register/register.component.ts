@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonService } from '../services/common.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
 
 @Component({
   selector: 'app-register',
@@ -14,6 +15,7 @@ export class RegisterComponent implements OnInit {
 
   public user:      any;
   public error_msg: any;
+  public socialUser: SocialUser = new SocialUser;
 
   submitted:boolean          = false;
   staticAlertClosed:boolean  = false;
@@ -27,7 +29,7 @@ export class RegisterComponent implements OnInit {
     mobile:   new FormControl('', Validators.required)
   })
 
-  constructor(private commonservice:CommonService, private route: Router, private toastr: ToastrService) { }
+  constructor(private commonservice:CommonService, private route: Router, private toastr: ToastrService, private socialAuthService: SocialAuthService) { }
 
   ngOnInit(): void {
      this.template_form = true
@@ -37,6 +39,11 @@ export class RegisterComponent implements OnInit {
       email: '',
       mobile: ''
     }
+
+    this.socialAuthService.authState.subscribe((socialUser: any) => {
+      this.socialUser = socialUser;
+      this.SocialloginService(socialUser);
+    });
   }
 
   register(){
@@ -89,6 +96,17 @@ export class RegisterComponent implements OnInit {
       toastClass: "alert alert-danger alert-with-icon",
     });
   }
+
+  loginWithGoogle(): void {
+      this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+      
+    }
+
+    SocialloginService(socialUser: any){
+      this.commonservice.createUser(socialUser).subscribe((data: any)=>{
+       if (data["success"]){}
+     });
+    }
 
   
 }

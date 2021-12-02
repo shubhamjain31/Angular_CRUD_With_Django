@@ -16,6 +16,20 @@
         <button type="button" aria-hidden="true" class="btn-close" data-dismiss="alert" aria-label="Close" (click)="staticAlertClosed = false">
         </button>
       </ngb-alert>
+
+
+			<div class="row">
+				<div class="col-6 mt-2 text-center">
+					<button mat-raised-button color="primary" type="button" alt="Login with Google" (click)="loginWithGoogle()">&nbsp;&nbsp;&nbsp;Google&nbsp;&nbsp;&nbsp;</button>
+		    </div>   
+				<div class="col-6 mt-2 text-center">
+					<button mat-raised-button color="accent" type="button" alt="Login with Facebook">Facebook</button>
+				</div>
+			</div>
+
+			<div class="strike text-secondary my-4">
+		    <span>OR</span>
+		</div>
 	    
 	    <div class="form-group">
 	      <label for="name" class="form-label">Name</label>
@@ -52,4 +66,6 @@
 		</div>
 
 	</form>
+
+	
 </div>

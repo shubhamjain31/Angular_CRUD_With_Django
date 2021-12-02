@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
   public error_msg: any;
   public csrf:      any;
   public sessionid: any;
+  public socialUser: SocialUser = new SocialUser;
 
   submitted:boolean          = false;
   template_form: boolean     = true;
@@ -29,7 +31,7 @@ export class LoginComponent implements OnInit {
 
 
   // npm install ngx-cookie-service --save(For install cookieservice)
-  constructor(private authenticationService:AuthenticationService, private router: Router, private cookieService:CookieService) { }
+  constructor(private authenticationService:AuthenticationService, private router: Router, private cookieService:CookieService, private socialAuthService: SocialAuthService) { }
 
   setCookie(csrf: any, session: any){
     this.cookieService.set('sessionid', session);
@@ -43,6 +45,11 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.authenticationService.is_logged_in();
     this.template_form = true;
+
+    this.socialAuthService.authState.subscribe((socialUser: any) => {
+      this.socialUser = socialUser;
+   console.log(this.socialUser)
+    });
     
   }
 
@@ -78,5 +85,13 @@ export class LoginComponent implements OnInit {
 
     check_login(){
       this.authenticationService.is_logged_in();
+    }
+
+    loginWithGoogle(): void {
+      this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+
+      this.authenticationService.loginUser(this.socialUser).subscribe((data: any)=>{
+       if (data["success"]){}
+     });
     }
 }
