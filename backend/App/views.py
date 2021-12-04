@@ -8,6 +8,8 @@ from django.http import QueryDict
 import json
 import ast
 import stripe
+import string
+import random
 from datetime import datetime, timedelta
 
 from django.contrib.auth import get_user_model, authenticate, login, logout
@@ -22,6 +24,9 @@ from django.contrib.admin.models import LogEntry
 from .models import Restaurant, Menu, Gallery, Address_Details, Transactions
 from validators import is_invalid
 
+from django.core.mail import EmailMessage
+from django.core.mail import send_mail
+
 from rest_framework.views import APIView
 
 
@@ -32,6 +37,10 @@ User = get_user_model()
 @csrf_exempt
 def home(request):
     return JsonResponse({'saved':True})
+
+# create a random string
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
 
 @csrf_exempt
 def upgrade(request):
@@ -82,13 +91,20 @@ def register_user(request):
     if request.method == "POST":
         data = urlencode(json.loads(request.body))
         user_data = QueryDict(data)
-        print(user_data)
-        return JsonResponse({})
 
         name        = user_data.get('name')
         password    = user_data.get('password')
         email       = user_data.get('email')
         mobile      = user_data.get('mobile')
+        provider    = user_data.get('provider', 'manual')
+        firstname   = user_data.get('firstName')
+        lastname    = user_data.get('lastName')
+
+        if provider is None:
+            pass
+        else:
+            if provider.lower() == 'google' or provider.lower() == 'facebook':
+                password = User.objects.make_random_password()
 
         if is_invalid(email):
             return JsonResponse({"error":True, "msg":"Enter Email Address"})
@@ -99,8 +115,8 @@ def register_user(request):
         if is_invalid(email):
             return JsonResponse({"error":True, "msg":"Enter Email"})
 
-        if is_invalid(mobile):
-            return JsonResponse({"error":True, "msg":"Enter Mobile"})
+        # if is_invalid(mobile):
+        #     return JsonResponse({"error":True, "msg":"Enter Mobile"})
 
         if len(password) < 8:
             return JsonResponse({'error':True, 'msg':"Password must contain 8 characters"})
@@ -108,15 +124,40 @@ def register_user(request):
         if User.objects.filter(email=email).exists():
             return JsonResponse({'exists':True})
 
-        user_obj =  User.objects.create(email=email,
-                                        fullname=name,
-                                        mobile=mobile,
-                                        password=make_password(password),
-                                    ip_address = get_ip(request))
+        if not firstname:
+            username = id_generator()
+        else:
+            username = firstname + id_generator()
+
+        user_obj =  User.objects.create(email               =email,
+                                        fullname            =name,
+                                        first_name          =firstname,
+                                        last_name           =lastname,
+                                        username            =username,
+                                        mobile              =mobile,
+                                        password            =make_password(password),
+                                        provider            =provider,
+                                        api_response        =user_data,
+                                        ip_address          = get_ip(request))
+
+        register_user_mail(email, firstname, password, username)
         
-        return JsonResponse({'saved':True})
+        return JsonResponse({'success':True})
     else:
         return JsonResponse({'fail':True}) 
+
+
+def register_user_mail(email, firstname, password, username):
+
+    subject  = 'Thank You For Signup'
+
+    body     = '<h2>Your Account Information</h2>,<br><br>\
+        <b>Username:</b> '+username+'<br>\
+        <b>Password:</b> '+password+'<br><br>'
+
+    msg = EmailMessage(subject, body, 'FoodMaNia', to=[email])
+    msg.content_subtype = "html"
+    msg.send()
 
 @csrf_exempt
 def login_user(request):

@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
 
     this.socialAuthService.authState.subscribe((socialUser: any) => {
       this.socialUser = socialUser;
-   console.log(this.socialUser)
     });
     
   }

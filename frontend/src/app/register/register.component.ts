@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.commonservice.createUser(this.createUser.value).subscribe((data: any)=>{
-       if (data["saved"]){
+       if (data["success"]){
         this.template_form = false;
         this.loader = true;
 
@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
               this.route.navigate(['/login'])
          }, 3000)
 
-        this.error_msg = "User Registered Successfully!"
+        this.error_msg = "User Registered Successfully. Please Login!"
         this.showSuccessAlert(this.error_msg);
       }
       else if (data["exists"]){
@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit {
         this.error_msg = "User with this email already exists."
         this.showErrorAlert(this.error_msg);
       }
-      else if (data["fail"]){
+      else if (data["fail"]){ 
         this.staticAlertClosed = true;
         this.error_msg = "Something Went Wrong!"
         this.showErrorAlert(this.error_msg);
@@ -104,7 +104,21 @@ export class RegisterComponent implements OnInit {
 
     SocialloginService(socialUser: any){
       this.commonservice.createUser(socialUser).subscribe((data: any)=>{
-       if (data["success"]){}
+       if (data["success"]){
+        this.error_msg = "User Registered Successfully. Please Login!"
+        this.showSuccessAlert(this.error_msg);
+        this.route.navigate(['/login']);
+       }
+
+       if (data["fail"]){
+        this.error_msg = "Something Went Wrong."
+        this.showErrorAlert(this.error_msg);
+       }
+
+       if (data["exists"]){
+        this.error_msg = "Email Already Exists."
+        this.showErrorAlert(this.error_msg);
+       }
      });
     }
 
