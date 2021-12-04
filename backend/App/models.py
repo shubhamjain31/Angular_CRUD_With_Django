@@ -15,6 +15,7 @@ class User(AbstractUser):
     last_name               = models.CharField(max_length=30, blank=True, null=True)
     password                = models.CharField(max_length=150)
     provider                = models.CharField(max_length=50, default="manual")
+    user_social_id          = models.CharField(max_length=50, blank=True, null=True)
     api_response            = models.JSONField(default=dict, blank=True, null=True)
     
      

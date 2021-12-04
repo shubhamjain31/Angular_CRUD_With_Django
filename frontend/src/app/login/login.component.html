@@ -15,8 +15,8 @@
 
 		<div class="form-group">
 		  <label for="email">Email</label>
-		  <input type="email" class="form-control" id="email" formControlName="emailaddress" name="email"  placeholder="Enter Email">
-		 <span class="text-danger" *ngIf="(submitted && loginUser.controls.emailaddress.errors?.required)|| (!loginUser.controls.emailaddress.value && loginUser.controls.emailaddress.touched)">Please Enter Email</span>
+		  <input type="email" class="form-control" id="email" formControlName="email" name="email"  placeholder="Enter Email">
+		 <span class="text-danger" *ngIf="(submitted && loginUser.controls.email.errors?.required)|| (!loginUser.controls.email.value && loginUser.controls.email.touched)">Please Enter Email</span>
 		</div>
 		<div class="form-group my-4">
 		  <label for="password">Password</label>

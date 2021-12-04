@@ -92,13 +92,14 @@ def register_user(request):
         data = urlencode(json.loads(request.body))
         user_data = QueryDict(data)
 
-        name        = user_data.get('name')
-        password    = user_data.get('password')
-        email       = user_data.get('email')
-        mobile      = user_data.get('mobile')
-        provider    = user_data.get('provider', 'manual')
-        firstname   = user_data.get('firstName')
-        lastname    = user_data.get('lastName')
+        name                = user_data.get('name')
+        password            = user_data.get('password')
+        email               = user_data.get('email')
+        mobile              = user_data.get('mobile')
+        provider            = user_data.get('provider', 'manual')
+        firstname           = user_data.get('firstName')
+        lastname            = user_data.get('lastName')
+        user_social_id      = user_data.get('id', '')
 
         if provider is None:
             pass
@@ -137,6 +138,7 @@ def register_user(request):
                                         mobile              =mobile,
                                         password            =make_password(password),
                                         provider            =provider,
+                                        user_social_id      =user_social_id,
                                         api_response        =user_data,
                                         ip_address          = get_ip(request))
 
@@ -167,18 +169,24 @@ def login_user(request):
     if request.method == "POST":
         data = urlencode(json.loads(request.body))
         user_data = QueryDict(data)
+        print(user_data)
 
-        email       = user_data.get('emailaddress')
+        email       = user_data.get('email')
         password    = user_data.get('pass')
+        provider    = user_data.get('provider', 'manual')
 
-        user = authenticate(email=email, password=password)
+        if provider == 'manual':
+            user = authenticate(email=email, password=password)
 
-        if user is not None:
-            login(request, user)
-            token       = csrf.get_token(request)
-            sessionid   = request.session.session_key
+            if user is not None:
+                login(request, user)
+                token       = csrf.get_token(request)
+                sessionid   = request.session.session_key
 
-            return JsonResponse({'sessionid':sessionid, 'csrf':token, 'success':True})
+                return JsonResponse({'sessionid':sessionid, 'csrf':token, 'success':True})
+        elif provider.lower() == 'google' or provider.lower() == 'facebook':
+            print('social')
+            pass
         else:    
             msg = 'Invalid credentials'
             return JsonResponse({'msg':msg, 'fail':True})   
