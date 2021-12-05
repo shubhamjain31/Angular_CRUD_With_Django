@@ -169,11 +169,11 @@ def login_user(request):
     if request.method == "POST":
         data = urlencode(json.loads(request.body))
         user_data = QueryDict(data)
-        print(user_data)
 
-        email       = user_data.get('email')
-        password    = user_data.get('pass')
-        provider    = user_data.get('provider', 'manual')
+        email               = user_data.get('email')
+        password            = user_data.get('pass')
+        provider            = user_data.get('provider', 'manual')
+        user_social_id      = user_data.get('id', '')
 
         if provider == 'manual':
             user = authenticate(email=email, password=password)
@@ -184,9 +184,17 @@ def login_user(request):
                 sessionid   = request.session.session_key
 
                 return JsonResponse({'sessionid':sessionid, 'csrf':token, 'success':True})
+            else:
+                msg = 'Invalid credentials'
+                return JsonResponse({'msg':msg, 'fail':True})
+                
         elif provider.lower() == 'google' or provider.lower() == 'facebook':
-            print('social')
-            pass
+            user = authenticate(email=email, password=user_social_id)
+
+            login(request, user)
+            token       = csrf.get_token(request)
+            sessionid   = request.session.session_key
+            return JsonResponse({'sessionid':sessionid, 'csrf':token, 'success':True}) 
         else:    
             msg = 'Invalid credentials'
             return JsonResponse({'msg':msg, 'fail':True})   

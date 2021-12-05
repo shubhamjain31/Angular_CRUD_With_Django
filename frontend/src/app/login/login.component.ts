@@ -71,14 +71,14 @@ export class LoginComponent implements OnInit {
           this.csrf = data['csrf'];
           this.sessionid = data['sessionid']
           this.setCookie(this.csrf, this.sessionid)
-
           setTimeout(()=>{                       
               this.router.navigateByUrl('/home');
          }, 3000)
           
       }
       else if (data["fail"]){
-        this.error_msg = data["msg"]
+        this.error_msg = data["msg"];
+        this.showErrorAlert(this.error_msg);
       }
     })
 
@@ -97,7 +97,12 @@ export class LoginComponent implements OnInit {
     SocialloginService(socialUser: any){
       this.authenticationService.loginUser(socialUser).subscribe((data: any)=>{
        if (data["success"]){
-        this.router.navigate(['/login']);
+        this.csrf = data['csrf'];
+        this.sessionid = data['sessionid'];
+
+        this.setCookie(this.csrf, this.sessionid)
+        
+        this.router.navigate(['/home']);
        }
 
        if (data["fail"]){
@@ -105,10 +110,6 @@ export class LoginComponent implements OnInit {
         this.showErrorAlert(this.error_msg);
        }
 
-       if (data["exists"]){
-        this.error_msg = "Email Already Exists."
-        this.showErrorAlert(this.error_msg);
-       }
      });
     }
 

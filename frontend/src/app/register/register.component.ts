@@ -107,7 +107,7 @@ export class RegisterComponent implements OnInit {
        if (data["success"]){
         this.error_msg = "User Registered Successfully. Please Login!"
         this.showSuccessAlert(this.error_msg);
-        this.route.navigate(['/login']);
+        // this.route.navigate(['/login']);
        }
 
        if (data["fail"]){
