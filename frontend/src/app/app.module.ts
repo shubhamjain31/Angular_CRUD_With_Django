@@ -24,6 +24,7 @@ import { LoginResolver } from './resolvers/login.resolver';
 import { SharedModule } from './modules/shared.module';
 
 const CLIENT_ID = GlobalConstantsComponent.GOOGLE_API
+const FB_ID     = GlobalConstantsComponent.FACBOOK_API
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +54,7 @@ const CLIENT_ID = GlobalConstantsComponent.GOOGLE_API
           {
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider(
-              'Facebook-App-ID-Goes-Here'
+              FB_ID
             )
           },
           {
@@ -64,7 +65,8 @@ const CLIENT_ID = GlobalConstantsComponent.GOOGLE_API
           }
         ]
       } as SocialAuthServiceConfig,
-    }    
+    },
+ 
   ],
   bootstrap: [AppComponent]
 })

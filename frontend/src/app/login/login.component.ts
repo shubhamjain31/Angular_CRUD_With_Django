@@ -6,7 +6,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
-import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
+import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -92,6 +92,10 @@ export class LoginComponent implements OnInit {
 
     loginWithGoogle(): void {
       this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    }
+
+     loginWithFacebook(): void {
+      this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
     }
 
     SocialloginService(socialUser: any){

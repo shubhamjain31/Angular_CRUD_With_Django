@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonService } from '../services/common.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { SocialAuthService, GoogleLoginProvider, SocialUser } from 'angularx-social-login';
+import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
 
 @Component({
   selector: 'app-register',
@@ -101,6 +101,10 @@ export class RegisterComponent implements OnInit {
       this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
       
     }
+
+  loginWithFacebook(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
 
     SocialloginService(socialUser: any){
       this.commonservice.createUser(socialUser).subscribe((data: any)=>{
