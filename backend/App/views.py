@@ -107,9 +107,6 @@ def register_user(request):
             if provider.lower() == 'google' or provider.lower() == 'facebook':
                 password = User.objects.make_random_password()
 
-        if is_invalid(email):
-            return JsonResponse({"error":True, "msg":"Enter Email Address"})
-
         if is_invalid(password):
             return JsonResponse({"error":True, "msg":"Enter Password"})
 
@@ -142,14 +139,14 @@ def register_user(request):
                                         api_response        =user_data,
                                         ip_address          = get_ip(request))
 
-        register_user_mail(email, firstname, password, username)
+        register_user_mail(email, password, username)
         
         return JsonResponse({'success':True})
     else:
         return JsonResponse({'fail':True}) 
 
 
-def register_user_mail(email, firstname, password, username):
+def register_user_mail(email, password, username):
 
     subject  = 'Thank You For Signup'
 
