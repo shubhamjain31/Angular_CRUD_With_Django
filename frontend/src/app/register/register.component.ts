@@ -21,6 +21,8 @@ export class RegisterComponent implements OnInit {
   staticAlertClosed:boolean  = false;
   template_form: boolean     = true;
   loader: boolean            = false;
+  spinner: boolean           = false;
+  btn_loader: boolean        = false;
 
   createUser = new FormGroup({
     name:     new FormControl('', Validators.required),
@@ -47,9 +49,13 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    this.submitted = true;
+    this.submitted  = true;
+    this.btn_loader = true;
+    this.spinner    = true;
 
     if(this.createUser.invalid) {
+      this.btn_loader = false;
+      this.spinner    = false;
       return;
     }
 
@@ -77,7 +83,9 @@ export class RegisterComponent implements OnInit {
       }
     })
     this.createUser.reset();
-    this.submitted = false;
+    this.submitted  = false;
+    this.btn_loader = false;
+    this.spinner    = false;
   }
 
   showSuccessAlert(msg:string) {
@@ -98,12 +106,25 @@ export class RegisterComponent implements OnInit {
   }
 
   loginWithGoogle(): void {
-      this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.btn_loader = true;
+    this.spinner    = true;
+      this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(response => {
+          
+      }).catch(e => {
+          this.btn_loader = false;
+          this.spinner    = false;
+      });;
       
     }
 
   loginWithFacebook(): void {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.btn_loader = true;
+    this.spinner    = true;
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(response => {
+    }).catch(e => {
+        this.btn_loader = false;
+        this.spinner    = false;
+    });
   }
 
     SocialloginService(socialUser: any){
@@ -124,6 +145,9 @@ export class RegisterComponent implements OnInit {
         this.showErrorAlert(this.error_msg);
        }
      });
+
+      this.btn_loader = false;
+      this.spinner    = false;
     }
 
   

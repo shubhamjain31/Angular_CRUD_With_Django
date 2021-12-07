@@ -20,10 +20,10 @@
 
 			<div class="row">
 				<div class="col-6 mt-2 text-center">
-					<button mat-raised-button color="primary" [disabled]="save_loader" type="button" alt="Login with Google" (click)="loginWithGoogle()">&nbsp;&nbsp;&nbsp;Google&nbsp;&nbsp;&nbsp; <i class="fa fa-spinner fa-spin"></i> Loading</h1></button>
+					<button mat-raised-button color="primary" [disabled]="btn_loader" type="button" alt="Login with Google" (click)="loginWithGoogle()">&nbsp;&nbsp;&nbsp;Google&nbsp;&nbsp;&nbsp; <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
 		    </div>   
 				<div class="col-6 mt-2 text-center">
-					<button mat-raised-button color="accent" [disabled]="save_loader" type="button" alt="Login with Facebook" (click)="loginWithFacebook()">Facebook <i class="fa fa-spinner fa-spin"></i> Loading</h1></button>
+					<button mat-raised-button color="accent" [disabled]="btn_loader" type="button" alt="Login with Facebook" (click)="loginWithFacebook()">Facebook <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
 				</div>
 			</div>
 
@@ -57,11 +57,11 @@
 	    </div>
 
 	    <div class="row mt-3">
-			<div class="col-10">
-				<button type="submit" [disabled]="save_loader" class="btn btn-success">Register <i class="fa fa-spinner fa-spin"></i> Loading</h1></button>
+			<div class="col-6">
+				<button type="submit" [disabled]="btn_loader" class="btn btn-success">Register <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
 			</div>
-			<div class="col-2">
-				<button type="button" [disabled]="save_loader" class="btn btn-info text-white" [routerLink]="['/login']">Login <i class="fa fa-spinner fa-spin"></i> Loading</h1></button>
+			<div class="col-6">
+				<button type="button" [disabled]="btn_loader" class="btn btn-info text-white float-end" [routerLink]="['/login']">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp; <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
 			</div>
 		</div>
 
