@@ -113,7 +113,7 @@ export class RegisterComponent implements OnInit {
       }).catch(e => {
           this.btn_loader = false;
           this.spinner    = false;
-      });;
+      });
       
     }
 

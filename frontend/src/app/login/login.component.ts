@@ -91,11 +91,15 @@ export class LoginComponent implements OnInit {
     }
 
     loginWithGoogle(): void {
-      this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+      this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(response => {
+          
+      }).catch(e => { });
     }
 
      loginWithFacebook(): void {
-      this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+      this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(response => {
+          
+      }).catch(e => { });
     }
 
     SocialloginService(socialUser: any){
