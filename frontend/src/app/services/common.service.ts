@@ -15,10 +15,6 @@ export class CommonService {
   private httpOptionsForRestFramework: any;
 
   constructor(private http:HttpClient, private cookieService:CookieService) {
-    this.httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-      withCredentials: true
-    };
 
     this.httpOptionsForRestFramework = {
       headers: new HttpHeaders({ 'x-csrftoken' : this.cookieService.get('csrftoken')}),
@@ -27,59 +23,59 @@ export class CommonService {
    }
 
   public createUser(data: any){
-    return this.http.post(this.APIUrl + '/register/', data, this.httpOptions);
+    return this.http.post(this.APIUrl + '/register/', data);
   }
 
   public addRestaurant(data: any){
-    return this.http.post(this.APIUrl + '/add/restaurant/', data, this.httpOptions);
+    return this.http.post(this.APIUrl + '/add/restaurant/', data);
   }
 
   public showRestaurant(){
-    return this.http.get(this.APIUrl + '/show/restaurant/', this.httpOptions);
+    return this.http.get(this.APIUrl + '/show/restaurant/');
   }
 
   public allRestaurant(dataTablesParameters:any, {}){
-    return this.http.post(this.APIUrl + '/show/restaurant/', dataTablesParameters, this.httpOptions);
+    return this.http.post(this.APIUrl + '/show/restaurant/', dataTablesParameters);
   }
 
   public deleteRestaurant(data:any){
-    return this.http.post(this.APIUrl + '/delete/restaurant/', data, this.httpOptions);
+    return this.http.post(this.APIUrl + '/delete/restaurant/', data);
   }
 
   public editRestaurant(id:any, data:any){
-    return this.http.post(this.APIUrl + '/edit/restaurant/'+id, data, this.httpOptions);
+    return this.http.post(this.APIUrl + '/edit/restaurant/'+id, data);
   }
 
   public getCurrentData(id:any){
-    return this.http.post(this.APIUrl + '/get/restaurant/'+id, this.httpOptions);
+    return this.http.post(this.APIUrl + '/get/restaurant/'+id, {});
   }
 
   public addMenu(data:any){
-    return this.http.post(this.APIUrl + '/add/menu/', data, this.httpOptions);
+    return this.http.post(this.APIUrl + '/add/menu/', data);
   }
 
   public updateMenu(data:any){
-    return this.http.post(this.APIUrl + '/update/menu/', data, this.httpOptions);
+    return this.http.post(this.APIUrl + '/update/menu/', data);
   }
 
   public deleteMenu(data:any){
-    return this.http.post(this.APIUrl + '/delete/menu/', data, this.httpOptions);
+    return this.http.post(this.APIUrl + '/delete/menu/', data);
   }
 
   public getMenu(id:any){
-    return this.http.get(this.APIUrl + '/get/menu/'+id, this.httpOptions);
+    return this.http.get(this.APIUrl + '/get/menu/'+id);
   }
 
   public allHistory(){
-    return this.http.post(this.APIUrl + '/history/', this.httpOptions);
+    return this.http.post(this.APIUrl + '/history/', {});
   }
 
   public download_all_menus(id:any){
-    return this.http.get(this.APIUrl + '/download/menu/'+id, this.httpOptions);
+    return this.http.get(this.APIUrl + '/download/menu/'+id);
   }
 
   public upload_image(data:any){
-    return this.http.post(this.APIUrl + '/add/image/', data, this.httpOptionsForRestFramework);
+    return this.http.post(this.APIUrl + '/add/image/', this.httpOptionsForRestFramework);
   }
 
   public get_images(id:any){

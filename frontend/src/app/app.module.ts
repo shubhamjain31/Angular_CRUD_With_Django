@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import {
@@ -20,6 +21,7 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
 
 import { LoginGuard, AuthGuard } from './login/login.guard';
 import { LoginResolver } from './resolvers/login.resolver';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 import { SharedModule } from './modules/shared.module';
 
@@ -38,6 +40,7 @@ const FB_ID     = GlobalConstantsComponent.FACBOOK_API
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     NgbModule,
     BrowserAnimationsModule,
     SocialLoginModule,
@@ -62,10 +65,16 @@ const FB_ID     = GlobalConstantsComponent.FACBOOK_API
             provider: new GoogleLoginProvider(
               CLIENT_ID
             )
-          },
+          }
         ]
       } as SocialAuthServiceConfig,
     },
+
+    {  
+      provide: HTTP_INTERCEPTORS,  
+      useClass: TokenInterceptor,  
+      multi: true  
+    }  
  
   ],
   bootstrap: [AppComponent]

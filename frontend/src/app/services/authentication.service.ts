@@ -13,26 +13,26 @@ export class AuthenticationService {
   private httpOptions: any;
 
   constructor(private http:HttpClient) {
-    this.httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-      withCredentials: true
-    };
+    // this.httpOptions = {
+    //   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    //   withCredentials: true
+    // };
    }
 
   public loginUser(data: any){
-    return this.http.post(this.APIUrl + '/login/', data, this.httpOptions);
+    return this.http.post(this.APIUrl + '/login/', data);
   }
 
   public is_logged_in() {
-    return this.http.get(this.APIUrl + '/login_check/', this.httpOptions);
+    return this.http.get(this.APIUrl + '/login_check/');
   }
 
   public logout_user(){
-    return this.http.get(this.APIUrl + '/logout/', this.httpOptions);
+    return this.http.get(this.APIUrl + '/logout/');
   }
 
   public upgrade(data: any){
-    return this.http.post(this.APIUrl + '/upgrade/', data, this.httpOptions);
+    return this.http.post(this.APIUrl + '/upgrade/', data);
   }
   
 }
