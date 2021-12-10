@@ -8,6 +8,8 @@
 	<form [formGroup]="createUser" (ngSubmit)= "register()">
 
 		<h1 class="text-center mb-3">REGISTRATION</h1>
+		<span *ngIf="spinner" class="my-2 mx-auto text-center text-info"><h2><i class="fa fa-spinner fa-spin"></i> Please wait while we finish setting up your account.</h2></span>
+		<span *ngIf="email_checker" class="text-center text-info"><h2><i class="fa fa-spinner fa-spin"></i> Checking Email...</h2></span>
 		
     	<ngb-alert [type]="'warning'" *ngIf="staticAlertClosed" [dismissible]="false">
     		<span>
@@ -20,48 +22,57 @@
 
 			<div class="row">
 				<div class="col-6 mt-2 text-center">
-					<button mat-raised-button color="primary" [disabled]="btn_loader" type="button" alt="Login with Google" (click)="loginWithGoogle()">&nbsp;&nbsp;&nbsp;Google&nbsp;&nbsp;&nbsp; <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
+					<button mat-raised-button color="primary" [disabled]="isReadOnly" [disabled]="btn_loader" type="button" alt="Login with Google" (click)="loginWithGoogle()">&nbsp;&nbsp;&nbsp;Google&nbsp;&nbsp;&nbsp; <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
 		    </div>   
 				<div class="col-6 mt-2 text-center">
-					<button mat-raised-button color="accent" [disabled]="btn_loader" type="button" alt="Login with Facebook" (click)="loginWithFacebook()">Facebook <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
+					<button mat-raised-button color="accent" [disabled]="isReadOnly" [disabled]="btn_loader" type="button" alt="Login with Facebook" (click)="loginWithFacebook()">Facebook <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
 				</div>
 			</div>
 
 			<div class="strike text-secondary my-4">
 		    <span>OR</span>
 		</div>
+
+			<div class="form-group mt-3">
+	        <label for="email" class="form-label">Email</label>
+	        <input type="text" class="form-control" id="email" placeholder="Enter Email" formControlName="email" name="email" [(ngModel)]="user.email" (keyup)="email_exist_or_not($event)">
+	        <span class="text-danger" *ngIf="(submitted && createUser.controls.email.errors?.required)|| (!createUser.controls.email.value && createUser.controls.email.touched)">Please Enter Email</span>
+	    </div>
 	    
 	    <div class="form-group">
 	      <label for="name" class="form-label">Name</label>
-	      <input type="text" class="form-control" id="name" placeholder="Enter Name" formControlName="name" name="name" [(ngModel)]="user.name">
+	      <input type="text" class="form-control" id="name" placeholder="Enter Name" formControlName="name" name="name" [(ngModel)]="user.name" [readonly]="isReadOnly">
 	      <span class="text-danger" *ngIf="(submitted && createUser.controls.name.errors?.required) || (!createUser.controls.name.value && createUser.controls.name.touched)">Please Enter Name</span>
 	    </div>
 	    
 	    <div class="form-group mt-3">
 	        <label for="password" class="form-label">Password</label>
-	        <input type="password" class="form-control" id="password" placeholder="Enter Password" formControlName="password" name="password" [(ngModel)]="user.password" minlength="8">
+	        <input type="password" class="form-control" id="password" placeholder="Enter Password" formControlName="password" name="password" [(ngModel)]="user.password" minlength="8" [readonly]="isReadOnly">
 	        <span class="text-danger" *ngIf="(submitted && createUser.controls.password.errors?.required)|| (!createUser.controls.password.value && createUser.controls.password.touched)">Please Enter Password</span>
 	        <span class="text-danger" *ngIf="(submitted && createUser.controls.password.errors?.minlength)|| (createUser.controls.password.errors?.minlength)">Password Must Contain 8 Characters</span>
 	    </div>
 
-	     <div class="form-group mt-3">
-	        <label for="email" class="form-label">Email</label>
-	        <input type="text" class="form-control" id="email" placeholder="Enter Email" formControlName="email" name="email" [(ngModel)]="user.email">
-	        <span class="text-danger" *ngIf="(submitted && createUser.controls.email.errors?.required)|| (!createUser.controls.email.value && createUser.controls.email.touched)">Please Enter Email</span>
-	    </div>
-
 	    <div class="form-group mt-3">
 	        <label for="mobile" class="form-label">Mobile</label>
-	        <input type="text" class="form-control" placeholder="Enter Mobile" id="mobile" formControlName="mobile" name="mobile" [(ngModel)]="user.mobile">
+	        <input type="text" class="form-control" placeholder="Enter Mobile" id="mobile" formControlName="mobile" name="mobile" [(ngModel)]="user.mobile" [readonly]="isReadOnly">
 	        <span class="text-danger" *ngIf="(submitted && createUser.controls.mobile.errors?.required) || (!createUser.controls.mobile.value && createUser.controls.mobile.touched)">Please Enter Mobile</span>
+	    </div>
+
+	     <div class="row mt-3">
+		    <div class="col-6 mx-auto">
+	        <re-captcha (resolved)="resolved($event)" formControlName="recaptcha" name="recaptcha"
+              siteKey="{{SITE_KEY}}">  
+ 				</re-captcha>
+ 				<span class="text-danger" *ngIf="(submitted && createUser.controls.recaptcha.errors?.required)">Please Verify Captcha</span>
+	      </div>
 	    </div>
 
 	    <div class="row mt-3">
 			<div class="col-6">
-				<button type="submit" [disabled]="btn_loader" class="btn btn-success">Register <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
+				<button type="submit" [disabled]="btn_loader" [disabled]="isReadOnly" class="btn btn-success">Register <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
 			</div>
 			<div class="col-6">
-				<button type="button" [disabled]="btn_loader" class="btn btn-info text-white float-end" [routerLink]="['/login']">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp; <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
+				<button type="button" [disabled]="btn_loader" [disabled]="isReadOnly" class="btn btn-info text-white float-end" [routerLink]="['/login']">&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp; <i *ngIf="spinner" class="fa fa-spinner fa-spin"></i></button>
 			</div>
 		</div>
 

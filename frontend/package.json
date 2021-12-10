@@ -36,6 +36,7 @@
     "file-saver": "^2.0.5",
     "jquery": "^3.6.0",
     "jszip": "^3.7.1",
+    "ng-recaptcha": "^9.0.0",
     "ngx-bootstrap": "^7.1.0",
     "ngx-cookie-service": "^12.0.3",
     "ngx-filesaver": "^12.0.0",
