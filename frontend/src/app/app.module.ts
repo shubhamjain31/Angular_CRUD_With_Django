@@ -22,11 +22,13 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
 import { LoginGuard, AuthGuard } from './login/login.guard';
 import { LoginResolver } from './resolvers/login.resolver';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
 
 import { SharedModule } from './modules/shared.module';
 
-const CLIENT_ID = GlobalConstantsComponent.GOOGLE_API
-const FB_ID     = GlobalConstantsComponent.FACBOOK_API
+const CLIENT_ID     = GlobalConstantsComponent.GOOGLE_API
+const FB_ID         = GlobalConstantsComponent.FACBOOK_API
+const recaptche     = GlobalConstantsComponent.RECAPTCHA
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +46,8 @@ const FB_ID     = GlobalConstantsComponent.FACBOOK_API
     NgbModule,
     BrowserAnimationsModule,
     SocialLoginModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
     
     SharedModule,
   ],
@@ -74,7 +78,13 @@ const FB_ID     = GlobalConstantsComponent.FACBOOK_API
       provide: HTTP_INTERCEPTORS,  
       useClass: TokenInterceptor,  
       multi: true  
-    }  
+    },
+    {
+    provide: RECAPTCHA_SETTINGS,
+    useValue: {
+      siteKey: recaptche,
+    } as RecaptchaSettings,
+  }
  
   ],
   bootstrap: [AppComponent]

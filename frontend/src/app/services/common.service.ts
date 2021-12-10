@@ -26,6 +26,10 @@ export class CommonService {
     return this.http.post(this.APIUrl + '/register/', data);
   }
 
+  public email_checker(data: any){
+    return this.http.post(this.APIUrl + '/email_checker/', data);
+  }
+
   public addRestaurant(data: any){
     return this.http.post(this.APIUrl + '/add/restaurant/', data);
   }

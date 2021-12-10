@@ -5,6 +5,7 @@ import { CommonService } from '../services/common.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider, SocialUser } from 'angularx-social-login';
+import { GlobalConstantsComponent } from '../common/global-constants/global-constants.component';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +13,7 @@ import { SocialAuthService, GoogleLoginProvider, FacebookLoginProvider, SocialUs
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  SITE_KEY: any = GlobalConstantsComponent.RECAPTCHA;
 
   public user:      any;
   public error_msg: any;
@@ -23,15 +25,19 @@ export class RegisterComponent implements OnInit {
   loader: boolean            = false;
   spinner: boolean           = false;
   btn_loader: boolean        = false;
+  isReadOnly: boolean        = false;
+  email_checker: boolean     = false;
 
   createUser = new FormGroup({
     name:     new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     email:    new FormControl('', [Validators.required, Validators.email]),
-    mobile:   new FormControl('', Validators.required)
+    mobile:   new FormControl('', Validators.required),
+    recaptcha:new FormControl('', Validators.required),
   })
 
-  constructor(private commonservice:CommonService, private route: Router, private toastr: ToastrService, private socialAuthService: SocialAuthService) { }
+  constructor(private commonservice:CommonService, private route: Router, private toastr: ToastrService, private socialAuthService: SocialAuthService) { 
+  }
 
   ngOnInit(): void {
      this.template_form = true
@@ -62,7 +68,9 @@ export class RegisterComponent implements OnInit {
     this.commonservice.createUser(this.createUser.value).subscribe((data: any)=>{
        if (data["success"]){
         this.template_form = false;
-        this.loader = true;
+        this.loader        = true;
+        this.btn_loader    = false;
+        this.spinner       = false;
 
         setTimeout(()=>{                       
               this.route.navigate(['/login'])
@@ -73,19 +81,21 @@ export class RegisterComponent implements OnInit {
       }
       else if (data["exists"]){
         this.staticAlertClosed = true;
+        this.btn_loader        = false;
+        this.spinner           = false;
         this.error_msg = "User with this email already exists."
         this.showErrorAlert(this.error_msg);
       }
       else if (data["fail"]){ 
         this.staticAlertClosed = true;
+        this.btn_loader        = false;
+        this.spinner           = false;
         this.error_msg = "Something Went Wrong!"
         this.showErrorAlert(this.error_msg);
       }
     })
     this.createUser.reset();
     this.submitted  = false;
-    this.btn_loader = false;
-    this.spinner    = false;
   }
 
   showSuccessAlert(msg:string) {
@@ -130,25 +140,69 @@ export class RegisterComponent implements OnInit {
     SocialloginService(socialUser: any){
       this.commonservice.createUser(socialUser).subscribe((data: any)=>{
        if (data["success"]){
+        this.btn_loader = false;
+        this.spinner    = false;
+        
         this.error_msg = "User Registered Successfully. Please Login!"
         this.showSuccessAlert(this.error_msg);
         // this.route.navigate(['/login']);
        }
 
        if (data["fail"]){
+        this.btn_loader = false;
+        this.spinner    = false;
+
         this.error_msg = "Something Went Wrong."
         this.showErrorAlert(this.error_msg);
        }
 
        if (data["exists"]){
+        this.btn_loader = false;
+        this.spinner    = false;
+
         this.error_msg = "Email Already Exists."
         this.showErrorAlert(this.error_msg);
        }
      });
-
-      this.btn_loader = false;
-      this.spinner    = false;
     }
 
   
+    resolved(captchaResponse: string) {
+      // console.log(captchaResponse);       
+      }
+
+    email_exist_or_not(event: any){
+    if(this.email_validator(event.target.value) === false){
+      this.isReadOnly = true;
+      return;
+    }
+
+    if(event.target.value.trim().length != 0){
+      this.email_checker  = true;
+      this.isReadOnly     = true;
+    }
+
+    this.commonservice.email_checker({'email':event.target.value}).subscribe((data: any)=>{
+       if (data["success"]){
+
+       }
+     });
+  }
+
+  email_validator(email: string){
+    if (email.trim().length < 1) {
+      this.email_checker  = false;
+      this.isReadOnly     = false;
+      return true;
+    }
+
+    const pattern = /^[\w]{1,}[\w.+-]{0,}@[\w-]{1,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$/;
+
+    if (!email.match(pattern)) {
+      this.email_checker  = false;
+      return false;
+    }
+
+    return true;
+  }
 }

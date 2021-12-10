@@ -14,6 +14,8 @@ export class GlobalConstantsComponent implements OnInit {
   public static GOOGLE_API: string = "591641495893-t5otmtkmn2c5c94l1j2cv6mnivr7e4bv.apps.googleusercontent.com"
   public static FACBOOK_API: string = "575644046874043"
 
+  public static RECAPTCHA: string = '6LeDSokdAAAAAH1Q2jzDifC-dPz4Bm8gPDmxl-YV';
+
   ngOnInit(): void {
   }
 
