@@ -30,6 +30,7 @@ urlpatterns = [
 
     path("history/", history, name="history"),
     path("upgrade/", upgrade, name="upgrade"),
+    path("email_checker/", email_checker, name="email_checker"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

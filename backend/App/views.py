@@ -146,6 +146,10 @@ def register_user(request):
         return JsonResponse({'fail':True}) 
 
 
+def email_checker(request):
+    print(check)
+    return JsonResponse({})
+
 def register_user_mail(email, password, username):
 
     subject  = 'Thank You For Signup'
