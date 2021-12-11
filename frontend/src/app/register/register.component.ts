@@ -182,9 +182,26 @@ export class RegisterComponent implements OnInit {
       this.isReadOnly     = true;
     }
 
-    this.commonservice.email_checker({'email':event.target.value}).subscribe((data: any)=>{
-       if (data["success"]){
+    setTimeout(()=>{   
+      this.email_check_service(event.target.value);
+        
+      }, 3000);
+  }
 
+  email_check_service(email: string){
+    this.commonservice.email_checker({'email':email}).subscribe((data: any)=>{
+       if (data["success"]){
+        this.email_checker  = false;
+        this.isReadOnly     = false;
+
+       }
+
+       if (data["exists"]){
+        this.isReadOnly     = true;
+        this.email_checker  = false;
+
+        this.error_msg = data["msg"];
+        this.showErrorAlert(this.error_msg);
        }
      });
   }

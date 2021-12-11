@@ -145,9 +145,23 @@ def register_user(request):
     else:
         return JsonResponse({'fail':True}) 
 
-
+@csrf_exempt
 def email_checker(request):
-    print(check)
+    if request.method == "POST":
+        data = urlencode(json.loads(request.body))
+        user_data = QueryDict(data)
+
+        email      = user_data.get('email')
+
+        isEmail = User.objects.filter(email=email).exists()
+
+        if isEmail:
+            msg = 'Email Already Exists!'
+            return JsonResponse({'exists':True, 'msg':msg})
+        else:
+            msg = ''
+            return JsonResponse({'success':True, 'msg':msg})
+        print(isEmail)
     return JsonResponse({})
 
 def register_user_mail(email, password, username):
