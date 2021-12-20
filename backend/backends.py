@@ -14,9 +14,13 @@ class EmailAuthBackend(object):
 	"""
 
 	def authenticate(self, request, **kwargs):
-		# print(kwargs)
-		username = kwargs['email']
+		print(kwargs)
+		if 'username' in kwargs:
+			username = kwargs['username']
+		else:
+			username = kwargs['email']
 		password = kwargs['password']
+		
 		try:
 			user = User.objects.get(email=username)
 			if user.check_password(password) or user.user_social_id == password:

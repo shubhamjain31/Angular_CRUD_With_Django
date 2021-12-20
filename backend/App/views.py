@@ -161,7 +161,6 @@ def email_checker(request):
         else:
             msg = ''
             return JsonResponse({'success':True, 'msg':msg})
-        print(isEmail)
     return JsonResponse({})
 
 def register_user_mail(email, password, username):
