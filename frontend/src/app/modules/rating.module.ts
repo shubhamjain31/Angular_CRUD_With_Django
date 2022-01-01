@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RatingComponent } from '../rating/rating.component';
 import { SharedModule } from './shared.module';
 import { LoginGuard } from '../login/login.guard';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 const routes: Routes = [
    {
@@ -23,7 +24,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    NgxSkeletonLoaderModule.forRoot()
   ],
   exports: [RouterModule]
 })

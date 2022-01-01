@@ -14,15 +14,18 @@ export interface PeriodicElement {
 })
 export class RatingComponent implements OnInit {
   public restaurant_list:any = [];
+  contentLoaded: boolean = true;
 
   constructor(private commonservice:CommonService) { }
 
   ngOnInit(): void {
+    this.contentLoaded = false;
     this.commonservice.showRestaurant().subscribe((data:any) => {
       if(data['success']){
         this.restaurant_list = data['all_restaurant'];
         this.remove_col();
         this.rating_to_review();
+        this.contentLoaded = true;
       }
     });
   }
